@@ -1,0 +1,26 @@
+{
+	"name"        : "ernilambar/optioner",
+	"description" : "Optioner",
+	"keywords"    : [ "option" ],
+	"homepage"    : "https://github.com/ernilambar/optioner",
+	"license"     : "MIT",
+	"authors"     : [
+		{
+			"name"     : "Nilambar Sharma",
+			"email"    : "nilambar@outlook.com",
+			"homepage" : "https://www.nilambar.net",
+			"role"     : "Developer"
+		}
+	],
+	"support"     : {
+		"issues" : "https://github.com/ernilambar/optioner/issues"
+	},
+	"autoload"    : {
+		"psr-4": {
+			"Nilambar\\Optioner\\": "src/"
+		}
+	},
+	"require"     : {
+		"php" : ">=5.6"
+	}
+}
