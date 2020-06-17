@@ -46,7 +46,7 @@ $obj->add_field(
 		'type'    => 'text',
 		'title'    => __( 'Hello Text', 'optioner' ),
 		'description'    => __( 'Text input description', 'optioner' ),
-		'default' => 'feri Default Text',
+		'placeholder' => 'feri Default Text',
 	)
 );
 
@@ -54,11 +54,11 @@ $obj->add_field(
 $obj->add_field(
 	'first_tab',
 	array(
-		'id'      => 'world_text',
-		'type'    => 'text',
-		'title'    => __( 'World Text', 'optioner' ),
-		'description'    => __( 'Text input description', 'optioner' ),
-		'default' => 'Default Text',
+		'id'          => 'world_text',
+		'type'        => 'text',
+		'title'       => __( 'World Text', 'optioner' ),
+		'description' => __( 'Text input description', 'optioner' ),
+		'default'     => 'Default Text',
 	)
 );
 
@@ -73,11 +73,12 @@ $obj->add_tab(
 $obj->add_field(
 	'second_tab',
 	array(
-		'id'      => 'hello_textarea',
-		'type'    => 'textarea',
-		'title'    => __( 'Hello Textarea', 'optioner' ),
-		'description'    => __( 'Textarea input description', 'optioner' ),
-		'default' => 'Default Textarea',
+		'id'          => 'hello_textarea',
+		'type'        => 'textarea',
+		'title'       => __( 'Hello Textarea', 'optioner' ),
+		'description' => __( 'Textarea input description', 'optioner' ),
+		'default'     => 'Default Textarea',
+
 	)
 );
 

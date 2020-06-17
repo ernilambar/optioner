@@ -150,9 +150,13 @@ class Optioner {
 		$attr = array(
 			'type'  => 'text',
 			'name'  => $args['field_name'],
-			'class' => 'regular-text',
 			'value' => $this->get_value( $args ),
+			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
 		);
+
+		if ( isset( $args['field']['placeholder'] ) ) {
+			$attr['placeholder'] = $args['field']['placeholder'];
+		}
 
 		$attributes = $this->render_attr( $attr, false );
 
@@ -163,9 +167,14 @@ class Optioner {
 
 	function callback_textarea( $args ) {
 		$attr = array(
-			'class' => 'regular-text',
 			'name'  => $args['field_name'],
+			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
+			'rows'  => isset( $args['field']['rows'] ) ? $args['field']['rows'] : 5,
 		);
+
+		if ( isset( $args['field']['placeholder'] ) ) {
+			$attr['placeholder'] = $args['field']['placeholder'];
+		}
 
 		$attributes = $this->render_attr( $attr, false );
 
