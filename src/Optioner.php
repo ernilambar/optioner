@@ -105,7 +105,7 @@ class Optioner {
 
 		}
 
-		submit_button( esc_html__( 'Save Changes' ) );
+		submit_button( esc_html__( 'Save Changes', 'optioner' ) );
 
 		echo '</form>';
 

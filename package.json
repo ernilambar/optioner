@@ -1,0 +1,13 @@
+{
+  "name": "optioner",
+  "title": "Optioner",
+  "version": "1.0.0",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "textdomain": "wpi18n addtextdomain"
+  },
+  "repository": "github:ernilambar/optioner",
+  "devDependencies": {
+    "node-wp-i18n": "^1.2.3"
+  }
+}
