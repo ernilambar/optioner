@@ -133,11 +133,11 @@ class Optioner {
 						'field_value' => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
 						'options'     => $this->options,
 					);
-					// nspre( $field );
+
 					add_settings_field(
 						$field_key,
 						$field['title'],
-						array( $this, 'field_callback' ),
+						array( $this, 'callback_' . $field['type'] ),
 						$tab['id'] . '-' . $this->page['menu_slug'],
 						$tab['id'] . '_settings' . '-' . $this->page['menu_slug'],
 						$args
@@ -147,19 +147,30 @@ class Optioner {
 		}
 	}
 
-	function field_callback( $args ) {
-		$field_type = $args['field']['type'];
-		nspre( $field_type );
-		return;
-		if ( ! class_exists( 'npf_field_' . $field_type ) ) {
-			$ov_file = $field_type . '.php';
-			echo 'Class <strong>npf_field_' . $field_type . '</strong> does not exist.';
-			return;
-		}
-		$class    = 'npf_field_' . $field_type;
-		$instance = $class::getInstance();
-		$instance->render_field( $args );
-		$instance->show_description( $args );
+	function callback_text( $args ) {
+		$attr = array(
+			'type'  => 'text',
+			'name'  => $args['field_name'],
+			'class' => 'regular-text',
+		);
+
+		$attributes = $this->render_attr( $attr, false );
+		$html = sprintf( '<input %s />', $attributes );
+
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	function callback_textarea( $args ) {
+		$attr = array(
+			'class' => 'regular-text',
+			'name'  => $args['field_name'],
+		);
+
+		$attributes = $this->render_attr( $attr, false );
+
+		$html = sprintf( '<textarea %s>%s</textarea>', $attributes, 'value here' );
+
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	function section_text_callback( $args ) {
@@ -223,4 +234,45 @@ class Optioner {
 
 		return $this;
 	}
+
+	/**
+	 * Render attributes.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $attributes Attributes.
+	 * @param bool  $echo Whether to echo or not.
+	 */
+	private function render_attr( $attributes, $echo = true ) {
+		if ( empty( $attributes ) ) {
+			return;
+		}
+
+		$html = '';
+
+		foreach ( $attributes as $name => $value ) {
+
+			$esc_value = '';
+
+			if ( 'class' === $name && is_array( $value ) ) {
+				$value = join( ' ', array_unique( $value ) );
+			}
+
+			if ( false !== $value && 'href' === $name ) {
+				$esc_value = esc_url( $value );
+
+			} elseif ( false !== $value ) {
+				$esc_value = esc_attr( $value );
+			}
+
+			$html .= false !== $value ? sprintf( ' %s="%s"', esc_html( $name ), $esc_value ) : esc_html( " {$name}" );
+		}
+
+		if ( ! empty( $html ) && true === $echo ) {
+			echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		} else {
+			return $html;
+		}
+	}
 }
+
