@@ -60,8 +60,6 @@ class Optioner {
 			$this->parent_page = 'options-general.php';
 		}
 
-
-
 		// Create admin page.
 		add_action( 'admin_menu', array( $this, 'create_menu_page' ) );
 
@@ -147,63 +145,6 @@ class Optioner {
 				}
 			}
 		}
-
-		return;
-
-		nspre( $this->fields );
-
-		foreach ( $this->fields as $field_key => $field ) {
-			$args = array(
-				'field'       => $field,
-				'field_id'    => $field['id'],
-				'field_name'  => $this->page['option_slug'] . '[' . $field['id'] . ']',
-				'field_value' => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
-				'options'     => $this->options,
-			);
-			// nspre( $field );
-			add_settings_field(
-				$field_key,
-				$field['title'],
-				array( $this, 'field_callback' ),
-				$tab['id'] . '-' . $this->page['menu_slug'],
-				$tab['id'] . '_settings' . '-' . $this->page['menu_slug'],
-				$args
-			);
-		}
-
-		return;
-
-
-
-		foreach ( $this->tabs as $tab ) {
-			add_settings_section(
-				$tab['id'] . '_settings' . '-' . $this->page['menu_slug'],
-				$tab['title'],
-				array( $this, 'section_text_callback' ),
-				$tab['id'] . '-' . $this->page['menu_slug']
-			);
-
-			foreach ( $tab['fields'] as $field_key => $field ) {
-				$args = array(
-					'field'       => $field,
-					'field_id'    => $field['id'],
-					'field_name'  => $this->page['option_slug'] . '[' . $field['id'] . ']',
-					'tab'         => $tab,
-					// 'base_args'   => $this->base_args,
-					'field_value' => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
-					'options'     => $this->options,
-				);
-
-				add_settings_field(
-					$field_key,
-					$field['title'],
-					array( $this, 'field_callback' ),
-					$tab['id'] . '-' . $this->page['menu_slug'],
-					$tab['id'] . '_settings' . '-' . $this->page['menu_slug'],
-					$args
-				);
-			}
-		}
 	}
 
 	function field_callback( $args ) {
@@ -219,22 +160,15 @@ class Optioner {
 		$instance = $class::getInstance();
 		$instance->render_field( $args );
 		$instance->show_description( $args );
-
 	}
 
+	function section_text_callback( $args ) {
+		$exp = explode( '_settings', $args['id'] );
 
-	function section_text_callback( $arg ) {
-		$id              = $arg['id'];
-		$current_section = str_replace( '_settings', '', $id );
-		$sub_heading     = '';
-		$callback_object = $arg['callback'][0];
+		$current_tab = array_shift( $exp );
 
-		if ( isset( $callback_object->base_args['tabs'][ $current_section ]['sub_heading'] ) ) {
-			$sub_heading = $callback_object->base_args['tabs'][ $current_section ]['sub_heading'];
-		}
-
-		if ( ! empty( $sub_heading ) ) {
-			echo '<div class="optioner-subheading">' . $sub_heading . '</div>';
+		if ( isset( $this->tabs[ $current_tab ]['subtitle'] ) && ! empty( $this->tabs[ $current_tab ]['subtitle'] ) ) {
+			echo '<div class="optioner-subheading">' . esc_html( $this->tabs[ $current_tab ]['subtitle'] ) . '</div>';
 		}
 	}
 
