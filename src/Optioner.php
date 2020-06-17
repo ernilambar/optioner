@@ -131,7 +131,6 @@ class Optioner {
 						'field_id'    => $field['id'],
 						'field_name'  => $this->page['option_slug'] . '[' . $field['id'] . ']',
 						'field_value' => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
-						'options'     => $this->options,
 					);
 
 					add_settings_field(
@@ -152,9 +151,11 @@ class Optioner {
 			'type'  => 'text',
 			'name'  => $args['field_name'],
 			'class' => 'regular-text',
+			'value' => $this->get_value( $args ),
 		);
 
 		$attributes = $this->render_attr( $attr, false );
+
 		$html = sprintf( '<input %s />', $attributes );
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -168,9 +169,28 @@ class Optioner {
 
 		$attributes = $this->render_attr( $attr, false );
 
-		$html = sprintf( '<textarea %s>%s</textarea>', $attributes, 'value here' );
+		$html = sprintf( '<textarea %s>%s</textarea>', $attributes, esc_textarea( $this->get_value( $args ) ) );
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	private function get_value( $args ) {
+		$output = null;
+
+		$default = null;
+
+		if ( isset( $args['field']['default'] ) ) {
+			$default = $args['field']['default'];
+		}
+
+		if ( isset( $this->options[ $args['field_id'] ] ) ) {
+			$output = $this->options[ $args['field_id'] ];
+		} else {
+			$output = $default;
+		}
+
+		return $output;
+
 	}
 
 	function section_text_callback( $args ) {
