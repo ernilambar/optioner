@@ -36,26 +36,32 @@ class Optioner {
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct( $args ) {
-		// $this->base_args = $args;
-		// $this->options   = get_option( $this->base_args['option_slug'] );
+	public function __construct() {
+	}
+
+	public function run() {
+		if ( empty( $this->page ) ) {
+			return;
+		}
+
+		$this->options = get_option( $this->page['option_slug'] );
 
 		// Check if top level page.
-		if ( isset( $this->base_args['top_level_menu'] ) && $this->base_args['top_level_menu'] ) {
+		if ( isset( $this->page['top_level_menu'] ) && $this->page['top_level_menu'] ) {
 			$this->top_level_menu = true;
 		} else {
 			$this->top_level_menu = false;
 		}
+
 		// Set submenu page.
-		if ( isset( $this->base_args['parent_page'] ) && ! empty( $this->base_args['parent_page'] ) ) {
-			$this->parent_page = $this->base_args['parent_page'];
+		if ( isset( $this->page['parent_page'] ) && ! empty( $this->page['parent_page'] ) ) {
+			$this->parent_page = $this->page['parent_page'];
 		} else {
 			$this->parent_page = 'options-general.php';
 		}
 
-	}
 
-	public function run() {
+
 		// Create admin page.
 		add_action( 'admin_menu', array( $this, 'create_menu_page' ) );
 
@@ -66,19 +72,19 @@ class Optioner {
 	function create_menu_page() {
 		if ( true == $this->top_level_menu ) {
 			add_menu_page(
-				$this->base_args['page_title'],
-				$this->base_args['menu_title'],
-				$this->base_args['capability'],
-				$this->base_args['menu_slug'],
+				$this->page['page_title'],
+				$this->page['menu_title'],
+				$this->page['capability'],
+				$this->page['menu_slug'],
 				array( $this, 'render_page' )
 			);
 		} else {
 			add_submenu_page(
 				$this->parent_page,
-				$this->base_args['page_title'],
-				$this->base_args['menu_title'],
-				$this->base_args['capability'],
-				$this->base_args['menu_slug'],
+				$this->page['page_title'],
+				$this->page['menu_title'],
+				$this->page['capability'],
+				$this->page['menu_slug'],
 				array( $this, 'render_page' )
 			);
 		}
@@ -91,12 +97,12 @@ class Optioner {
 
 		echo '<form action="options.php" method="post">';
 
-		settings_fields( $this->base_args['option_slug'] . '-group' );
+		settings_fields( $this->page['option_slug'] . '-group' );
 
-		foreach ( $this->base_args['tabs'] as $tab_key => $tab ) {
+		foreach ( $this->tabs as $tab ) {
 
 			echo '<div id="npf-' . $tab['id'] . '" class="single-tab-content">';
-			do_settings_sections( $tab['id'] . '-' . $this->base_args['menu_slug'] );
+			do_settings_sections( $tab['id'] . '-' . $this->page['menu_slug'] );
 			echo '</div>';
 
 		}
@@ -109,23 +115,81 @@ class Optioner {
 	}
 
 	function register_settings() {
-		register_setting( $this->base_args['option_slug'] . '-group', $this->base_args['option_slug'], array( $this, 'sanitize_callback' ) );
+		register_setting( $this->page['option_slug'] . '-group', $this->page['option_slug'], array( $this, 'sanitize_callback' ) );
 
-		foreach ( $this->base_args['tabs'] as $tab_key => $tab ) {
+		// Load tabs.
+		foreach ( $this->tabs as $tab ) {
 			add_settings_section(
-				$tab['id'] . '_settings' . '-' . $this->base_args['menu_slug'],
+				$tab['id'] . '_settings' . '-' . $this->page['menu_slug'],
 				$tab['title'],
 				array( $this, 'section_text_callback' ),
-				$tab['id'] . '-' . $this->base_args['menu_slug']
+				$tab['id'] . '-' . $this->page['menu_slug']
+			);
+
+			if ( isset( $this->fields[ $tab['id'] ] ) && ! empty( $this->fields[ $tab['id'] ] ) ) {
+				foreach ( $this->fields[ $tab['id'] ] as $field_key => $field ) {
+					$args = array(
+						'field'       => $field,
+						'field_id'    => $field['id'],
+						'field_name'  => $this->page['option_slug'] . '[' . $field['id'] . ']',
+						'field_value' => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
+						'options'     => $this->options,
+					);
+					// nspre( $field );
+					add_settings_field(
+						$field_key,
+						$field['title'],
+						array( $this, 'field_callback' ),
+						$tab['id'] . '-' . $this->page['menu_slug'],
+						$tab['id'] . '_settings' . '-' . $this->page['menu_slug'],
+						$args
+					);
+				}
+			}
+		}
+
+		return;
+
+		nspre( $this->fields );
+
+		foreach ( $this->fields as $field_key => $field ) {
+			$args = array(
+				'field'       => $field,
+				'field_id'    => $field['id'],
+				'field_name'  => $this->page['option_slug'] . '[' . $field['id'] . ']',
+				'field_value' => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
+				'options'     => $this->options,
+			);
+			// nspre( $field );
+			add_settings_field(
+				$field_key,
+				$field['title'],
+				array( $this, 'field_callback' ),
+				$tab['id'] . '-' . $this->page['menu_slug'],
+				$tab['id'] . '_settings' . '-' . $this->page['menu_slug'],
+				$args
+			);
+		}
+
+		return;
+
+
+
+		foreach ( $this->tabs as $tab ) {
+			add_settings_section(
+				$tab['id'] . '_settings' . '-' . $this->page['menu_slug'],
+				$tab['title'],
+				array( $this, 'section_text_callback' ),
+				$tab['id'] . '-' . $this->page['menu_slug']
 			);
 
 			foreach ( $tab['fields'] as $field_key => $field ) {
 				$args = array(
 					'field'       => $field,
 					'field_id'    => $field['id'],
-					'field_name'  => $this->base_args['option_slug'] . '[' . $field['id'] . ']',
+					'field_name'  => $this->page['option_slug'] . '[' . $field['id'] . ']',
 					'tab'         => $tab,
-					'base_args'   => $this->base_args,
+					// 'base_args'   => $this->base_args,
 					'field_value' => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
 					'options'     => $this->options,
 				);
@@ -134,8 +198,8 @@ class Optioner {
 					$field_key,
 					$field['title'],
 					array( $this, 'field_callback' ),
-					$tab['id'] . '-' . $this->base_args['menu_slug'],
-					$tab['id'] . '_settings' . '-' . $this->base_args['menu_slug'],
+					$tab['id'] . '-' . $this->page['menu_slug'],
+					$tab['id'] . '_settings' . '-' . $this->page['menu_slug'],
 					$args
 				);
 			}
@@ -221,7 +285,7 @@ class Optioner {
 
 		$arg = wp_parse_args( $args, $defaults );
 
-		$this->fields_array[ $tab ][ $args['id'] ] = $args;
+		$this->fields[ $tab ][ $args['id'] ] = $args;
 
 		return $this;
 	}

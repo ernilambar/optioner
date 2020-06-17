@@ -95,14 +95,26 @@ $obj->add_tab(
 	)
 );
 
-// Field: Text.
+// Field: Hello Text.
 $obj->add_field(
 	'first_tab',
 	array(
 		'id'      => 'hello_text',
 		'type'    => 'text',
-		'name'    => __( 'Hello Text', 'WPOSA' ),
-		'desc'    => __( 'Text input description', 'WPOSA' ),
+		'title'    => __( 'Hello Text', 'optioner' ),
+		'description'    => __( 'Text input description', 'optioner' ),
+		'default' => 'Default Text',
+	)
+);
+
+// Field: World Text.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'      => 'world_text',
+		'type'    => 'text',
+		'title'    => __( 'World Text', 'optioner' ),
+		'description'    => __( 'Text input description', 'optioner' ),
 		'default' => 'Default Text',
 	)
 );
@@ -114,5 +126,16 @@ $obj->add_tab(
 	)
 );
 
+// Field: Hello Textarea.
+$obj->add_field(
+	'second_tab',
+	array(
+		'id'      => 'hello_textarea',
+		'type'    => 'textarea',
+		'title'    => __( 'Hello Textarea', 'optioner' ),
+		'description'    => __( 'Textarea input description', 'optioner' ),
+		'default' => 'Default Textarea',
+	)
+);
 
-nspre( $obj );
+$obj->run();
