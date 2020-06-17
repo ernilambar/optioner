@@ -25,14 +25,20 @@ class Optioner {
 
 	var $parent_page;
 
+	var $tabs = array();
+
+	var $fields = array();
+
+	var $page = array();
+
 	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
 	 */
 	public function __construct( $args ) {
-		$this->base_args = $args;
-		$this->options   = get_option( $this->base_args['option_slug'] );
+		// $this->base_args = $args;
+		// $this->options   = get_option( $this->base_args['option_slug'] );
 
 		// Check if top level page.
 		if ( isset( $this->base_args['top_level_menu'] ) && $this->base_args['top_level_menu'] ) {
@@ -47,6 +53,9 @@ class Optioner {
 			$this->parent_page = 'options-general.php';
 		}
 
+	}
+
+	public function run() {
 		// Create admin page.
 		add_action( 'admin_menu', array( $this, 'create_menu_page' ) );
 
@@ -163,8 +172,57 @@ class Optioner {
 		if ( ! empty( $sub_heading ) ) {
 			echo '<div class="optioner-subheading">' . $sub_heading . '</div>';
 		}
-
 	}
 
+	public function set_page( $args = array() ) {
+		$defaults = array(
+			'page_title'  => esc_html__( 'Optioner', 'optioner' ),
+			'menu_title'  => esc_html__( 'Optioner', 'optioner' ),
+			'capability'  => 'manage_options',
+			'menu_slug'   => 'optioner',
+			'option_slug' => 'optioner',
+		);
 
+		$this->page = wp_parse_args( $args, $defaults );
+	}
+
+	public function add_tab( $args ) {
+		// Bail if not array.
+		if ( ! is_array( $args ) ) {
+			return false;
+		}
+
+		$defaults = array(
+			'id'       => '',
+			'title'    => '',
+			'subtitle' => '',
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$this->tabs[ $args['id'] ] = $args;
+
+		return $this;
+	}
+
+	public function add_field( $tab, $args ) {
+		// Bail if not array.
+		if ( ! is_array( $args ) ) {
+			return false;
+		}
+
+		// Set the defaults.
+		$defaults = array(
+			'id'   => '',
+			'name' => '',
+			'desc' => '',
+			'type' => 'text',
+		);
+
+		$arg = wp_parse_args( $args, $defaults );
+
+		$this->fields_array[ $tab ][ $args['id'] ] = $args;
+
+		return $this;
+	}
 }

@@ -83,4 +83,36 @@ $my_settings_another = array(
 	);
 
 
-$npf_demo_object_another = new Optioner($my_settings_another);
+$obj = new Optioner($my_settings_another);
+
+$obj->set_page();
+
+$obj->add_tab(
+	array(
+		'id' => "first_tab",
+		'title' => "First Tab",
+		'subtitle' => "First Tab description",
+	)
+);
+
+// Field: Text.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'      => 'hello_text',
+		'type'    => 'text',
+		'name'    => __( 'Hello Text', 'WPOSA' ),
+		'desc'    => __( 'Text input description', 'WPOSA' ),
+		'default' => 'Default Text',
+	)
+);
+
+$obj->add_tab(
+	array(
+		'id' => "second_tab",
+		'title' => "Second Tab",
+	)
+);
+
+
+nspre( $obj );
