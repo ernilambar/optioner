@@ -231,6 +231,8 @@ class Optioner {
 
 		$html = sprintf( '<input %s />', $attributes );
 
+		$html .= $this->get_field_description( $args );
+
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
@@ -255,6 +257,8 @@ class Optioner {
 		$attributes = $this->render_attr( $attr, false );
 
 		$html = sprintf( '<textarea %s>%s</textarea>', $attributes, esc_textarea( $this->get_value( $args ) ) );
+
+		$html .= $this->get_field_description( $args );
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
@@ -284,6 +288,8 @@ class Optioner {
 
 		$html = sprintf( '<input %s />', $attributes );
 
+		$html .= $this->get_field_description( $args );
+
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
@@ -303,7 +309,19 @@ class Optioner {
 
 		$html = sprintf( '<h2 %s>%s</h2>', $attributes, esc_html( $args['field']['title'] ) );
 
+		$html .= $this->get_field_description( $args );
+
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	function get_field_description( $args ) {
+		$output = '';
+
+		if ( isset( $args['field']['description'] ) && ! empty( $args['field']['description'] ) ) {
+			$output = sprintf( '<p class="description">%s</p>', $args['field']['description'] );
+		}
+
+		return $output;
 	}
 
 	private function get_value( $args ) {
