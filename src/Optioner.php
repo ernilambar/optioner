@@ -488,7 +488,7 @@ class Optioner {
 		?>
 		<style>
 			.tab-content {
-				display: none;
+				/*display: none;*/
 			}
 
 			.wrap-content {
@@ -516,7 +516,6 @@ class Optioner {
 	 * @since 1.0.0
 	 */
 	public function footer_scripts() {
-		return;
 		$screen = get_current_screen();
 
 		$required_screen = $this->get_required_screen();
