@@ -448,14 +448,6 @@ class Optioner {
 	 */
 	public function callback_image( $args ) {
 		$value = $this->get_value( $args );
-
-		$attr = array(
-			'name'  => $args['field_name'],
-			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
-			'rows'  => isset( $args['field']['rows'] ) ? $args['field']['rows'] : 5,
-		);
-
-		$attributes = $this->render_attr( $attr, false );
 		?>
 		<div class="field-image">
 			<input type="button" class="select-img button button-primary" value="<?php esc_attr_e( 'Upload', 'optioner' ); ?>" data-uploader_title="<?php esc_attr_e( 'Select Image', 'optioner' ); ?>" data-uploader_button_text="<?php esc_attr_e( 'Choose Image', 'optioner' ); ?>" />
@@ -470,7 +462,7 @@ class Optioner {
 			}
 			?>
 			<input type="button" value="<?php echo esc_attr( _x( 'X', 'remove button', 'optioner' ) ); ?>" class="button button-secondary btn-image-remove" style="<?php echo esc_attr( $remove_button_style ); ?>" />
-			<input type="text" class="img" name="<?php echo esc_attr( $args['field_name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
+			<input type="hidden" class="img" name="<?php echo esc_attr( $args['field_name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
 			<div class="image-preview-wrap">
 			<?php if ( ! empty( $value ) ) : ?>
 				<img src="<?php echo esc_attr( $value ); ?>" alt="" />
@@ -868,6 +860,15 @@ class Optioner {
 
 			.field-radio .radio-list li {
 				margin-right: 10px;
+			}
+
+			.field-image .image-preview-wrap {
+				margin-top: 10px;
+				max-width: 200px;
+			}
+
+			.field-image .image-preview-wrap img {
+				width: 100%;
 			}
 		</style>
 		<?php

@@ -51,17 +51,6 @@ $obj->add_field(
 	)
 );
 
-// Field: sample_image.
-$obj->add_field(
-	'basic_tab',
-	array(
-		'id'          => 'sample_image',
-		'type'        => 'image',
-		'title'       => esc_html__( 'Sample Image', 'optioner' ),
-		'description' => esc_html__( 'Description for sample image.', 'optioner' ),
-	)
-);
-
 // Field: sample_text.
 $obj->add_field(
 	'basic_tab',
@@ -116,6 +105,17 @@ $obj->add_field(
 			'1' => esc_html__( 'First', 'optioner' ),
 			'2' => esc_html__( 'Second', 'optioner' ),
 		),
+	)
+);
+
+// Field: sample_image.
+$obj->add_field(
+	'basic_tab',
+	array(
+		'id'          => 'sample_image',
+		'type'        => 'image',
+		'title'       => esc_html__( 'Sample Image', 'optioner' ),
+		'description' => esc_html__( 'Description for sample image.', 'optioner' ),
 	)
 );
 
