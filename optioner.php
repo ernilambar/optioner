@@ -55,6 +55,18 @@ $obj->add_field(
 	)
 );
 
+// Field: Heading.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'          => 'test_heading',
+		'type'        => 'heading',
+		'title'       => __( 'Good heading', 'optioner' ),
+		'description' => __( 'Good heading description', 'optioner' ),
+	)
+);
+
+
 // Field: World Text.
 $obj->add_field(
 	'first_tab',

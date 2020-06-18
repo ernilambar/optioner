@@ -287,6 +287,25 @@ class Optioner {
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
+	/**
+	 * Render heading.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_heading( $args ) {
+		$attr = array(
+			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'optioner-heading',
+		);
+
+		$attributes = $this->render_attr( $attr, false );
+
+		$html = sprintf( '<h2 %s>%s</h2>', $attributes, esc_html( $args['field']['title'] ) );
+
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
 	private function get_value( $args ) {
 		$output = null;
 
