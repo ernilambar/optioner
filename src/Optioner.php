@@ -122,7 +122,6 @@ class Optioner {
 			echo '</div><!-- .wrap-secondary -->';
 		}
 
-
 		echo '</div><!-- .wrap-content -->';
 
 		echo '</div><!-- .wrap -->';
@@ -319,10 +318,10 @@ class Optioner {
 		if ( ! empty( $args['field']['choices'] ) ) {
 			$html .= '<ul>';
 
-			foreach ($args['field']['choices'] as $key => $value ) {
+			foreach ( $args['field']['choices'] as $key => $value ) {
 				$attr = array(
 					'type'  => 'checkbox',
-					'name'  => $args['field_name']. '[]',
+					'name'  => $args['field_name'] . '[]',
 					'value' => $key,
 				);
 
@@ -441,7 +440,7 @@ class Optioner {
 	 */
 	public function callback_select( $args ) {
 		$attr = array(
-			'name'  => $args['field_name'],
+			'name' => $args['field_name'],
 		);
 
 		$attributes = $this->render_attr( $attr, false );
@@ -453,8 +452,8 @@ class Optioner {
 		}
 
 		if ( ! empty( $args['field']['choices'] ) ) {
-			foreach ($args['field']['choices'] as $key => $value ) {
-				$html .= '<option value="' . esc_attr( $key ) . '"' . selected( $this->get_value( $args ), $key, false ) . '>' . esc_html( $value ) .'</option>';
+			foreach ( $args['field']['choices'] as $key => $value ) {
+				$html .= '<option value="' . esc_attr( $key ) . '"' . selected( $this->get_value( $args ), $key, false ) . '>' . esc_html( $value ) . '</option>';
 			}
 		}
 
@@ -486,7 +485,7 @@ class Optioner {
 
 			$html .= '<ul class="radio-list ' . esc_attr( $layout_class ) . '">';
 
-			foreach ($args['field']['choices'] as $key => $value ) {
+			foreach ( $args['field']['choices'] as $key => $value ) {
 				$attr = array(
 					'type'  => 'radio',
 					'name'  => $args['field_name'],
@@ -660,37 +659,35 @@ class Optioner {
 		wp_enqueue_script( 'jquery' );
 
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script( 'wp-color-picker');
+		wp_enqueue_script( 'wp-color-picker' );
 
 		wp_enqueue_media();
 	}
 
 	function get_required_screen() {
-		$output = '';
+		$output    = '';
 		$map_array = array(
-			'index.php'           => 'dashboard',
-			'edit.php'            => 'posts',
-			'upload.php'          => 'media',
-			'edit.php?post_type=page'  => 'pages',
-			'edit-comments.php'   => 'comments',
-			'themes.php'          => 'appearance',
-			'plugins.php'         => 'plugins',
-			'users.php'           => 'users',
-			'tools.php'           => 'tools',
-			'options-general.php' => 'settings',
-			);
+			'index.php'               => 'dashboard',
+			'edit.php'                => 'posts',
+			'upload.php'              => 'media',
+			'edit.php?post_type=page' => 'pages',
+			'edit-comments.php'       => 'comments',
+			'themes.php'              => 'appearance',
+			'plugins.php'             => 'plugins',
+			'users.php'               => 'users',
+			'tools.php'               => 'tools',
+			'options-general.php'     => 'settings',
+		);
 		if ( true == $this->top_level_menu ) {
 			$output = 'toplevel';
-		} else{
-			if (isset($map_array[$this->parent_page])) {
-				$output = $map_array[$this->parent_page];
-			}
-			else{
-				$t= strpos($this->parent_page, 'edit.php?post_type=');
+		} else {
+			if ( isset( $map_array[ $this->parent_page ] ) ) {
+				$output = $map_array[ $this->parent_page ];
+			} else {
+				$t = strpos( $this->parent_page, 'edit.php?post_type=' );
 				if ( false !== $t ) {
-					$output = substr($this->parent_page, strlen('edit.php?post_type=') );
+					$output = substr( $this->parent_page, strlen( 'edit.php?post_type=' ) );
 				}
-
 			}
 		}
 
@@ -792,7 +789,7 @@ class Optioner {
 			jQuery( document ).ready( function( $ ) {
 				//Initiate Color Picker.
 				$('.optioner-color').each(function(){
-				    $(this).wpColorPicker();
+					$(this).wpColorPicker();
 				});
 
 				// Heading fix.
