@@ -68,6 +68,7 @@ class Optioner {
 
 		// Register admin assets.
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
+		add_action( 'admin_head', array( $this, 'admin_style' ) );
 		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
 	}
 
@@ -99,21 +100,7 @@ class Optioner {
 
 		$this->render_navigation();
 
-		echo '<form action="options.php" method="post">';
-
-		settings_fields( $this->page['option_slug'] . '-group' );
-
-		foreach ( $this->tabs as $tab ) {
-
-			echo '<div id="npf-' . $tab['id'] . '" class="single-tab-content">';
-			do_settings_sections( $tab['id'] . '-' . $this->page['menu_slug'] );
-			echo '</div>';
-
-		}
-
-		submit_button( esc_html__( 'Save Changes', 'optioner' ) );
-
-		echo '</form>';
+		$this->render_forms();
 
 		echo '</div>';
 	}
@@ -135,6 +122,30 @@ class Optioner {
 		echo $html;
 	}
 
+	/**
+	 * Render forms.
+	 *
+	 * @since 1.0.0
+	 */
+	function render_forms() {
+		echo '<div class="optioner-form-holder">';
+		echo '<form action="options.php" method="post">';
+
+		settings_fields( $this->page['option_slug'] . '-group' );
+
+		foreach ( $this->tabs as $tab ) {
+
+			echo '<div id="' . $tab['id'] . '" class="tab-content">';
+			do_settings_sections( $tab['id'] . '-' . $this->page['menu_slug'] );
+			echo '</div>';
+
+		}
+
+		submit_button( esc_html__( 'Save Changes', 'optioner' ) );
+
+		echo '</form>';
+		echo '</div>';
+	}
 
 	function register_settings() {
 		register_setting( $this->page['option_slug'] . '-group', $this->page['option_slug'], array( $this, 'sanitize_callback' ) );
@@ -385,6 +396,21 @@ class Optioner {
 	}
 
 	/**
+	 * Admin style.
+	 *
+	 * @since 1.0.0
+	 */
+	public function admin_style() {
+		?>
+		<style>
+			.tab-content {
+				display: none;
+			}
+		</style>
+		<?php
+	}
+
+	/**
 	 * Footer Scripts.
 	 *
 	 * @since 1.0.0
@@ -393,7 +419,45 @@ class Optioner {
 		?>
 		<script>
 			jQuery( document ).ready( function( $ ) {
-				// console.log('I am called');
+				// Switches tabs.
+				$( '.tab-content' ).hide();
+
+				var activetab = '';
+
+				if ( 'undefined' != typeof localStorage ) {
+					activetab = localStorage.getItem( 'activetab' );
+				}
+
+				if ( '' != activetab && $( activetab ).length ) {
+					$( activetab ).fadeIn();
+				} else {
+					$( '.tab-content:first' ).fadeIn();
+				}
+
+				// Tab links.
+				if ( '' != activetab && $( activetab + '-tab' ).length ) {
+					$( activetab + '-tab' ).addClass( 'nav-tab-active' );
+				} else {
+					$( '.nav-tab-wrapper a:first' ).addClass( 'nav-tab-active' );
+				}
+
+				// Tab switcher.
+				$( '.nav-tab-wrapper a' ).click( function( evt ) {
+					$( '.nav-tab-wrapper a' ).removeClass( 'nav-tab-active' );
+					$( this )
+						.addClass( 'nav-tab-active' )
+						.blur();
+					var clicked_group = $( this ).attr( 'href' );
+					if ( 'undefined' != typeof localStorage ) {
+						localStorage.setItem( 'activetab', $( this ).attr( 'href' ) );
+					}
+					$( '.tab-content' ).hide();
+					$( clicked_group ).fadeIn();
+					evt.preventDefault();
+				});
+
+
+
 
 				//Initiate Color Picker.
 				$('.optioner-color').each(function(){
