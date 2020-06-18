@@ -1,7 +1,7 @@
 {
 	"name"        : "ernilambar/optioner",
-	"description" : "Optioner",
-	"keywords"    : [ "option" ],
+	"description" : "Minimal option framework for WordPress plugins",
+	"keywords"    : [ "option", "wordpress" ],
 	"homepage"    : "https://github.com/ernilambar/optioner",
 	"license"     : "MIT",
 	"authors"     : [

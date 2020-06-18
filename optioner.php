@@ -32,7 +32,7 @@ $obj->set_page();
 $obj->add_tab(
 	array(
 		'id'    => 'basic_tab',
-		'title' => esc_html__( 'First Tab', 'optioner' ),
+		'title' => esc_html__( 'Basic', 'optioner' ),
 	)
 );
 
@@ -381,5 +381,5 @@ $obj->run();
  * @since 1.0.0
  */
 function optioner_render_features_tab() {
-	echo esc_html__( 'I am callback for features tab.' );
+	echo esc_html__( 'I am callback for features tab.', 'optioner' );
 }
