@@ -59,16 +59,33 @@ $obj->add_field(
 	)
 );
 
-// Field: sample_truefalse.
+// Field: sample_checkbox.
 $obj->add_field(
 	'first_tab',
 	array(
-		'id'          => 'sample_truefalse',
-		'type'        => 'truefalse',
+		'id'          => 'sample_checkbox',
+		'type'        => 'checkbox',
 		'default'     => true,
-		'title'       => esc_html__( 'Sample Truefalse', 'optioner' ),
-		'side_text'   => esc_html__( 'Enable sample truefalse', 'optioner' ),
-		'description' => esc_html__( 'Description for sample truefalse field.', 'optioner' ),
+		'title'       => esc_html__( 'Sample Checkbox', 'optioner' ),
+		'side_text'   => esc_html__( 'Enable sample checkbox', 'optioner' ),
+		'description' => esc_html__( 'Description for sample checkbox field.', 'optioner' ),
+	)
+);
+
+// Field: sample_checkboxes.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'          => 'sample_checkboxes',
+		'type'        => 'checkboxes',
+		'title'       => esc_html__( 'Sample Checkboxes', 'optioner' ),
+		'description' => esc_html__( 'Description of sample checkboxes.', 'optioner' ),
+		'allow_null'  => true,
+		'choices'     => array(
+			'1' => esc_html__( 'First', 'optioner' ),
+			'2' => esc_html__( 'Second', 'optioner' ),
+			'3' => esc_html__( 'Third', 'optioner' ),
+		),
 	)
 );
 

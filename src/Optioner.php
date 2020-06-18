@@ -272,13 +272,13 @@ class Optioner {
 	}
 
 	/**
-	 * Render truefalse.
+	 * Render checkbox.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param array $args Arguments.
 	 */
-	public function callback_truefalse( $args ) {
+	public function callback_checkbox( $args ) {
 		$attr = array(
 			'type'  => 'checkbox',
 			'name'  => $args['field_name'],
@@ -299,9 +299,19 @@ class Optioner {
 
 		$html .= $this->get_field_description( $args );
 
-		$html = sprintf( '<div class="field-truefalse">%s</div>', $html );
+		$html = sprintf( '<div class="field-checkbox">%s</div>', $html );
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Render checkboxes.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_checkboxes( $args ) {
 	}
 
 	/**
