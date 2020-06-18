@@ -31,6 +31,10 @@ class Optioner {
 
 	var $page = array();
 
+	var $is_sidebar = false;
+
+	var $sidebar_callback = null;
+
 	/**
 	 * Constructor.
 	 *
@@ -108,11 +112,16 @@ class Optioner {
 
 		echo '</div><!-- .wrap-primary -->';
 
-		echo '<div class="wrap-secondary">';
+		if ( true === $this->is_sidebar ) {
+			echo '<div class="wrap-secondary">';
 
-		echo 'secondary';
+			if ( is_callable( $this->sidebar_callback ) ) {
+				call_user_func( $this->sidebar_callback );
+			}
 
-		echo '</div><!-- .wrap-secondary -->';
+			echo '</div><!-- .wrap-secondary -->';
+		}
+
 
 		echo '</div><!-- .wrap-content -->';
 
@@ -313,6 +322,12 @@ class Optioner {
 		);
 
 		$this->page = wp_parse_args( $args, $defaults );
+	}
+
+	public function set_sidebar( $cb ) {
+		$this->is_sidebar = true;
+
+		$this->sidebar_callback = $cb;
 	}
 
 	public function add_tab( $args ) {

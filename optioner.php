@@ -26,6 +26,11 @@ define( 'OPTIONER_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
 
 require_once OPTIONER_DIR . '/src/Optioner.php';
 
+
+function test_sidebar_cb_func() {
+	echo 'I am sidebar';
+}
+
 $obj = new Optioner();
 
 $obj->set_page();
@@ -81,5 +86,7 @@ $obj->add_field(
 
 	)
 );
+
+// $obj->set_sidebar( __NAMESPACE__ . '\test_sidebar_cb_func' );
 
 $obj->run();
