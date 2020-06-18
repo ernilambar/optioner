@@ -60,17 +60,6 @@ $obj->add_field(
 	)
 );
 
-// $obj->run();
-
-// $dummy_var = array(
-// 	'sample_text' => 'asf 1234',
-// 	'sample_text2' => 'zvxv',
-// );
-
-// $out = $obj->sanitize_fields( $dummy_var );
-// nsdump( $out );
-// return;
-
 // Field: sample_checkbox.
 $obj->add_field(
 	'first_tab',
@@ -91,6 +80,7 @@ $obj->add_field(
 		'id'      => 'sample_multicheck',
 		'type'    => 'multicheck',
 		'title'   => esc_html__( 'Sample Multicheck', 'optioner' ),
+		'default' => array( '1', '2' ),
 		'choices' => array(
 			'1' => esc_html__( 'First', 'optioner' ),
 			'2' => esc_html__( 'Second', 'optioner' ),
@@ -217,7 +207,7 @@ $obj->add_field(
 	'first_tab',
 	array(
 		'id'          => 'sample_email',
-		'type'        => 'number',
+		'type'        => 'email',
 		'title'       => esc_html__( 'Sample Email', 'optioner' ),
 		'description' => esc_html__( 'Description of sample email.', 'optioner' ),
 	)
@@ -225,21 +215,87 @@ $obj->add_field(
 
 $obj->add_tab(
 	array(
-		'id'    => 'second_tab',
-		'title' => esc_html__( 'Second Tab', 'optioner' ),
+		'id'    => 'text_tab',
+		'title' => esc_html__( 'Text', 'optioner' ),
+	)
+);
+
+// Field: text_regular.
+$obj->add_field(
+	'text_tab',
+	array(
+		'id'          => 'text_regular',
+		'type'        => 'text',
+		'title'       => esc_html__( 'Text Regular', 'optioner' ),
+		'description' => esc_html__( 'Description of text regular.', 'optioner' ),
+	)
+);
+
+// Field: text_small.
+$obj->add_field(
+	'text_tab',
+	array(
+		'id'          => 'text_small',
+		'type'        => 'text',
+		'title'       => esc_html__( 'Text Small', 'optioner' ),
+		'description' => esc_html__( 'Description of text small.', 'optioner' ),
+		'class'       => 'small-text',
+	)
+);
+
+// Field: text_tiny.
+$obj->add_field(
+	'text_tab',
+	array(
+		'id'          => 'text_tiny',
+		'type'        => 'text',
+		'title'       => esc_html__( 'Text Tiny', 'optioner' ),
+		'description' => esc_html__( 'Description of text tiny.', 'optioner' ),
+		'class'       => 'tiny-text',
+	)
+);
+
+// Field: text_large.
+$obj->add_field(
+	'text_tab',
+	array(
+		'id'          => 'text_large',
+		'type'        => 'text',
+		'title'       => esc_html__( 'Text Regular', 'optioner' ),
+		'description' => esc_html__( 'Description of text regular.', 'optioner' ),
+		'class'       => 'large-text',
+	)
+);
+
+$obj->add_tab(
+	array(
+		'id'    => 'textarea_tab',
+		'title' => esc_html__( 'Textarea', 'optioner' ),
 	)
 );
 
 // Field: sample_textarea.
 $obj->add_field(
-	'second_tab',
+	'textarea_tab',
 	array(
 		'id'          => 'sample_textarea',
 		'type'        => 'textarea',
 		'title'       => esc_html__( 'Sample Textarea', 'optioner' ),
-		'description' => esc_html__( 'Description of sample textarea.', 'optioner' ),
+		'description' => esc_html__( 'Regular textarea.', 'optioner' ),
 		'placeholder' => esc_html__( 'Enter content.', 'optioner' ),
+	)
+);
 
+// Field: sample_textarea2.
+$obj->add_field(
+	'textarea_tab',
+	array(
+		'id'          => 'sample_textarea2',
+		'type'        => 'textarea',
+		'title'       => esc_html__( 'Sample Textarea 2', 'optioner' ),
+		'description' => esc_html__( 'This is large textarea.', 'optioner' ),
+		'placeholder' => esc_html__( 'Enter content.', 'optioner' ),
+		'class'       => 'large-text',
 	)
 );
 

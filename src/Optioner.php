@@ -239,6 +239,20 @@ class Optioner {
 							$output[ $field['id'] ] = $input[ $field['id'] ] ? true : false;
 							break;
 
+						case 'multicheck':
+							$val = array();
+
+							if ( is_array( $input[ $field['id'] ] ) && ! empty( $input[ $field['id'] ] ) ) {
+								foreach ( $input[ $field['id'] ] as $v ) {
+									$val[] = sanitize_text_field( $v );
+								}
+							}
+
+							if ( ! empty( $val ) ) {
+								$output[ $field['id'] ] = $val;
+							}
+							break;
+
 						default:
 							$output[ $field['id'] ] = sanitize_text_field( $input[ $field['id'] ] );
 							break;
@@ -359,6 +373,9 @@ class Optioner {
 	 */
 	public function callback_multicheck( $args ) {
 		$values = (array) $this->get_value( $args );
+		nsdump( $this->get_value( $args ) );
+
+
 
 		$html = '';
 
