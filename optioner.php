@@ -36,14 +36,14 @@ $obj->add_tab(
 	)
 );
 
-// Field: awesome_heading.
+// Field: basic_heading.
 $obj->add_field(
 	'first_tab',
 	array(
-		'id'          => 'awesome_heading',
+		'id'          => 'basic_heading',
 		'type'        => 'heading',
-		'title'       => esc_html__( 'Awesome Section', 'optioner' ),
-		'description' => esc_html__( 'This is description of awesome section.', 'optioner' ),
+		'title'       => esc_html__( 'Basic Section', 'optioner' ),
+		'description' => esc_html__( 'This is description of basic section.', 'optioner' ),
 	)
 );
 
@@ -80,10 +80,10 @@ $obj->add_field(
 $obj->add_field(
 	'first_tab',
 	array(
-		'id'          => 'sample_select_no_null',
-		'type'        => 'select',
-		'title'       => esc_html__( 'Sample Select No Null', 'optioner' ),
-		'choices'     => array(
+		'id'      => 'sample_select_no_null',
+		'type'    => 'select',
+		'title'   => esc_html__( 'Sample Select No Null', 'optioner' ),
+		'choices' => array(
 			'1' => esc_html__( 'First', 'optioner' ),
 			'2' => esc_html__( 'Second', 'optioner' ),
 			'3' => esc_html__( 'Third', 'optioner' ),
@@ -137,45 +137,67 @@ $obj->add_field(
 	)
 );
 
-// Field: Heading.
+// Field: extra_heading.
 $obj->add_field(
 	'first_tab',
 	array(
-		'id'          => 'test_heading2',
+		'id'          => 'extra_heading',
 		'type'        => 'heading',
-		'title'       => esc_html__( 'Good heading2', 'optioner' ),
-		'description' => esc_html__( 'Good heading description2', 'optioner' ),
+		'title'       => esc_html__( 'Extra Section', 'optioner' ),
+		'description' => esc_html__( 'This is description of extra section.', 'optioner' ),
 	)
 );
 
-// Field: Age.
+// Field: sample_url.
 $obj->add_field(
 	'first_tab',
 	array(
-		'id'          => 'age',
-		'type'        => 'text',
-		'title'       => esc_html__( 'Age', 'optioner' ),
-		'description' => esc_html__( 'Text input description', 'optioner' ),
+		'id'          => 'sample_url',
+		'type'        => 'url',
+		'title'       => esc_html__( 'Sample URL', 'optioner' ),
+		'description' => esc_html__( 'Description of sample URL.', 'optioner' ),
+		'placeholder' => esc_html__( 'Enter full URL.', 'optioner' ),
 	)
 );
 
+// Field: sample_number.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'          => 'sample_number',
+		'type'        => 'number',
+		'title'       => esc_html__( 'Sample Number', 'optioner' ),
+		'description' => esc_html__( 'Description of sample number.', 'optioner' ),
+	)
+);
+
+// Field: sample_email.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'          => 'sample_email',
+		'type'        => 'number',
+		'title'       => esc_html__( 'Sample Email', 'optioner' ),
+		'description' => esc_html__( 'Description of sample email.', 'optioner' ),
+	)
+);
 
 $obj->add_tab(
 	array(
 		'id'    => 'second_tab',
-		'title' => 'Second Tab',
+		'title' => esc_html__( 'Second Tab', 'optioner' ),
 	)
 );
 
-// Field: Hello Textarea.
+// Field: sample_textarea.
 $obj->add_field(
 	'second_tab',
 	array(
-		'id'          => 'hello_textarea',
+		'id'          => 'sample_textarea',
 		'type'        => 'textarea',
-		'title'       => esc_html__( 'Hello Textarea', 'optioner' ),
-		'description' => esc_html__( 'Textarea input description', 'optioner' ),
-		'default'     => 'Default Textarea',
+		'title'       => esc_html__( 'Sample Textarea', 'optioner' ),
+		'description' => esc_html__( 'Description of sample textarea.', 'optioner' ),
+		'placeholder' => esc_html__( 'Enter content.', 'optioner' ),
 
 	)
 );

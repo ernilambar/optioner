@@ -217,7 +217,7 @@ class Optioner {
 	 */
 	public function callback_text( $args ) {
 		$attr = array(
-			'type'  => 'text',
+			'type'  => $args['field']['type'],
 			'name'  => $args['field_name'],
 			'value' => $this->get_value( $args ),
 			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
@@ -236,6 +236,39 @@ class Optioner {
 		$html = sprintf( '<div class="field-text">%s</div>', $html );
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Render URL.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_url( $args ) {
+		$this->callback_text( $args );
+	}
+
+	/**
+	 * Render number.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_number( $args ) {
+		$this->callback_text( $args );
+	}
+
+	/**
+	 * Render email.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_email( $args ) {
+		$this->callback_text( $args );
 	}
 
 	/**
