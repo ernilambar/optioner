@@ -72,19 +72,18 @@ $obj->add_field(
 	)
 );
 
-// Field: sample_checkboxes.
+// Field: sample_multicheck.
 $obj->add_field(
 	'first_tab',
 	array(
-		'id'          => 'sample_checkboxes',
-		'type'        => 'checkboxes',
-		'title'       => esc_html__( 'Sample Checkboxes', 'optioner' ),
-		'description' => esc_html__( 'Description of sample checkboxes.', 'optioner' ),
-		'allow_null'  => true,
-		'choices'     => array(
+		'id'      => 'sample_multicheck',
+		'type'    => 'multicheck',
+		'title'   => esc_html__( 'Sample Multicheck', 'optioner' ),
+		'choices' => array(
 			'1' => esc_html__( 'First', 'optioner' ),
 			'2' => esc_html__( 'Second', 'optioner' ),
 			'3' => esc_html__( 'Third', 'optioner' ),
+			'4' => esc_html__( 'Fourth', 'optioner' ),
 		),
 	)
 );

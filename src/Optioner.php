@@ -305,13 +305,45 @@ class Optioner {
 	}
 
 	/**
-	 * Render checkboxes.
+	 * Render multicheck.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param array $args Arguments.
 	 */
-	public function callback_checkboxes( $args ) {
+	public function callback_multicheck( $args ) {
+
+		$html = '';
+
+		if ( ! empty( $args['field']['choices'] ) ) {
+			$html .= '<ul>';
+
+			foreach ($args['field']['choices'] as $key => $value ) {
+				$attr = array(
+					'type'  => 'checkbox',
+					'name'  => $args['field_name']. '[]',
+					'value' => $key,
+				);
+
+				$attributes = $this->render_attr( $attr, false );
+
+				$html .= '<li>';
+
+				$html .= sprintf( '<input %s />%s', $attributes, $value );
+				$html .= '</li>';
+			}
+
+
+
+
+			$html .= '</ul>';
+		}
+
+		$html .= $this->get_field_description( $args );
+
+		$html = sprintf( '<div class="field-multicheck">%s</div>', $html );
+
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
