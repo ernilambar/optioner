@@ -51,16 +51,26 @@ $obj->add_field(
 	)
 );
 
+// Field: sample_image.
+$obj->add_field(
+	'basic_tab',
+	array(
+		'id'          => 'sample_image',
+		'type'        => 'image',
+		'title'       => esc_html__( 'Sample Image', 'optioner' ),
+		'description' => esc_html__( 'Description for sample image.', 'optioner' ),
+	)
+);
+
 // Field: sample_text.
 $obj->add_field(
 	'basic_tab',
 	array(
-		'id'                  => 'sample_text',
-		'type'                => 'text',
-		'title'               => esc_html__( 'Sample Text', 'optioner' ),
-		'description'         => esc_html__( 'Description for sample text', 'optioner' ),
-		'placeholder'         => esc_html__( 'Enter text', 'optioner' ),
-		'sanitize_text_field' => 'esc_url_raw',
+		'id'          => 'sample_text',
+		'type'        => 'text',
+		'title'       => esc_html__( 'Sample Text', 'optioner' ),
+		'description' => esc_html__( 'Description for sample text.', 'optioner' ),
+		'placeholder' => esc_html__( 'Enter text', 'optioner' ),
 	)
 );
 
