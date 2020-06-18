@@ -221,6 +221,14 @@ class Optioner {
 							$output[ $field['id'] ] = esc_url_raw( $input[ $field['id'] ] );
 							break;
 
+						case 'email':
+							$output[ $field['id'] ] = sanitize_email( $input[ $field['id'] ] );
+							break;
+
+						case 'textarea':
+							$output[ $field['id'] ] = sanitize_textarea_field( $input[ $field['id'] ] );
+							break;
+
 						default:
 							$output[ $field['id'] ] = sanitize_text_field( $input[ $field['id'] ] );
 							break;

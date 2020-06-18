@@ -73,16 +73,16 @@ $obj->add_field(
 );
 
 
-$obj->run();
+// $obj->run();
 
-$dummy_var = array(
-	'sample_text' => 'asf 1234',
-	'sample_text2' => 'zvxv',
-);
+// $dummy_var = array(
+// 	'sample_text' => 'asf 1234',
+// 	'sample_text2' => 'zvxv',
+// );
 
-$out = $obj->sanitize_fields( $dummy_var );
-nsdump( $out );
-return;
+// $out = $obj->sanitize_fields( $dummy_var );
+// nsdump( $out );
+// return;
 
 // Field: sample_checkbox.
 $obj->add_field(
