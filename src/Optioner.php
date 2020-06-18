@@ -158,7 +158,13 @@ class Optioner {
 			echo '<div id="' . $tab['id'] . '" class="tab-content">';
 
 			do_action( 'optioner_form_top_' . $tab['id'], $tab );
-			do_settings_sections( $tab['id'] . '-' . $this->page['menu_slug'] );
+
+			if ( isset( $tab['render_callback'] ) && is_callable( $tab['render_callback'] ) ) {
+				call_user_func( $tab['render_callback'] );
+			} else {
+				do_settings_sections( $tab['id'] . '-' . $this->page['menu_slug'] );
+			}
+
 			do_action( 'optioner_form_bottom_' . $tab['id'], $tab );
 
 			echo '</div>';

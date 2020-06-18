@@ -25,6 +25,10 @@ define( 'OPTIONER_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
 
 require_once OPTIONER_DIR . '/src/Optioner.php';
 
+function optioner_render_features() {
+	echo 'I am callback for features tab.';
+}
+
 $obj = new Optioner();
 
 $obj->set_page();
@@ -276,7 +280,6 @@ $obj->add_field(
 	)
 );
 
-
 // Tab: selection_tab.
 $obj->add_tab(
 	array(
@@ -350,6 +353,16 @@ $obj->add_field(
 			'2' => esc_html__( 'Second', 'optioner' ),
 			'3' => esc_html__( 'Third', 'optioner' ),
 		),
+	)
+);
+
+
+// Tab: features_tab.
+$obj->add_tab(
+	array(
+		'id'              => 'features_tab',
+		'title'           => esc_html__( 'Features', 'optioner' ),
+		'render_callback' => __NAMESPACE__ . '\optioner_render_features',
 	)
 );
 
