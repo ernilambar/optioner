@@ -233,7 +233,7 @@ class Optioner {
 
 		$html .= $this->get_field_description( $args );
 
-		$html = sprintf( '<div class="field-text">%s</div>', $html );
+		$html = sprintf( '<div class="field-%s">%s</div>', $attr['type'], $html );
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
@@ -269,6 +269,39 @@ class Optioner {
 	 */
 	public function callback_email( $args ) {
 		$this->callback_text( $args );
+	}
+
+	/**
+	 * Render truefalse.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_truefalse( $args ) {
+		$attr = array(
+			'type'  => 'checkbox',
+			'name'  => $args['field_name'],
+			'value' => 1,
+		);
+
+		$attributes = $this->render_attr( $attr, false );
+
+		$html = '';
+
+		$html .= '<input type="hidden" name="' . esc_attr( $args['field_name'] ) . '" value="0" />';
+
+		$html .= sprintf( '<input %s %s />', $attributes, checked( $this->get_value( $args ), 1, false ) );
+
+		if ( isset( $args['field']['side_text'] ) && ! empty( $args['field']['side_text'] ) ) {
+			$html .= esc_html( $args['field']['side_text'] );
+		}
+
+		$html .= $this->get_field_description( $args );
+
+		$html = sprintf( '<div class="field-truefalse">%s</div>', $html );
+
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**

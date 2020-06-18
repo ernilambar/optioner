@@ -47,7 +47,7 @@ $obj->add_field(
 	)
 );
 
-// Field: Hello Text.
+// Field: sample_text.
 $obj->add_field(
 	'first_tab',
 	array(
@@ -56,6 +56,19 @@ $obj->add_field(
 		'title'       => esc_html__( 'Sample Text', 'optioner' ),
 		'description' => esc_html__( 'Description for sample text', 'optioner' ),
 		'placeholder' => esc_html__( 'Enter text', 'optioner' ),
+	)
+);
+
+// Field: sample_truefalse.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'          => 'sample_truefalse',
+		'type'        => 'truefalse',
+		'default'     => true,
+		'title'       => esc_html__( 'Sample Truefalse', 'optioner' ),
+		'side_text'   => esc_html__( 'Enable sample truefalse', 'optioner' ),
+		'description' => esc_html__( 'Description for sample truefalse field.', 'optioner' ),
 	)
 );
 
