@@ -65,6 +65,23 @@ $obj->add_field(
 	)
 );
 
+// Field: Hello Select.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'          => 'hello_select',
+		'type'        => 'select',
+		'title'       => __( 'Select Sample', 'optioner' ),
+		'description' => __( 'Select description', 'optioner' ),
+		'allow_null'  => true,
+		'choices'     => array(
+			'1' => 'First',
+			'2' => 'Second',
+			'3' => 'Third',
+		),
+	)
+);
+
 
 
 // Field: World Text.

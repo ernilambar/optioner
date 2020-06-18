@@ -268,7 +268,7 @@ class Optioner {
 	}
 
 	/**
-	 * Render text.
+	 * Render color.
 	 *
 	 * @since 1.0.0
 	 *
@@ -321,6 +321,44 @@ class Optioner {
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
+
+
+	/**
+	 * Render select.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_select( $args ) {
+		$attr = array(
+			'name'  => $args['field_name'],
+			'value' => $this->get_value( $args ),
+		);
+
+		$attributes = $this->render_attr( $attr, false );
+
+		$html = sprintf( '<select %s>', $attributes );
+
+		if ( isset( $args['field']['allow_null'] ) && true === $args['field']['allow_null'] ) {
+			$html .= '<option value="">&mdash; ' . esc_html__( 'Select' ) . ' &mdash;</option>';
+		}
+
+		if ( ! empty( $args['field']['choices'] ) ) {
+			foreach ($args['field']['choices'] as $key => $value ) {
+				$html .= '<option value="' . esc_attr( $key ) . '"' . selected( $args['field_value'], $key, false ) . '>' . esc_html( $value ) .'</option>';
+			}
+		}
+
+		$html .= '</select>';
+
+		$html .= $this->get_field_description( $args );
+
+		$html = sprintf( '<div class="field-select">%s</div>', $html );
+
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
 
 	function get_field_description( $args ) {
 		$output = '';
