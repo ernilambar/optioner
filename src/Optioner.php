@@ -65,6 +65,9 @@ class Optioner {
 
 		// Register settings.
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
+
+		// Register admin assets.
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 	}
 
 	function create_menu_page() {
@@ -303,5 +306,25 @@ class Optioner {
 			return $html;
 		}
 	}
+
+	/**
+	 * Admin Scripts.
+	 *
+	 * @since 1.0.0
+	 */
+	public function admin_scripts() {
+		wp_enqueue_script( 'jquery' );
+
+		wp_enqueue_script(
+			'iris',
+			admin_url( 'js/iris.min.js' ),
+			array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ),
+			false,
+			1
+		);
+
+		wp_enqueue_media();
+	}
+
 }
 
