@@ -312,6 +312,7 @@ class Optioner {
 	 * @param array $args Arguments.
 	 */
 	public function callback_multicheck( $args ) {
+		$values = (array) $this->get_value( $args );
 
 		$html = '';
 
@@ -329,12 +330,12 @@ class Optioner {
 
 				$html .= '<li>';
 
-				$html .= sprintf( '<input %s />%s', $attributes, $value );
+				$html .= sprintf( '<input %s %s />', $attributes, checked( in_array( (string) $key, $values, true ), true, false ) );
+
+				$html .= $value;
+
 				$html .= '</li>';
 			}
-
-
-
 
 			$html .= '</ul>';
 		}
