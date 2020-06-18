@@ -157,21 +157,19 @@ class Optioner {
 
 			echo '<div id="' . $tab['id'] . '" class="tab-content">';
 
-			do_action( 'optioner_form_top_' . $tab['id'], $tab );
-
 			if ( isset( $tab['render_callback'] ) && is_callable( $tab['render_callback'] ) ) {
+				do_action( 'optioner_form_top_' . $tab['id'], $tab );
 				call_user_func( $tab['render_callback'] );
+				do_action( 'optioner_form_bottom_' . $tab['id'], $tab );
 			} else {
+				do_action( 'optioner_form_top_' . $tab['id'], $tab );
 				do_settings_sections( $tab['id'] . '-' . $this->page['menu_slug'] );
+				do_action( 'optioner_form_bottom_' . $tab['id'], $tab );
+				submit_button( esc_html__( 'Save Changes', 'optioner' ) );
 			}
 
-			do_action( 'optioner_form_bottom_' . $tab['id'], $tab );
-
 			echo '</div>';
-
 		}
-
-		submit_button( esc_html__( 'Save Changes', 'optioner' ) );
 
 		echo '</form>';
 		echo '</div>';
