@@ -526,47 +526,12 @@ class Optioner {
 		?>
 		<script>
 			jQuery( document ).ready( function( $ ) {
-				// Switches tabs.
-				$( '.tab-content' ).hide();
-
-				var activetab = '';
-
-				if ( 'undefined' != typeof localStorage ) {
-					activetab = localStorage.getItem( 'activetab' );
-				}
-
-				if ( '' != activetab && $( activetab ).length ) {
-					$( activetab ).fadeIn();
-				} else {
-					$( '.tab-content:first' ).fadeIn();
-				}
-
-				// Tab links.
-				if ( '' != activetab && $( activetab + '-tab' ).length ) {
-					$( activetab + '-tab' ).addClass( 'nav-tab-active' );
-				} else {
-					$( '.nav-tab-wrapper a:first' ).addClass( 'nav-tab-active' );
-				}
-
-				// Tab switcher.
-				$( '.nav-tab-wrapper a' ).click( function( evt ) {
-					$( '.nav-tab-wrapper a' ).removeClass( 'nav-tab-active' );
-					$( this ).addClass( 'nav-tab-active' ).blur();
-
-					var clicked_group = $( this ).attr( 'href' );
-					if ( 'undefined' != typeof localStorage ) {
-						localStorage.setItem( 'activetab', $( this ).attr( 'href' ) );
-					}
-					$( '.tab-content' ).hide();
-					$( clicked_group ).fadeIn();
-					evt.preventDefault();
-				});
+				// console.log('good');
 
 				//Initiate Color Picker.
 				$('.optioner-color').each(function(){
 				    $(this).wpColorPicker();
 				});
-
 
 			});
 
