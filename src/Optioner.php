@@ -17,21 +17,77 @@ namespace Nilambar\Optioner;
  */
 class Optioner {
 
-	var $options;
+	/**
+	 * Options.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array
+	 */
+	protected $options;
 
-	var $top_level_menu;
+	/**
+	 * Whether page is in top level menu.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var bool
+	 */
+	protected $top_level_menu;
 
-	var $parent_page;
+	/**
+	 * Parent page.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
+	protected $parent_page;
 
-	var $tabs = array();
+	/**
+	 * Tabs.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array
+	 */
+	protected $tabs = array();
 
-	var $fields = array();
+	/**
+	 * Fields.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array
+	 */
+	protected $fields = array();
 
-	var $page = array();
+	/**
+	 * Page settings.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array
+	 */
+	protected $page = array();
 
-	var $is_sidebar = false;
+	/**
+	 * Sidebar status.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var bool
+	 */
+	protected $is_sidebar = false;
 
-	var $sidebar_callback = null;
+	/**
+	 * Sidebar callback.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
+	protected $sidebar_callback = null;
 
 	/**
 	 * Constructor.
@@ -41,6 +97,11 @@ class Optioner {
 	public function __construct() {
 	}
 
+	/**
+	 * Run now.
+	 *
+	 * @since 1.0.0
+	 */
 	public function run() {
 		if ( empty( $this->page ) ) {
 			return;
@@ -74,8 +135,13 @@ class Optioner {
 		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
 	}
 
-	function create_menu_page() {
-		if ( true == $this->top_level_menu ) {
+	/**
+	 * Create menu page.
+	 *
+	 * @since 1.0.0
+	 */
+	public function create_menu_page() {
+		if ( true === $this->top_level_menu ) {
 			add_menu_page(
 				$this->page['page_title'],
 				$this->page['menu_title'],
@@ -95,7 +161,12 @@ class Optioner {
 		}
 	}
 
-	function render_page() {
+	/**
+	 * Render page.
+	 *
+	 * @since 1.0.0
+	 */
+	public function render_page() {
 		echo '<div class="wrap optioner-wrap">';
 
 		echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
@@ -130,7 +201,7 @@ class Optioner {
 	 *
 	 * @since 1.0.0
 	 */
-	function render_navigation() {
+	public function render_navigation() {
 		$html = '<h2 class="nav-tab-wrapper">';
 
 		foreach ( $this->tabs as $tab ) {
@@ -139,7 +210,7 @@ class Optioner {
 
 		$html .= '</h2>';
 
-		echo $html;
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -147,7 +218,7 @@ class Optioner {
 	 *
 	 * @since 1.0.0
 	 */
-	function render_forms() {
+	public function render_forms() {
 		echo '<div class="optioner-form-holder">';
 		echo '<form action="options.php" method="post">';
 
@@ -155,7 +226,7 @@ class Optioner {
 
 		foreach ( $this->tabs as $tab ) {
 
-			echo '<div id="' . $tab['id'] . '" class="tab-content">';
+			echo '<div id="' . esc_attr( $tab['id'] ) . '" class="tab-content">';
 
 			if ( isset( $tab['render_callback'] ) && is_callable( $tab['render_callback'] ) ) {
 				do_action( 'optioner_form_top_' . $tab['id'], $tab );
@@ -175,13 +246,18 @@ class Optioner {
 		echo '</div>';
 	}
 
-	function register_settings() {
+	/**
+	 * Register field settings.
+	 *
+	 * @since 1.0.0
+	 */
+	public function register_settings() {
 		register_setting( $this->page['option_slug'] . '-group', $this->page['option_slug'], array( $this, 'sanitize_fields' ) );
 
 		// Load tabs.
 		foreach ( $this->tabs as $tab ) {
 			add_settings_section(
-				$tab['id'] . '_settings' . '-' . $this->page['menu_slug'],
+				$tab['id'] . '_settings-' . $this->page['menu_slug'],
 				$tab['title'],
 				array( $this, 'section_text_callback' ),
 				$tab['id'] . '-' . $this->page['menu_slug']
@@ -201,7 +277,7 @@ class Optioner {
 						$field['title'],
 						array( $this, 'callback_' . $field['type'] ),
 						$tab['id'] . '-' . $this->page['menu_slug'],
-						$tab['id'] . '_settings' . '-' . $this->page['menu_slug'],
+						$tab['id'] . '_settings-' . $this->page['menu_slug'],
 						$args
 					);
 				}
@@ -209,6 +285,14 @@ class Optioner {
 		}
 	}
 
+	/**
+	 * Sanitize fields.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $input Raw values.
+	 * @return array Sanitized values.
+	 */
 	public function sanitize_fields( $input ) {
 		$output = array();
 
@@ -609,8 +693,15 @@ class Optioner {
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
-
-	function get_field_description( $args ) {
+	/**
+	 * Return field description.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 * @return string Description markup.
+	 */
+	public function get_field_description( $args ) {
 		$output = '';
 
 		if ( isset( $args['field']['description'] ) && ! empty( $args['field']['description'] ) ) {
@@ -620,9 +711,16 @@ class Optioner {
 		return $output;
 	}
 
+	/**
+	 * Return value.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 * @return mixed Value.
+	 */
 	private function get_value( $args ) {
-		$output = null;
-
+		$output  = null;
 		$default = null;
 
 		if ( isset( $args['field']['default'] ) ) {
@@ -636,12 +734,25 @@ class Optioner {
 		}
 
 		return $output;
-
 	}
 
-	function section_text_callback( $args ) {
+	/**
+	 * Render section text.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function section_text_callback( $args ) {
 	}
 
+	/**
+	 * Set page settings.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
 	public function set_page( $args = array() ) {
 		$defaults = array(
 			'page_title'  => esc_html__( 'Optioner', 'optioner' ),
@@ -654,12 +765,26 @@ class Optioner {
 		$this->page = wp_parse_args( $args, $defaults );
 	}
 
+	/**
+	 * Set sidebar.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $cb Callback function.
+	 */
 	public function set_sidebar( $cb ) {
 		$this->is_sidebar = true;
 
 		$this->sidebar_callback = $cb;
 	}
 
+	/**
+	 * Add tab.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Tab arguments.
+	 */
 	public function add_tab( $args ) {
 		// Bail if not array.
 		if ( ! is_array( $args ) ) {
@@ -675,10 +800,16 @@ class Optioner {
 		$args = wp_parse_args( $args, $defaults );
 
 		$this->tabs[ $args['id'] ] = $args;
-
-		return $this;
 	}
 
+	/**
+	 * Add field.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $tab  Tab id.
+	 * @param array  $args Field arguments.
+	 */
 	public function add_field( $tab, $args ) {
 		// Bail if not array.
 		if ( ! is_array( $args ) ) {
@@ -696,8 +827,6 @@ class Optioner {
 		$arg = wp_parse_args( $args, $defaults );
 
 		$this->fields[ $tab ][ $args['id'] ] = $args;
-
-		return $this;
 	}
 
 	/**
@@ -762,8 +891,16 @@ class Optioner {
 		wp_enqueue_media();
 	}
 
-	function get_required_screen() {
-		$output    = '';
+	/**
+	 * Return require screen.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string Screen slug.
+	 */
+	public function get_required_screen() {
+		$output = '';
+
 		$map_array = array(
 			'index.php'               => 'dashboard',
 			'edit.php'                => 'posts',
@@ -776,13 +913,15 @@ class Optioner {
 			'tools.php'               => 'tools',
 			'options-general.php'     => 'settings',
 		);
-		if ( true == $this->top_level_menu ) {
+
+		if ( true === $this->top_level_menu ) {
 			$output = 'toplevel';
 		} else {
 			if ( isset( $map_array[ $this->parent_page ] ) ) {
 				$output = $map_array[ $this->parent_page ];
 			} else {
 				$t = strpos( $this->parent_page, 'edit.php?post_type=' );
+
 				if ( false !== $t ) {
 					$output = substr( $this->parent_page, strlen( 'edit.php?post_type=' ) );
 				}
@@ -794,7 +933,6 @@ class Optioner {
 
 		return $output;
 	}
-
 
 	/**
 	 * Admin style.
@@ -953,60 +1091,59 @@ class Optioner {
 				// Uploads.
 				jQuery(document).on('click', 'input.select-img', function( event ){
 
-				  var $this = $(this);
+					var $this = $(this);
 
-				  event.preventDefault();
+					event.preventDefault();
 
-				  var CustomThemeImage = wp.media.controller.Library.extend({
-					  defaults :  _.defaults({
-							  id:        'custom-theme-insert-image',
-							  title:      $this.data( 'uploader_title' ),
-							  allowLocalEdits: false,
-							  displaySettings: true,
-							  displayUserSettings: false,
-							  multiple : false,
-							  library: wp.media.query( { type: 'image' } )
+					var CustomThemeImage = wp.media.controller.Library.extend({
+						defaults :  _.defaults({
+							id:        'custom-theme-insert-image',
+							title:      $this.data( 'uploader_title' ),
+							allowLocalEdits: false,
+							displaySettings: true,
+							displayUserSettings: false,
+							multiple : false,
+							library: wp.media.query( { type: 'image' } )
 						}, wp.media.controller.Library.prototype.defaults )
-				  });
+					});
 
-				  // Create the media frame.
-				  custom_theme_file_frame = wp.media.frames.custom_theme_file_frame = wp.media({
-					button: {
-					  text: jQuery( this ).data( 'uploader_button_text' )
-					},
-					state : 'custom-theme-insert-image',
+					// Create the media frame.
+					custom_theme_file_frame = wp.media.frames.custom_theme_file_frame = wp.media({
+						button: {
+							text: jQuery( this ).data( 'uploader_button_text' )
+						},
+						state : 'custom-theme-insert-image',
 						states : [
-							new CustomThemeImage()
+						new CustomThemeImage()
 						],
-					multiple: false
-				  });
+						multiple: false
+					});
 
-				  // When an image is selected, run a callback.
-				  custom_theme_file_frame.on( 'select', function() {
+					// When an image is selected, run a callback.
+					custom_theme_file_frame.on( 'select', function() {
+						var state = custom_theme_file_frame.state('custom-theme-insert-image');
+						var selection = state.get('selection');
+						var display = state.display( selection.first() ).toJSON();
+						var obj_attachment = selection.first().toJSON();
+						display = wp.media.string.props( display, obj_attachment );
 
-					var state = custom_theme_file_frame.state('custom-theme-insert-image');
-					var selection = state.get('selection');
-					var display = state.display( selection.first() ).toJSON();
-					var obj_attachment = selection.first().toJSON();
-					display = wp.media.string.props( display, obj_attachment );
+						var image_field = $this.siblings('.img');
+						var imgurl = display.src;
 
-					var image_field = $this.siblings('.img');
-					var imgurl = display.src;
+						// Copy image URL.
+						image_field.val(imgurl);
+						image_field.trigger('change');
+						// Show in preview.
+						var image_preview_wrap = $this.siblings('.image-preview-wrap');
+						var image_html = '<img src="' + imgurl+ '" alt="" style="max-width:100%;max-height:200px;" />';
+						image_preview_wrap.html( image_html );
+						// Show Remove button.
+						var image_remove_button = $this.siblings('.btn-image-remove');
+						image_remove_button.css('display','inline-block');
+					});
 
-					// Copy image URL.
-					image_field.val(imgurl);
-					image_field.trigger('change');
-					// Show in preview.
-					var image_preview_wrap = $this.siblings('.image-preview-wrap');
-					var image_html = '<img src="' + imgurl+ '" alt="" style="max-width:100%;max-height:200px;" />';
-					image_preview_wrap.html( image_html );
-					// Show Remove button.
-					var image_remove_button = $this.siblings('.btn-image-remove');
-					image_remove_button.css('display','inline-block');
-				  });
-
-				  // Finally, open the modal.
-				  custom_theme_file_frame.open();
+					// Finally, open the modal.
+					custom_theme_file_frame.open();
 				});
 
 				// Remove image.
@@ -1038,7 +1175,7 @@ class Optioner {
 	 * @param array $title Title.
 	 * @return array Modified title.
 	 */
-	function get_underscored_string( $title ) {
+	public function get_underscored_string( $title ) {
 		return str_replace( '-', '_', sanitize_title_with_dashes( $title ) );
 	}
 }
