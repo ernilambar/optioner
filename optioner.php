@@ -25,10 +25,6 @@ define( 'OPTIONER_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
 
 require_once OPTIONER_DIR . '/src/Optioner.php';
 
-function optioner_render_features() {
-	echo 'I am callback for features tab.';
-}
-
 $obj = new Optioner();
 
 $obj->set_page();
@@ -372,8 +368,18 @@ $obj->add_tab(
 	array(
 		'id'              => 'features_tab',
 		'title'           => esc_html__( 'Features', 'optioner' ),
-		'render_callback' => __NAMESPACE__ . '\optioner_render_features',
+		'render_callback' => __NAMESPACE__ . '\optioner_render_features_tab',
 	)
 );
 
+// Render now.
 $obj->run();
+
+/**
+ * Render features tab.
+ *
+ * @since 1.0.0
+ */
+function optioner_render_features_tab() {
+	echo esc_html__( 'I am callback for features tab.' );
+}
