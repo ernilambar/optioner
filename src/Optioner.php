@@ -149,7 +149,14 @@ class Optioner {
 		}
 	}
 
-	function callback_text( $args ) {
+	/**
+	 * Render text.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_text( $args ) {
 		$attr = array(
 			'type'  => 'text',
 			'name'  => $args['field_name'],
@@ -168,7 +175,14 @@ class Optioner {
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
-	function callback_textarea( $args ) {
+	/**
+	 * Render textarea.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_textarea( $args ) {
 		$attr = array(
 			'name'  => $args['field_name'],
 			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
@@ -182,6 +196,34 @@ class Optioner {
 		$attributes = $this->render_attr( $attr, false );
 
 		$html = sprintf( '<textarea %s>%s</textarea>', $attributes, esc_textarea( $this->get_value( $args ) ) );
+
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Render text.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_color( $args ) {
+		$attr = array(
+			'type'  => 'text',
+			'name'  => $args['field_name'],
+			'value' => $this->get_value( $args ),
+			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
+		);
+
+		$attr['class'] = ' code optioner-color';
+
+		if ( isset( $args['field']['placeholder'] ) ) {
+			$attr['placeholder'] = $args['field']['placeholder'];
+		}
+
+		$attributes = $this->render_attr( $attr, false );
+
+		$html = sprintf( '<input %s />', $attributes );
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}

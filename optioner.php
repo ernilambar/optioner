@@ -55,10 +55,10 @@ $obj->add_field(
 	'first_tab',
 	array(
 		'id'          => 'world_text',
-		'type'        => 'text',
+		'type'        => 'color',
 		'title'       => __( 'World Text', 'optioner' ),
 		'description' => __( 'Text input description', 'optioner' ),
-		'default'     => 'Default Text',
+		'default'     => '#ff00ff',
 	)
 );
 
