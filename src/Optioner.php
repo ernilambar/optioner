@@ -94,15 +94,29 @@ class Optioner {
 	}
 
 	function render_page() {
-		echo '<div class="wrap">';
+		echo '<div class="wrap optioner-wrap">';
 
 		echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
+
+		echo '<div class="wrap-content">';
+
+		echo '<div class="wrap-primary">';
 
 		$this->render_navigation();
 
 		$this->render_forms();
 
-		echo '</div>';
+		echo '</div><!-- .wrap-primary -->';
+
+		echo '<div class="wrap-secondary">';
+
+		echo 'secondary';
+
+		echo '</div><!-- .wrap-secondary -->';
+
+		echo '</div><!-- .wrap-content -->';
+
+		echo '</div><!-- .wrap -->';
 	}
 
 	/**
@@ -405,6 +419,22 @@ class Optioner {
 		<style>
 			.tab-content {
 				display: none;
+			}
+
+			.wrap-content {
+				display: flex;
+			}
+
+			.wrap-primary {
+				flex: 1;
+			}
+
+			.wrap-secondary {
+				flex-basis: 20%;
+				margin-left: 30px;
+				background-color: #fff;
+				padding: 20px;
+				margin-top: 40px;
 			}
 		</style>
 		<?php
