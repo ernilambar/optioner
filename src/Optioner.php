@@ -17,8 +17,6 @@ namespace Nilambar\Optioner;
  */
 class Optioner {
 
-	var $base_args;
-
 	var $options;
 
 	var $top_level_menu;
@@ -174,7 +172,7 @@ class Optioner {
 	}
 
 	function register_settings() {
-		register_setting( $this->page['option_slug'] . '-group', $this->page['option_slug'], array( $this, 'sanitize_callback' ) );
+		register_setting( $this->page['option_slug'] . '-group', $this->page['option_slug'], array( $this, 'sanitize_fields' ) );
 
 		// Load tabs.
 		foreach ( $this->tabs as $tab ) {
@@ -205,6 +203,35 @@ class Optioner {
 				}
 			}
 		}
+	}
+
+	public function sanitize_fields( $input ) {
+		$output = array();
+
+		foreach ( $this->fields as $tab ) {
+
+			foreach ( $tab as $field ) {
+				if ( isset( $input[ $field['id'] ] ) ) {
+					switch ( strtolower( $field['type'] ) ) {
+						case 'text':
+							$output[ $field['id'] ] = sanitize_text_field( $input[ $field['id'] ] );
+							break;
+
+						case 'url':
+							$output[ $field['id'] ] = esc_url_raw( $input[ $field['id'] ] );
+							break;
+
+						default:
+							$output[ $field['id'] ] = sanitize_text_field( $input[ $field['id'] ] );
+							break;
+					}
+				} else {
+					$output[ $field['id'] ] = null;
+				}
+			}
+		}
+
+		return $output;
 	}
 
 	/**

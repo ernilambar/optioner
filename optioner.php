@@ -51,13 +51,38 @@ $obj->add_field(
 $obj->add_field(
 	'first_tab',
 	array(
-		'id'          => 'sample_text',
-		'type'        => 'text',
-		'title'       => esc_html__( 'Sample Text', 'optioner' ),
-		'description' => esc_html__( 'Description for sample text', 'optioner' ),
-		'placeholder' => esc_html__( 'Enter text', 'optioner' ),
+		'id'                  => 'sample_text',
+		'type'                => 'text',
+		'title'               => esc_html__( 'Sample Text', 'optioner' ),
+		'description'         => esc_html__( 'Description for sample text', 'optioner' ),
+		'placeholder'         => esc_html__( 'Enter text', 'optioner' ),
+		'sanitize_text_field' => 'esc_url_raw',
 	)
 );
+
+// Field: sample_text2.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'                  => 'sample_text2',
+		'type'                => 'url',
+		'title'               => esc_html__( 'Sample Text2', 'optioner' ),
+		'description'         => esc_html__( 'Description for sample text', 'optioner' ),
+		'placeholder'         => esc_html__( 'Enter text', 'optioner' ),
+	)
+);
+
+
+$obj->run();
+
+$dummy_var = array(
+	'sample_text' => 'asf 1234',
+	'sample_text2' => 'zvxv',
+);
+
+$out = $obj->sanitize_fields( $dummy_var );
+nsdump( $out );
+return;
 
 // Field: sample_checkbox.
 $obj->add_field(
