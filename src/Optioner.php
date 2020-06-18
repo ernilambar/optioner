@@ -214,6 +214,8 @@ class Optioner {
 				if ( isset( $input[ $field['id'] ] ) ) {
 					switch ( strtolower( $field['type'] ) ) {
 						case 'text':
+						case 'select':
+						case 'radio':
 							$output[ $field['id'] ] = sanitize_text_field( $input[ $field['id'] ] );
 							break;
 
@@ -225,8 +227,16 @@ class Optioner {
 							$output[ $field['id'] ] = sanitize_email( $input[ $field['id'] ] );
 							break;
 
+						case 'number':
+							$output[ $field['id'] ] = intval( $input[ $field['id'] ] );
+							break;
+
 						case 'textarea':
 							$output[ $field['id'] ] = sanitize_textarea_field( $input[ $field['id'] ] );
+							break;
+
+						case 'checkbox':
+							$output[ $field['id'] ] = $input[ $field['id'] ] ? true : false;
 							break;
 
 						default:
@@ -313,6 +323,8 @@ class Optioner {
 	 * @param array $args Arguments.
 	 */
 	public function callback_checkbox( $args ) {
+		nsdump( $this->get_value( $args ) );
+
 		$attr = array(
 			'type'  => 'checkbox',
 			'name'  => $args['field_name'],

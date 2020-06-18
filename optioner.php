@@ -60,19 +60,6 @@ $obj->add_field(
 	)
 );
 
-// Field: sample_text2.
-$obj->add_field(
-	'first_tab',
-	array(
-		'id'                  => 'sample_text2',
-		'type'                => 'url',
-		'title'               => esc_html__( 'Sample Text2', 'optioner' ),
-		'description'         => esc_html__( 'Description for sample text', 'optioner' ),
-		'placeholder'         => esc_html__( 'Enter text', 'optioner' ),
-	)
-);
-
-
 // $obj->run();
 
 // $dummy_var = array(
