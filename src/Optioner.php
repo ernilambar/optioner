@@ -72,7 +72,7 @@ class Optioner {
 
 		// Register admin assets.
 		// add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
-		// add_action( 'admin_head', array( $this, 'admin_style' ) );
+		add_action( 'admin_head', array( $this, 'admin_style' ) );
 		// add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
 	}
 
@@ -420,6 +420,14 @@ class Optioner {
 	 * @since 1.0.0
 	 */
 	public function admin_scripts() {
+		$screen = get_current_screen();
+
+		$required_screen = $this->get_required_screen();
+
+		if ( $required_screen !== $screen->id ) {
+			return;
+		}
+
 		wp_enqueue_script( 'jquery' );
 
 		wp_enqueue_style( 'wp-color-picker' );
@@ -428,14 +436,60 @@ class Optioner {
 		wp_enqueue_media();
 	}
 
+	function get_required_screen() {
+		$output = '';
+		$map_array = array(
+			'index.php'           => 'dashboard',
+			'edit.php'            => 'posts',
+			'upload.php'          => 'media',
+			'edit.php?post_type=page'  => 'pages',
+			'edit-comments.php'   => 'comments',
+			'themes.php'          => 'appearance',
+			'plugins.php'         => 'plugins',
+			'users.php'           => 'users',
+			'tools.php'           => 'tools',
+			'options-general.php' => 'settings',
+			);
+		if ( true == $this->top_level_menu ) {
+			$output = 'toplevel';
+		} else{
+			if (isset($map_array[$this->parent_page])) {
+				$output = $map_array[$this->parent_page];
+			}
+			else{
+				$t= strpos($this->parent_page, 'edit.php?post_type=');
+				if ( false !== $t ) {
+					$output = substr($this->parent_page, strlen('edit.php?post_type=') );
+				}
+
+			}
+		}
+
+		$output .= '_page_';
+		$output .= $this->page['menu_slug'];
+
+		return $output;
+	}
+
+
 	/**
 	 * Admin style.
 	 *
 	 * @since 1.0.0
 	 */
 	public function admin_style() {
+		$screen = get_current_screen();
+
+		$required_screen = $this->get_required_screen();
+
+		if ( $required_screen !== $screen->id ) {
+			return;
+		}
 		?>
 		<style>
+			a {
+				border: 1px red solid;
+			}
 			.tab-content {
 				display: none;
 			}
@@ -465,6 +519,13 @@ class Optioner {
 	 * @since 1.0.0
 	 */
 	public function footer_scripts() {
+		$screen = get_current_screen();
+
+		$required_screen = $this->get_required_screen();
+
+		if ( $required_screen !== $screen->id ) {
+			return;
+		}
 		?>
 		<script>
 			jQuery( document ).ready( function( $ ) {
@@ -493,9 +554,8 @@ class Optioner {
 				// Tab switcher.
 				$( '.nav-tab-wrapper a' ).click( function( evt ) {
 					$( '.nav-tab-wrapper a' ).removeClass( 'nav-tab-active' );
-					$( this )
-						.addClass( 'nav-tab-active' )
-						.blur();
+					$( this ).addClass( 'nav-tab-active' ).blur();
+
 					var clicked_group = $( this ).attr( 'href' );
 					if ( 'undefined' != typeof localStorage ) {
 						localStorage.setItem( 'activetab', $( this ).attr( 'href' ) );
@@ -504,9 +564,6 @@ class Optioner {
 					$( clicked_group ).fadeIn();
 					evt.preventDefault();
 				});
-
-
-
 
 				//Initiate Color Picker.
 				$('.optioner-color').each(function(){
