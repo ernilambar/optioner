@@ -488,7 +488,7 @@ class Optioner {
 		?>
 		<style>
 			.tab-content {
-				/*display: none;*/
+				display: none;
 			}
 
 			.wrap-content {
@@ -523,14 +523,52 @@ class Optioner {
 		if ( $required_screen !== $screen->id ) {
 			return;
 		}
+
+		$slug = $this->get_underscored_string( $this->page['menu_slug'] );
+
+		$storage_key = $slug . '_activetab';
 		?>
 		<script>
 			jQuery( document ).ready( function( $ ) {
-				// console.log('good');
-
 				//Initiate Color Picker.
 				$('.optioner-color').each(function(){
 				    $(this).wpColorPicker();
+				});
+
+				// Switches tabs.
+				$( '.tab-content' ).hide();
+
+				var activetab = '';
+
+				if ( 'undefined' != typeof localStorage ) {
+					activetab = localStorage.getItem( '<?php echo esc_attr( $storage_key ); ?>' );
+				}
+
+				if ( '' != activetab && $( activetab ).length ) {
+					$( activetab ).fadeIn();
+				} else {
+					$( '.tab-content:first' ).fadeIn();
+				}
+
+				// Tab links.
+				if ( '' != activetab && $( activetab + '-tab' ).length ) {
+					$( activetab + '-tab' ).addClass( 'nav-tab-active' );
+				} else {
+					$( '.nav-tab-wrapper a:first' ).addClass( 'nav-tab-active' );
+				}
+
+				// Tab switcher.
+				$( '.nav-tab-wrapper a' ).click( function( evt ) {
+					$( '.nav-tab-wrapper a' ).removeClass( 'nav-tab-active' );
+					$( this ).addClass( 'nav-tab-active' ).blur();
+
+					var clicked_group = $( this ).attr( 'href' );
+					if ( 'undefined' != typeof localStorage ) {
+						localStorage.setItem( '<?php echo esc_attr( $storage_key ); ?>', $( this ).attr( 'href' ) );
+					}
+					$( '.tab-content' ).hide();
+					$( clicked_group ).fadeIn();
+					evt.preventDefault();
 				});
 
 			});
@@ -539,5 +577,16 @@ class Optioner {
 		<?php
 	}
 
+	/**
+	 * Get string with underscore.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $title Title.
+	 * @return array Modified title.
+	 */
+	function get_underscored_string( $title ) {
+		return str_replace( '-', '_', sanitize_title_with_dashes( $title ) );
+	}
 }
 
