@@ -71,9 +71,9 @@ class Optioner {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 
 		// Register admin assets.
-		// add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 		add_action( 'admin_head', array( $this, 'admin_style' ) );
-		// add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
+		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
 	}
 
 	function create_menu_page() {
@@ -487,9 +487,6 @@ class Optioner {
 		}
 		?>
 		<style>
-			a {
-				border: 1px red solid;
-			}
 			.tab-content {
 				display: none;
 			}
@@ -519,6 +516,7 @@ class Optioner {
 	 * @since 1.0.0
 	 */
 	public function footer_scripts() {
+		return;
 		$screen = get_current_screen();
 
 		$required_screen = $this->get_required_screen();
