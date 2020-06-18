@@ -233,6 +233,8 @@ class Optioner {
 
 		$html .= $this->get_field_description( $args );
 
+		$html = sprintf( '<div class="field-text">%s</div>', $html );
+
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
@@ -259,6 +261,8 @@ class Optioner {
 		$html = sprintf( '<textarea %s>%s</textarea>', $attributes, esc_textarea( $this->get_value( $args ) ) );
 
 		$html .= $this->get_field_description( $args );
+
+		$html = sprintf( '<div class="field-textarea">%s</div>', $html );
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
@@ -290,6 +294,8 @@ class Optioner {
 
 		$html .= $this->get_field_description( $args );
 
+		$html = sprintf( '<div class="field-color">%s</div>', $html );
+
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
@@ -310,6 +316,8 @@ class Optioner {
 		$html = sprintf( '<h2 %s>%s</h2>', $attributes, esc_html( $args['field']['title'] ) );
 
 		$html .= $this->get_field_description( $args );
+
+		$html = sprintf( '<div class="field-heading">%s</div>', $html );
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
@@ -344,13 +352,6 @@ class Optioner {
 	}
 
 	function section_text_callback( $args ) {
-		$exp = explode( '_settings', $args['id'] );
-
-		$current_tab = array_shift( $exp );
-
-		if ( isset( $this->tabs[ $current_tab ]['subtitle'] ) && ! empty( $this->tabs[ $current_tab ]['subtitle'] ) ) {
-			echo '<div class="optioner-subheading">' . esc_html( $this->tabs[ $current_tab ]['subtitle'] ) . '</div>';
-		}
 	}
 
 	public function set_page( $args = array() ) {
@@ -528,6 +529,10 @@ class Optioner {
 				display: none;
 			}
 
+			.tab-content > h2 {
+				display: none;
+			}
+
 			.wrap-content {
 				display: flex;
 			}
@@ -542,6 +547,20 @@ class Optioner {
 				background-color: #fff;
 				padding: 20px;
 				margin-top: 40px;
+			}
+
+			.field-heading {
+				margin-left: -10px;
+			}
+
+			.field-heading h2 {
+				margin-top: 0;
+			}
+
+			.field-heading .description {
+				font-size: 13px;
+				font-style: inherit;
+				color: #444;
 			}
 		</style>
 		<?php
@@ -570,6 +589,20 @@ class Optioner {
 				//Initiate Color Picker.
 				$('.optioner-color').each(function(){
 				    $(this).wpColorPicker();
+				});
+
+				// Heading fix.
+				$('.field-heading').each(function(i, el){
+					// console.log( el );
+					$el = $(el);
+
+					$tr = $el.parent().parent();
+
+					$tr.find('th').hide();
+
+					$tr.find('td').attr('colspan',2);
+
+
 				});
 
 				// Switches tabs.

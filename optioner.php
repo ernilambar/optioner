@@ -37,9 +37,19 @@ $obj->set_page();
 
 $obj->add_tab(
 	array(
-		'id' => "first_tab",
-		'title' => "First Tab",
-		'subtitle' => "First Tab description",
+		'id'       => "first_tab",
+		'title'    => "First Tab",
+	)
+);
+
+// Field: Heading.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'          => 'test_heading',
+		'type'        => 'heading',
+		'title'       => __( 'Store Address', 'optioner' ),
+		'description' => __( 'This is where your business is located. Tax rates and shipping rates will use this address.', 'optioner' ),
 	)
 );
 
@@ -55,16 +65,6 @@ $obj->add_field(
 	)
 );
 
-// Field: Heading.
-$obj->add_field(
-	'first_tab',
-	array(
-		'id'          => 'test_heading',
-		'type'        => 'heading',
-		'title'       => __( 'Good heading', 'optioner' ),
-		'description' => __( 'Good heading description', 'optioner' ),
-	)
-);
 
 
 // Field: World Text.
@@ -78,6 +78,29 @@ $obj->add_field(
 		'default'     => '#ff00ff',
 	)
 );
+
+// Field: Heading.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'          => 'test_heading2',
+		'type'        => 'heading',
+		'title'       => __( 'Good heading2', 'optioner' ),
+		'description' => __( 'Good heading description2', 'optioner' ),
+	)
+);
+
+// Field: Age.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'          => 'age',
+		'type'        => 'text',
+		'title'       => __( 'Age', 'optioner' ),
+		'description' => __( 'Text input description', 'optioner' ),
+	)
+);
+
 
 $obj->add_tab(
 	array(
