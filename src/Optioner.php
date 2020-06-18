@@ -68,6 +68,7 @@ class Optioner {
 
 		// Register admin assets.
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
+		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
 	}
 
 	function create_menu_page() {
@@ -357,15 +358,33 @@ class Optioner {
 	public function admin_scripts() {
 		wp_enqueue_script( 'jquery' );
 
-		wp_enqueue_script(
-			'iris',
-			admin_url( 'js/iris.min.js' ),
-			array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ),
-			false,
-			1
-		);
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( 'wp-color-picker');
 
 		wp_enqueue_media();
+	}
+
+	/**
+	 * Footer Scripts.
+	 *
+	 * @since 1.0.0
+	 */
+	public function footer_scripts() {
+		?>
+		<script>
+			jQuery( document ).ready( function( $ ) {
+				// console.log('I am called');
+
+				//Initiate Color Picker.
+				$('.optioner-color').each(function(){
+				    $(this).wpColorPicker();
+				});
+
+
+			});
+
+		</script>
+		<?php
 	}
 
 }
