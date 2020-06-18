@@ -97,6 +97,8 @@ class Optioner {
 
 		echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
 
+		$this->render_navigation();
+
 		echo '<form action="options.php" method="post">';
 
 		settings_fields( $this->page['option_slug'] . '-group' );
@@ -115,6 +117,24 @@ class Optioner {
 
 		echo '</div>';
 	}
+
+	/**
+	 * Render navigation.
+	 *
+	 * @since 1.0.0
+	 */
+	function render_navigation() {
+		$html = '<h2 class="nav-tab-wrapper">';
+
+		foreach ( $this->tabs as $tab ) {
+			$html .= sprintf( '<a href="#%1$s" class="nav-tab" id="%1$s-tab">%2$s</a>', $tab['id'], $tab['title'] );
+		}
+
+		$html .= '</h2>';
+
+		echo $html;
+	}
+
 
 	function register_settings() {
 		register_setting( $this->page['option_slug'] . '-group', $this->page['option_slug'], array( $this, 'sanitize_callback' ) );
