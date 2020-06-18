@@ -71,9 +71,9 @@ class Optioner {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 
 		// Register admin assets.
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
-		add_action( 'admin_head', array( $this, 'admin_style' ) );
-		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
+		// add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
+		// add_action( 'admin_head', array( $this, 'admin_style' ) );
+		// add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
 	}
 
 	function create_menu_page() {
@@ -159,7 +159,11 @@ class Optioner {
 		foreach ( $this->tabs as $tab ) {
 
 			echo '<div id="' . $tab['id'] . '" class="tab-content">';
+
+			do_action( 'optioner_form_top_' . $tab['id'], $tab );
 			do_settings_sections( $tab['id'] . '-' . $this->page['menu_slug'] );
+			do_action( 'optioner_form_bottom_' . $tab['id'], $tab );
+
 			echo '</div>';
 
 		}
