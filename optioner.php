@@ -31,25 +31,25 @@ $obj->set_page();
 
 $obj->add_tab(
 	array(
-		'id'    => 'first_tab',
+		'id'    => 'basic_tab',
 		'title' => esc_html__( 'First Tab', 'optioner' ),
 	)
 );
 
-// Field: basic_heading.
+// Field: sample_heading.
 $obj->add_field(
-	'first_tab',
+	'basic_tab',
 	array(
-		'id'          => 'basic_heading',
+		'id'          => 'sample_heading',
 		'type'        => 'heading',
-		'title'       => esc_html__( 'Basic Section', 'optioner' ),
-		'description' => esc_html__( 'This is description of basic section.', 'optioner' ),
+		'title'       => esc_html__( 'Sample Heading', 'optioner' ),
+		'description' => esc_html__( 'This is description.', 'optioner' ),
 	)
 );
 
 // Field: sample_text.
 $obj->add_field(
-	'first_tab',
+	'basic_tab',
 	array(
 		'id'                  => 'sample_text',
 		'type'                => 'text',
@@ -62,7 +62,7 @@ $obj->add_field(
 
 // Field: sample_checkbox.
 $obj->add_field(
-	'first_tab',
+	'basic_tab',
 	array(
 		'id'          => 'sample_checkbox',
 		'type'        => 'checkbox',
@@ -73,32 +73,14 @@ $obj->add_field(
 	)
 );
 
-// Field: sample_multicheck.
-$obj->add_field(
-	'first_tab',
-	array(
-		'id'      => 'sample_multicheck',
-		'type'    => 'multicheck',
-		'title'   => esc_html__( 'Sample Multicheck', 'optioner' ),
-		'default' => array( '1', '2' ),
-		'choices' => array(
-			'1' => esc_html__( 'First', 'optioner' ),
-			'2' => esc_html__( 'Second', 'optioner' ),
-			'3' => esc_html__( 'Third', 'optioner' ),
-			'4' => esc_html__( 'Fourth', 'optioner' ),
-		),
-	)
-);
-
 // Field: sample_select.
 $obj->add_field(
-	'first_tab',
+	'basic_tab',
 	array(
 		'id'          => 'sample_select',
 		'type'        => 'select',
 		'title'       => esc_html__( 'Sample Select', 'optioner' ),
 		'description' => esc_html__( 'Description of sample select.', 'optioner' ),
-		'allow_null'  => true,
 		'choices'     => array(
 			'1' => esc_html__( 'First', 'optioner' ),
 			'2' => esc_html__( 'Second', 'optioner' ),
@@ -107,109 +89,31 @@ $obj->add_field(
 	)
 );
 
-// Field: sample_select_no_null.
+// Field: sample_radio.
 $obj->add_field(
-	'first_tab',
+	'basic_tab',
 	array(
-		'id'      => 'sample_select_no_null',
-		'type'    => 'select',
-		'title'   => esc_html__( 'Sample Select No Null', 'optioner' ),
-		'choices' => array(
-			'1' => esc_html__( 'First', 'optioner' ),
-			'2' => esc_html__( 'Second', 'optioner' ),
-			'3' => esc_html__( 'Third', 'optioner' ),
-		),
-	)
-);
-
-// Field: radio_horizontal.
-$obj->add_field(
-	'first_tab',
-	array(
-		'id'          => 'radio_horizontal',
+		'id'          => 'sample_radio',
 		'type'        => 'radio',
+		'title'       => esc_html__( 'Sample Radio', 'optioner' ),
+		'description' => esc_html__( 'Description of sample radio.', 'optioner' ),
 		'default'     => '1',
-		'layout'      => 'horizontal',
-		'title'       => esc_html__( 'Radio Horizontal', 'optioner' ),
-		'description' => esc_html__( 'Description of radio horizontal.', 'optioner' ),
 		'choices'     => array(
 			'1' => esc_html__( 'First', 'optioner' ),
 			'2' => esc_html__( 'Second', 'optioner' ),
-			'3' => esc_html__( 'Third', 'optioner' ),
-		),
-	)
-);
-
-// Field: radio_vertical.
-$obj->add_field(
-	'first_tab',
-	array(
-		'id'          => 'radio_vertical',
-		'type'        => 'radio',
-		'title'       => esc_html__( 'Radio Vertical', 'optioner' ),
-		'description' => esc_html__( 'Description of radio vertical.', 'optioner' ),
-		'choices'     => array(
-			'1' => esc_html__( 'First', 'optioner' ),
-			'2' => esc_html__( 'Second', 'optioner' ),
-			'3' => esc_html__( 'Third', 'optioner' ),
 		),
 	)
 );
 
 // Field: sample_color.
 $obj->add_field(
-	'first_tab',
+	'basic_tab',
 	array(
 		'id'          => 'sample_color',
 		'type'        => 'color',
 		'title'       => esc_html__( 'Sample Color', 'optioner' ),
 		'description' => esc_html__( 'Description of sample color.', 'optioner' ),
 		'default'     => '#8224e3',
-	)
-);
-
-// Field: extra_heading.
-$obj->add_field(
-	'first_tab',
-	array(
-		'id'          => 'extra_heading',
-		'type'        => 'heading',
-		'title'       => esc_html__( 'Extra Section', 'optioner' ),
-		'description' => esc_html__( 'This is description of extra section.', 'optioner' ),
-	)
-);
-
-// Field: sample_url.
-$obj->add_field(
-	'first_tab',
-	array(
-		'id'          => 'sample_url',
-		'type'        => 'url',
-		'title'       => esc_html__( 'Sample URL', 'optioner' ),
-		'description' => esc_html__( 'Description of sample URL.', 'optioner' ),
-		'placeholder' => esc_html__( 'Enter full URL.', 'optioner' ),
-	)
-);
-
-// Field: sample_number.
-$obj->add_field(
-	'first_tab',
-	array(
-		'id'          => 'sample_number',
-		'type'        => 'number',
-		'title'       => esc_html__( 'Sample Number', 'optioner' ),
-		'description' => esc_html__( 'Description of sample number.', 'optioner' ),
-	)
-);
-
-// Field: sample_email.
-$obj->add_field(
-	'first_tab',
-	array(
-		'id'          => 'sample_email',
-		'type'        => 'email',
-		'title'       => esc_html__( 'Sample Email', 'optioner' ),
-		'description' => esc_html__( 'Description of sample email.', 'optioner' ),
 	)
 );
 
@@ -267,6 +171,41 @@ $obj->add_field(
 	)
 );
 
+// Field: sample_url.
+$obj->add_field(
+	'text_tab',
+	array(
+		'id'          => 'sample_url',
+		'type'        => 'url',
+		'title'       => esc_html__( 'Sample URL', 'optioner' ),
+		'description' => esc_html__( 'Description of sample URL.', 'optioner' ),
+		'placeholder' => esc_html__( 'Enter full URL.', 'optioner' ),
+	)
+);
+
+// Field: sample_number.
+$obj->add_field(
+	'text_tab',
+	array(
+		'id'          => 'sample_number',
+		'type'        => 'number',
+		'title'       => esc_html__( 'Sample Number', 'optioner' ),
+		'description' => esc_html__( 'Description of sample number.', 'optioner' ),
+	)
+);
+
+// Field: sample_email.
+$obj->add_field(
+	'text_tab',
+	array(
+		'id'          => 'sample_email',
+		'type'        => 'email',
+		'title'       => esc_html__( 'Sample Email', 'optioner' ),
+		'description' => esc_html__( 'Description of sample email.', 'optioner' ),
+	)
+);
+
+// Tab: textarea_tab.
 $obj->add_tab(
 	array(
 		'id'    => 'textarea_tab',
@@ -274,28 +213,143 @@ $obj->add_tab(
 	)
 );
 
-// Field: sample_textarea.
+// Field: textarea_regular.
 $obj->add_field(
 	'textarea_tab',
 	array(
-		'id'          => 'sample_textarea',
+		'id'          => 'textarea_regular',
 		'type'        => 'textarea',
-		'title'       => esc_html__( 'Sample Textarea', 'optioner' ),
-		'description' => esc_html__( 'Regular textarea.', 'optioner' ),
+		'title'       => esc_html__( 'Textarea Regular', 'optioner' ),
+		'description' => esc_html__( 'This is regular textarea.', 'optioner' ),
 		'placeholder' => esc_html__( 'Enter content.', 'optioner' ),
 	)
 );
 
-// Field: sample_textarea2.
+// Field: textarea_large.
 $obj->add_field(
 	'textarea_tab',
 	array(
-		'id'          => 'sample_textarea2',
+		'id'          => 'textarea_large',
 		'type'        => 'textarea',
-		'title'       => esc_html__( 'Sample Textarea 2', 'optioner' ),
+		'title'       => esc_html__( 'Textarea Large', 'optioner' ),
 		'description' => esc_html__( 'This is large textarea.', 'optioner' ),
 		'placeholder' => esc_html__( 'Enter content.', 'optioner' ),
 		'class'       => 'large-text',
+	)
+);
+
+// Tab: checkbox_tab.
+$obj->add_tab(
+	array(
+		'id'    => 'checkbox_tab',
+		'title' => esc_html__( 'Checkbox', 'optioner' ),
+	)
+);
+
+// Field: checkbox_single.
+$obj->add_field(
+	'checkbox_tab',
+	array(
+		'id'          => 'checkbox_single',
+		'type'        => 'checkbox',
+		'default'     => true,
+		'title'       => esc_html__( 'Checkbox Simple', 'optioner' ),
+		'side_text'   => esc_html__( 'Enable simple checkbox', 'optioner' ),
+		'description' => esc_html__( 'Description for simple checkbox field.', 'optioner' ),
+	)
+);
+
+// Field: checkbox_multi.
+$obj->add_field(
+	'checkbox_tab',
+	array(
+		'id'          => 'checkbox_multi',
+		'type'        => 'multicheck',
+		'title'       => esc_html__( 'Checkbox Multiple', 'optioner' ),
+		'description' => esc_html__( 'Description for checkbox multiple.', 'optioner' ),
+		'choices'     => array(
+			'1' => esc_html__( 'First', 'optioner' ),
+			'2' => esc_html__( 'Second', 'optioner' ),
+			'3' => esc_html__( 'Third', 'optioner' ),
+			'4' => esc_html__( 'Fourth', 'optioner' ),
+		),
+	)
+);
+
+
+// Tab: selection_tab.
+$obj->add_tab(
+	array(
+		'id'    => 'selection_tab',
+		'title' => esc_html__( 'Selection', 'optioner' ),
+	)
+);
+
+// Field: select_simple.
+$obj->add_field(
+	'selection_tab',
+	array(
+		'id'          => 'select_simple',
+		'type'        => 'select',
+		'title'       => esc_html__( 'Select Simple', 'optioner' ),
+		'description' => esc_html__( 'Description of select simple.', 'optioner' ),
+		'choices'     => array(
+			'1' => esc_html__( 'First', 'optioner' ),
+			'2' => esc_html__( 'Second', 'optioner' ),
+			'3' => esc_html__( 'Third', 'optioner' ),
+		),
+	)
+);
+
+// Field: select_null_allowed.
+$obj->add_field(
+	'selection_tab',
+	array(
+		'id'          => 'select_null_allowed',
+		'type'        => 'select',
+		'title'       => esc_html__( 'Select Null Allowed', 'optioner' ),
+		'description' => esc_html__( 'Description of select null allowed.', 'optioner' ),
+		'allow_null'  => true,
+		'choices'     => array(
+			'1' => esc_html__( 'First', 'optioner' ),
+			'2' => esc_html__( 'Second', 'optioner' ),
+			'3' => esc_html__( 'Third', 'optioner' ),
+		),
+	)
+);
+
+// Field: radio_horizontal.
+$obj->add_field(
+	'selection_tab',
+	array(
+		'id'          => 'radio_horizontal',
+		'type'        => 'radio',
+		'layout'      => 'horizontal',
+		'title'       => esc_html__( 'Radio Horizontal', 'optioner' ),
+		'description' => esc_html__( 'Description of radio horizontal.', 'optioner' ),
+		'default'     => '1',
+		'choices'     => array(
+			'1' => esc_html__( 'First', 'optioner' ),
+			'2' => esc_html__( 'Second', 'optioner' ),
+			'3' => esc_html__( 'Third', 'optioner' ),
+		),
+	)
+);
+
+// Field: radio_vertical.
+$obj->add_field(
+	'selection_tab',
+	array(
+		'id'          => 'radio_vertical',
+		'type'        => 'radio',
+		'title'       => esc_html__( 'Radio Vertical', 'optioner' ),
+		'description' => esc_html__( 'Description of radio vertical.', 'optioner' ),
+		'default'     => '1',
+		'choices'     => array(
+			'1' => esc_html__( 'First', 'optioner' ),
+			'2' => esc_html__( 'Second', 'optioner' ),
+			'3' => esc_html__( 'Third', 'optioner' ),
+		),
 	)
 );
 

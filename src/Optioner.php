@@ -337,8 +337,6 @@ class Optioner {
 	 * @param array $args Arguments.
 	 */
 	public function callback_checkbox( $args ) {
-		nsdump( $this->get_value( $args ) );
-
 		$attr = array(
 			'type'  => 'checkbox',
 			'name'  => $args['field_name'],
@@ -373,9 +371,6 @@ class Optioner {
 	 */
 	public function callback_multicheck( $args ) {
 		$values = (array) $this->get_value( $args );
-		nsdump( $this->get_value( $args ) );
-
-
 
 		$html = '';
 
