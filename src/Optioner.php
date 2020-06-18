@@ -318,7 +318,7 @@ class Optioner {
 		$output = '';
 
 		if ( isset( $args['field']['description'] ) && ! empty( $args['field']['description'] ) ) {
-			$output = sprintf( '<p class="description">%s</p>', $args['field']['description'] );
+			$output = sprintf( '<p class="description">%s</p>', wp_kses_post( $args['field']['description'] ) );
 		}
 
 		return $output;
