@@ -65,6 +65,40 @@ $obj->add_field(
 	)
 );
 
+// Field: Radio Horizontal.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'          => 'hello_radio',
+		'type'        => 'radio',
+		'default'     => '3',
+		'layout'        => 'horizontal',
+		'title'       => __( 'Radio Horizontal', 'optioner' ),
+		'description' => __( 'Radio description', 'optioner' ),
+		'choices'     => array(
+			'1' => 'First',
+			'2' => 'Second',
+			'3' => 'Third',
+		),
+	)
+);
+
+// Field: Radio Vertical.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'          => 'hello_radio_vertical',
+		'type'        => 'radio',
+		'title'       => __( 'Radio Vertical', 'optioner' ),
+		'description' => __( 'Radio description', 'optioner' ),
+		'choices'     => array(
+			'1' => 'First',
+			'2' => 'Second',
+			'3' => 'Third',
+		),
+	)
+);
+
 // Field: Hello Select.
 $obj->add_field(
 	'first_tab',

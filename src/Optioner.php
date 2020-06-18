@@ -333,7 +333,6 @@ class Optioner {
 	public function callback_select( $args ) {
 		$attr = array(
 			'name'  => $args['field_name'],
-			'value' => $this->get_value( $args ),
 		);
 
 		$attributes = $this->render_attr( $attr, false );
@@ -346,7 +345,7 @@ class Optioner {
 
 		if ( ! empty( $args['field']['choices'] ) ) {
 			foreach ($args['field']['choices'] as $key => $value ) {
-				$html .= '<option value="' . esc_attr( $key ) . '"' . selected( $args['field_value'], $key, false ) . '>' . esc_html( $value ) .'</option>';
+				$html .= '<option value="' . esc_attr( $key ) . '"' . selected( $this->get_value( $args ), $key, false ) . '>' . esc_html( $value ) .'</option>';
 			}
 		}
 
@@ -355,6 +354,51 @@ class Optioner {
 		$html .= $this->get_field_description( $args );
 
 		$html = sprintf( '<div class="field-select">%s</div>', $html );
+
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Render radio.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_radio( $args ) {
+		$html = '';
+
+		if ( ! empty( $args['field']['choices'] ) ) {
+			$layout_class = 'layout-vertical';
+
+			if ( isset( $args['field']['layout'] ) && ! empty( $args['field']['layout'] ) ) {
+				$layout_class = 'layout-' . $args['field']['layout'];
+			}
+
+			$html .= '<ul class="radio-list ' . esc_attr( $layout_class ) . '">';
+
+			foreach ($args['field']['choices'] as $key => $value ) {
+				$attr = array(
+					'type'  => 'radio',
+					'name'  => $args['field_name'],
+					'value' => $key,
+				);
+
+				$attributes = $this->render_attr( $attr, false );
+
+				$html .= '<li>';
+
+				$html .= sprintf( '<label><input %s %s />%s</label>', $attributes, checked( $this->get_value( $args ), $key, false ), $value );
+
+				$html .= '</li>';
+			}
+
+			$html .= '</ul>';
+		}
+
+		$html .= $this->get_field_description( $args );
+
+		$html = sprintf( '<div class="field-radio">%s</div>', $html );
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
@@ -599,6 +643,19 @@ class Optioner {
 				font-size: 13px;
 				font-style: inherit;
 				color: #444;
+			}
+
+			.field-radio .layout-horizontal {
+				display: flex;
+			}
+
+			.field-radio .radio-list {
+				margin: 0;
+				padding: 0;
+			}
+
+			.field-radio .radio-list li {
+				margin-right: 10px;
 			}
 		</style>
 		<?php
