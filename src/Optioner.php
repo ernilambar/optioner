@@ -340,7 +340,7 @@ class Optioner {
 		$html = sprintf( '<select %s>', $attributes );
 
 		if ( isset( $args['field']['allow_null'] ) && true === $args['field']['allow_null'] ) {
-			$html .= '<option value="">&mdash; ' . esc_html__( 'Select' ) . ' &mdash;</option>';
+			$html .= '<option value="">&mdash; ' . esc_html__( 'Select', 'optioner' ) . ' &mdash;</option>';
 		}
 
 		if ( ! empty( $args['field']['choices'] ) ) {

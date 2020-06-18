@@ -14,7 +14,6 @@
 
 namespace Nilambar\Optioner;
 
-
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -26,30 +25,25 @@ define( 'OPTIONER_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
 
 require_once OPTIONER_DIR . '/src/Optioner.php';
 
-
-function test_sidebar_cb_func() {
-	echo 'I am sidebar';
-}
-
 $obj = new Optioner();
 
 $obj->set_page();
 
 $obj->add_tab(
 	array(
-		'id'       => "first_tab",
-		'title'    => "First Tab",
+		'id'    => 'first_tab',
+		'title' => esc_html__( 'First Tab', 'optioner' ),
 	)
 );
 
-// Field: Heading.
+// Field: awesome_heading.
 $obj->add_field(
 	'first_tab',
 	array(
-		'id'          => 'test_heading',
+		'id'          => 'awesome_heading',
 		'type'        => 'heading',
-		'title'       => __( 'Store Address', 'optioner' ),
-		'description' => __( 'This is where your business is located. Tax rates and shipping rates will use this address.', 'optioner' ),
+		'title'       => esc_html__( 'Awesome Section', 'optioner' ),
+		'description' => esc_html__( 'This is description of awesome section.', 'optioner' ),
 	)
 );
 
@@ -57,76 +51,89 @@ $obj->add_field(
 $obj->add_field(
 	'first_tab',
 	array(
-		'id'      => 'hello_text',
-		'type'    => 'text',
-		'title'    => __( 'Hello Text', 'optioner' ),
-		'description'    => __( 'Text input description', 'optioner' ),
-		'placeholder' => 'feri Default Text',
+		'id'          => 'sample_text',
+		'type'        => 'text',
+		'title'       => esc_html__( 'Sample Text', 'optioner' ),
+		'description' => esc_html__( 'Description for sample text', 'optioner' ),
+		'placeholder' => esc_html__( 'Enter text', 'optioner' ),
 	)
 );
 
-// Field: Radio Horizontal.
+// Field: sample_select.
 $obj->add_field(
 	'first_tab',
 	array(
-		'id'          => 'hello_radio',
-		'type'        => 'radio',
-		'default'     => '3',
-		'layout'        => 'horizontal',
-		'title'       => __( 'Radio Horizontal', 'optioner' ),
-		'description' => __( 'Radio description', 'optioner' ),
-		'choices'     => array(
-			'1' => 'First',
-			'2' => 'Second',
-			'3' => 'Third',
-		),
-	)
-);
-
-// Field: Radio Vertical.
-$obj->add_field(
-	'first_tab',
-	array(
-		'id'          => 'hello_radio_vertical',
-		'type'        => 'radio',
-		'title'       => __( 'Radio Vertical', 'optioner' ),
-		'description' => __( 'Radio description', 'optioner' ),
-		'choices'     => array(
-			'1' => 'First',
-			'2' => 'Second',
-			'3' => 'Third',
-		),
-	)
-);
-
-// Field: Hello Select.
-$obj->add_field(
-	'first_tab',
-	array(
-		'id'          => 'hello_select',
+		'id'          => 'sample_select',
 		'type'        => 'select',
-		'title'       => __( 'Select Sample', 'optioner' ),
-		'description' => __( 'Select description', 'optioner' ),
+		'title'       => esc_html__( 'Sample Select', 'optioner' ),
+		'description' => esc_html__( 'Description of sample select.', 'optioner' ),
 		'allow_null'  => true,
 		'choices'     => array(
-			'1' => 'First',
-			'2' => 'Second',
-			'3' => 'Third',
+			'1' => esc_html__( 'First', 'optioner' ),
+			'2' => esc_html__( 'Second', 'optioner' ),
+			'3' => esc_html__( 'Third', 'optioner' ),
 		),
 	)
 );
 
-
-
-// Field: World Text.
+// Field: sample_select_no_null.
 $obj->add_field(
 	'first_tab',
 	array(
-		'id'          => 'world_text',
+		'id'          => 'sample_select_no_null',
+		'type'        => 'select',
+		'title'       => esc_html__( 'Sample Select No Null', 'optioner' ),
+		'choices'     => array(
+			'1' => esc_html__( 'First', 'optioner' ),
+			'2' => esc_html__( 'Second', 'optioner' ),
+			'3' => esc_html__( 'Third', 'optioner' ),
+		),
+	)
+);
+
+// Field: radio_horizontal.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'          => 'radio_horizontal',
+		'type'        => 'radio',
+		'default'     => '1',
+		'layout'      => 'horizontal',
+		'title'       => esc_html__( 'Radio Horizontal', 'optioner' ),
+		'description' => esc_html__( 'Description of radio horizontal.', 'optioner' ),
+		'choices'     => array(
+			'1' => esc_html__( 'First', 'optioner' ),
+			'2' => esc_html__( 'Second', 'optioner' ),
+			'3' => esc_html__( 'Third', 'optioner' ),
+		),
+	)
+);
+
+// Field: radio_vertical.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'          => 'radio_vertical',
+		'type'        => 'radio',
+		'title'       => esc_html__( 'Radio Vertical', 'optioner' ),
+		'description' => esc_html__( 'Description of radio vertical.', 'optioner' ),
+		'choices'     => array(
+			'1' => esc_html__( 'First', 'optioner' ),
+			'2' => esc_html__( 'Second', 'optioner' ),
+			'3' => esc_html__( 'Third', 'optioner' ),
+		),
+	)
+);
+
+// Field: sample_color.
+$obj->add_field(
+	'first_tab',
+	array(
+		'id'          => 'sample_color',
 		'type'        => 'color',
-		'title'       => __( 'World Text', 'optioner' ),
-		'description' => __( 'Text input description', 'optioner' ),
-		'default'     => '#ff00ff',
+		'title'       => esc_html__( 'Sample Color', 'optioner' ),
+		'description' => esc_html__( 'Description of sample color.', 'optioner' ),
+		'default'     => '#8224e3',
 	)
 );
 
@@ -136,8 +143,8 @@ $obj->add_field(
 	array(
 		'id'          => 'test_heading2',
 		'type'        => 'heading',
-		'title'       => __( 'Good heading2', 'optioner' ),
-		'description' => __( 'Good heading description2', 'optioner' ),
+		'title'       => esc_html__( 'Good heading2', 'optioner' ),
+		'description' => esc_html__( 'Good heading description2', 'optioner' ),
 	)
 );
 
@@ -147,16 +154,16 @@ $obj->add_field(
 	array(
 		'id'          => 'age',
 		'type'        => 'text',
-		'title'       => __( 'Age', 'optioner' ),
-		'description' => __( 'Text input description', 'optioner' ),
+		'title'       => esc_html__( 'Age', 'optioner' ),
+		'description' => esc_html__( 'Text input description', 'optioner' ),
 	)
 );
 
 
 $obj->add_tab(
 	array(
-		'id' => "second_tab",
-		'title' => "Second Tab",
+		'id'    => 'second_tab',
+		'title' => 'Second Tab',
 	)
 );
 
@@ -166,26 +173,11 @@ $obj->add_field(
 	array(
 		'id'          => 'hello_textarea',
 		'type'        => 'textarea',
-		'title'       => __( 'Hello Textarea', 'optioner' ),
-		'description' => __( 'Textarea input description', 'optioner' ),
+		'title'       => esc_html__( 'Hello Textarea', 'optioner' ),
+		'description' => esc_html__( 'Textarea input description', 'optioner' ),
 		'default'     => 'Default Textarea',
 
 	)
 );
 
-// $obj->set_sidebar( __NAMESPACE__ . '\test_sidebar_cb_func' );
-
 $obj->run();
-
-
-// add_action('optioner_form_top_first_tab', __NAMESPACE__ . '\opt_first_top' );
-
-// function opt_first_top() {
-// 	echo 'I am first top';
-// }
-
-// add_action('optioner_form_bottom_first_tab', __NAMESPACE__ . '\opt_first_top' );
-
-// function opt_first_bottom() {
-// 	echo 'I am first bottom';
-// }
