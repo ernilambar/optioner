@@ -463,7 +463,9 @@ $obj->run();
  * @since 1.0.0
  */
 function optioner_render_features_tab() {
-	echo esc_html__( 'This is a demonstration of custom tab. You can add anything here.', 'optioner' );
+	?>
+	<p>This is a demonstration of custom tab. You can add anything here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos quia eveniet fugiat nihil voluptatum, laborum alias reprehenderit, modi dicta repudiandae, officia repellat fuga cum optio sit culpa nemo quibusdam. Perspiciatis.</p>
+	<?php
 }
 
 /**

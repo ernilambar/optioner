@@ -1072,7 +1072,16 @@ class Optioner {
 			.tab-content .tab-content-inner {
 				background-color: #fff;
 				padding: 10px 20px;
-				margin-top: 10px;
+			}
+
+			.tab-content p.submit {
+				padding-bottom: 0;
+			}
+
+			.nav-tab-active,
+			.nav-tab-active:hover {
+				background-color: #fff;
+				border-bottom-color: #fff;
 			}
 
 			.sidebox {
