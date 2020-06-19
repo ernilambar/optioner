@@ -970,9 +970,32 @@ class Optioner {
 			.wrap-secondary {
 				flex-basis: 20%;
 				margin-left: 30px;
-				background-color: #fff;
-				padding: 20px;
 				margin-top: 40px;
+			}
+
+			.sidebox {
+			    position: relative;
+			    min-width: 240px;
+			    border: 1px solid #ccd0d4;
+			    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+			    background: #fff;
+			    padding: 15px;
+			    margin-bottom: 15px;
+			}
+
+			.sidebox .box-heading {
+				font-size: 1.2em;
+				margin-top: 0;
+			}
+
+			.sidebox .box-content ul,
+			.sidebox .box-content ol,
+			.sidebox .box-content p {
+				margin-top: 0;
+			}
+
+			.sidebox .box-content p:last-child {
+				margin-bottom: 0;
 			}
 
 			.field-heading {
