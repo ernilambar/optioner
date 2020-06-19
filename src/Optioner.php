@@ -380,7 +380,7 @@ class Optioner {
 
 		$html .= $this->get_field_description( $args );
 
-		$html = sprintf( '<div class="field-%s">%s</div>', $attr['type'], $html );
+		$html = sprintf( '<div class="form-field-%1$s form-field-%2$s">%3$s</div>', $attr['type'], $args['field']['id'], $html );
 
 		do_action( 'optioner_field_top_' . $args['field']['type'], $args['field']['id'], $this->page['menu_slug'], $args );
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
