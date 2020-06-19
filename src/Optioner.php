@@ -1069,8 +1069,10 @@ class Optioner {
 				margin-top: 20px;
 			}
 
-			.tab-content .tab-content-inner-custom {
-				margin: 20px 0;
+			.tab-content .tab-content-inner {
+				background-color: #fff;
+				padding: 10px 20px;
+				margin-top: 10px;
 			}
 
 			.sidebox {
