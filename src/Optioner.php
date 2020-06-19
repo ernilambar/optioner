@@ -246,16 +246,18 @@ class Optioner {
 			echo '<div id="' . esc_attr( $tab['id'] ) . '" class="tab-content">';
 
 			if ( isset( $tab['render_callback'] ) && is_callable( $tab['render_callback'] ) ) {
-				echo '<div class="tab-content-inner">';
+				echo '<div class="tab-content-inner tab-content-inner-custom">';
 				do_action( 'optioner_form_top_' . $tab['id'], $tab );
 				call_user_func( $tab['render_callback'] );
 				do_action( 'optioner_form_bottom_' . $tab['id'], $tab );
 				echo '</div>';
 			} else {
+				echo '<div class="tab-content-inner">';
 				do_action( 'optioner_form_top_' . $tab['id'], $tab );
 				do_settings_sections( $tab['id'] . '-' . $this->page['menu_slug'] );
 				do_action( 'optioner_form_bottom_' . $tab['id'], $tab );
 				submit_button( esc_html__( 'Save Changes', 'optioner' ) );
+				echo '</div>';
 			}
 
 			echo '</div>';
@@ -979,7 +981,7 @@ class Optioner {
 				display: none;
 			}
 
-			.tab-content > h2 {
+			.tab-content .tab-content-inner > h2 {
 				display: none;
 			}
 
@@ -1007,7 +1009,7 @@ class Optioner {
 				margin-top: 20px;
 			}
 
-			.tab-content .tab-content-inner {
+			.tab-content .tab-content-inner-custom {
 				margin: 20px 0;
 			}
 
