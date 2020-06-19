@@ -463,7 +463,7 @@ $obj->run();
  * @since 1.0.0
  */
 function optioner_render_features_tab() {
-	echo esc_html__( 'I am callback for features tab.', 'optioner' );
+	echo esc_html__( 'This is a demonstration of custom tab. You can add anything here.', 'optioner' );
 }
 
 /**
