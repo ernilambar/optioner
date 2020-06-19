@@ -557,6 +557,8 @@ class Optioner {
 	 */
 	public function callback_image( $args ) {
 		$value = $this->get_value( $args );
+
+		ob_start();
 		?>
 		<div class="field-image">
 			<input type="button" class="select-img button button-primary" value="<?php esc_attr_e( 'Upload', 'optioner' ); ?>" data-uploader_title="<?php esc_attr_e( 'Select Image', 'optioner' ); ?>" data-uploader_button_text="<?php esc_attr_e( 'Choose Image', 'optioner' ); ?>" />
@@ -580,6 +582,11 @@ class Optioner {
 		</div>
 
 		<?php
+		$html = ob_get_clean();
+
+		$html .= $this->get_field_description( $args );
+
+		$this->render_field_markup( $html, $args );
 	}
 
 	/**
