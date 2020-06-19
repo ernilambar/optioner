@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Optioner
  * Description: Minimal option framework.
- * Version: 1.0.0
+ * Version: 1.0.2
  * Author: Nilambar Sharma
  * Author URI: https://www.nilambar.net
  * Text Domain: optioner
