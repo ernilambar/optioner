@@ -184,7 +184,7 @@ class Optioner {
 
 		echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
 
-		$tab_status_class = ( true === $this->tab_status ) ? 'tab-enabled': 'tab-disabled';
+		$tab_status_class = ( true === $this->tab_status ) ? 'tab-enabled' : 'tab-disabled';
 
 		echo '<div class="wrap-content ' . esc_attr( $tab_status_class ) . '">';
 
@@ -386,7 +386,7 @@ class Optioner {
 	 * @since 1.0.0
 	 *
 	 * @param string $html HTML markup.
-	 * @param array $args Arguments.
+	 * @param array  $args Arguments.
 	 */
 	public function render_field_markup( $html, $args ) {
 		$html = sprintf( '<div class="form-field-%1$s form-field-%2$s">%3$s</div>', $args['field']['type'], $args['field']['id'], $html );
@@ -454,6 +454,17 @@ class Optioner {
 	 * @param array $args Arguments.
 	 */
 	public function callback_email( $args ) {
+		$this->callback_text( $args );
+	}
+
+	/**
+	 * Render password.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_password( $args ) {
 		$this->callback_text( $args );
 	}
 
@@ -564,7 +575,7 @@ class Optioner {
 	 * @param array $args Arguments.
 	 */
 	public function callback_editor( $args ) {
-		$field_value = $this->get_value($args);
+		$field_value = $this->get_value( $args );
 
 		$editor_settings = array(
 			'teeny'          => true,
@@ -577,7 +588,7 @@ class Optioner {
 			$editor_settings = wp_parse_args( $args['field']['settings'], $editor_settings );
 		}
 
-		$size  = isset( $args['field']['size'] ) && ! empty( $args['field']['size'] ) ? absint( $args['field']['size'] ) : 1024;
+		$size = isset( $args['field']['size'] ) && ! empty( $args['field']['size'] ) ? absint( $args['field']['size'] ) : 1024;
 
 		ob_start();
 
@@ -1056,13 +1067,13 @@ class Optioner {
 			}
 
 			.sidebox {
-			    position: relative;
-			    min-width: 240px;
-			    border: 1px solid #ccd0d4;
-			    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-			    background: #fff;
-			    padding: 15px;
-			    margin-bottom: 15px;
+				position: relative;
+				min-width: 240px;
+				border: 1px solid #ccd0d4;
+				box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+				background: #fff;
+				padding: 15px;
+				margin-bottom: 15px;
 			}
 
 			.sidebox .box-heading {

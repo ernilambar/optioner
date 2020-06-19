@@ -181,6 +181,17 @@ $obj->add_field(
 	)
 );
 
+// Field: text_password.
+$obj->add_field(
+	'text_tab',
+	array(
+		'id'          => 'text_password',
+		'type'        => 'password',
+		'title'       => esc_html__( 'Text Password', 'optioner' ),
+		'description' => esc_html__( 'Description of text password.', 'optioner' ),
+	)
+);
+
 // Field: sample_url.
 $obj->add_field(
 	'text_tab',
@@ -383,7 +394,7 @@ $obj->add_field(
 			'textarea_rows' => 5,
 			'media_buttons' => false,
 			'quicktags'     => false,
-		)
+		),
 	)
 );
 
@@ -400,7 +411,7 @@ $obj->add_field(
 			'textarea_rows' => 5,
 			'media_buttons' => false,
 			'tinymce'       => false,
-		)
+		),
 	)
 );
 
@@ -416,7 +427,7 @@ $obj->add_field(
 		'settings'    => array(
 			'textarea_rows' => 5,
 			'media_buttons' => false,
-		)
+		),
 	)
 );
 
