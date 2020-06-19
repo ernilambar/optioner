@@ -431,11 +431,11 @@ $obj->add_field(
 	)
 );
 
-// Field: editor_thulo.
+// Field: editor_large.
 $obj->add_field(
 	'editor_tab',
 	array(
-		'id'          => 'editor_thulo',
+		'id'          => 'editor_large',
 		'type'        => 'editor',
 		'title'       => esc_html__( 'Editor Large', 'optioner' ),
 		'description' => esc_html__( 'Description for editor large.', 'optioner' ),
