@@ -345,6 +345,10 @@ class Optioner {
 							$output[ $field['id'] ] = sanitize_textarea_field( $input[ $field['id'] ] );
 							break;
 
+						case 'editor':
+							$output[ $field['id'] ] = wp_kses_post( $input[ $field['id'] ] );
+							break;
+
 						case 'checkbox':
 							$output[ $field['id'] ] = $input[ $field['id'] ] ? true : false;
 							break;
@@ -546,6 +550,44 @@ class Optioner {
 		$attributes = $this->render_attr( $attr, false );
 
 		$html = sprintf( '<textarea %s>%s</textarea>', $attributes, esc_textarea( $this->get_value( $args ) ) );
+
+		$html .= $this->get_field_description( $args );
+
+		$this->render_field_markup( $html, $args );
+	}
+
+	/**
+	 * Render editor.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_editor( $args ) {
+		$field_value = $this->get_value($args);
+
+		$editor_settings = array(
+			'teeny'          => true,
+			'textarea_name'  => $args['field_name'],
+			'textarea_rows'  => 10,
+			'default_editor' => 'tinymce',
+		);
+
+		if ( isset( $args['field']['settings'] ) && is_array( $args['field']['settings'] ) ) {
+			$editor_settings = wp_parse_args( $args['field']['settings'], $editor_settings );
+		}
+
+		$size  = isset( $args['field']['size'] ) && ! empty( $args['field']['size'] ) ? absint( $args['field']['size'] ) : 1024;
+
+		ob_start();
+
+		echo '<div style="max-width: ' . esc_attr( $size . 'px' ) . ';">';
+
+		wp_editor( $field_value, $args['field_id'], $editor_settings );
+
+		echo '</div>';
+
+		$html = ob_get_clean();
 
 		$html .= $this->get_field_description( $args );
 

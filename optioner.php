@@ -362,6 +362,74 @@ $obj->add_field(
 	)
 );
 
+// Tab: editor_tab.
+$obj->add_tab(
+	array(
+		'id'    => 'editor_tab',
+		'title' => esc_html__( 'Editor', 'optioner' ),
+	)
+);
+
+// Field: editor_visual_only.
+$obj->add_field(
+	'editor_tab',
+	array(
+		'id'          => 'editor_visual_only',
+		'type'        => 'editor',
+		'title'       => esc_html__( 'Editor Visual Mode Only', 'optioner' ),
+		'description' => esc_html__( 'Description for editor visual mode only.', 'optioner' ),
+		'size'        => 500, // Max width, in px.
+		'settings'    => array(
+			'textarea_rows' => 5,
+			'media_buttons' => false,
+			'quicktags'     => false,
+		)
+	)
+);
+
+// Field: editor_text_only.
+$obj->add_field(
+	'editor_tab',
+	array(
+		'id'          => 'editor_text_only',
+		'type'        => 'editor',
+		'title'       => esc_html__( 'Editor Text Mode Only', 'optioner' ),
+		'description' => esc_html__( 'Description for editor text mode only.', 'optioner' ),
+		'size'        => 500, // Max width, in px.
+		'settings'    => array(
+			'textarea_rows' => 5,
+			'media_buttons' => false,
+			'tinymce'       => false,
+		)
+	)
+);
+
+// Field: editor_small.
+$obj->add_field(
+	'editor_tab',
+	array(
+		'id'          => 'editor_small',
+		'type'        => 'editor',
+		'title'       => esc_html__( 'Editor Small', 'optioner' ),
+		'description' => esc_html__( 'Description for editor small.', 'optioner' ),
+		'size'        => 500, // Max width, in px.
+		'settings'    => array(
+			'textarea_rows' => 5,
+			'media_buttons' => false,
+		)
+	)
+);
+
+// Field: editor_thulo.
+$obj->add_field(
+	'editor_tab',
+	array(
+		'id'          => 'editor_thulo',
+		'type'        => 'editor',
+		'title'       => esc_html__( 'Editor Large', 'optioner' ),
+		'description' => esc_html__( 'Description for editor large.', 'optioner' ),
+	)
+);
 
 // Tab: features_tab.
 $obj->add_tab(
