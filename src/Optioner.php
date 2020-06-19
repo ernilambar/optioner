@@ -246,9 +246,11 @@ class Optioner {
 			echo '<div id="' . esc_attr( $tab['id'] ) . '" class="tab-content">';
 
 			if ( isset( $tab['render_callback'] ) && is_callable( $tab['render_callback'] ) ) {
+				echo '<div class="tab-content-inner">';
 				do_action( 'optioner_form_top_' . $tab['id'], $tab );
 				call_user_func( $tab['render_callback'] );
 				do_action( 'optioner_form_bottom_' . $tab['id'], $tab );
+				echo '</div>';
 			} else {
 				do_action( 'optioner_form_top_' . $tab['id'], $tab );
 				do_settings_sections( $tab['id'] . '-' . $this->page['menu_slug'] );
@@ -988,7 +990,7 @@ class Optioner {
 			.wrap-content.tab-disabled {
 				margin-top: 10px;
 				display: flex;
-				border-top: 1px #CCCCCC solid;
+				border-top: 1px #CCC solid;
 			}
 
 			.wrap-primary {
@@ -1003,6 +1005,10 @@ class Optioner {
 
 			.tab-disabled .wrap-secondary {
 				margin-top: 20px;
+			}
+
+			.tab-content .tab-content-inner {
+				margin: 20px 0;
 			}
 
 			.sidebox {
@@ -1030,39 +1036,39 @@ class Optioner {
 				margin-bottom: 0;
 			}
 
-			.field-heading {
+			.form-field-heading {
 				margin-left: -10px;
 			}
 
-			.field-heading h2 {
+			.form-field-heading h2 {
 				margin-top: 0;
 			}
 
-			.field-heading .description {
+			.form-field-heading .description {
 				font-size: 13px;
 				font-style: inherit;
 				color: #444;
 			}
 
-			.field-radio .layout-horizontal {
+			.form-field-radio .layout-horizontal {
 				display: flex;
 			}
 
-			.field-radio .radio-list {
+			.form-field-radio .radio-list {
 				margin: 0;
 				padding: 0;
 			}
 
-			.field-radio .radio-list li {
+			.form-field-radio .radio-list li {
 				margin-right: 10px;
 			}
 
-			.field-image .image-preview-wrap {
+			.form-field-image .image-preview-wrap {
 				margin-top: 10px;
 				max-width: 200px;
 			}
 
-			.field-image .image-preview-wrap img {
+			.form-field-image .image-preview-wrap img {
 				width: 100%;
 			}
 		</style>
@@ -1097,7 +1103,7 @@ class Optioner {
 				});
 
 				// Heading fix.
-				$('.field-heading').each(function(i, el){
+				$('.form-field-heading').each(function(i, el){
 					$el = $(el);
 
 					$tr = $el.parent().parent();
