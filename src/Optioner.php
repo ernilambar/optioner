@@ -1054,7 +1054,7 @@ class Optioner {
 
 			.wrap-secondary {
 				flex-basis: 20%;
-				margin-left: 30px;
+				margin-left: 20px;
 				margin-top: 40px;
 			}
 
@@ -1068,7 +1068,7 @@ class Optioner {
 
 			.sidebox {
 				position: relative;
-				min-width: 240px;
+				min-width: 200px;
 				border: 1px solid #ccd0d4;
 				box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 				background: #fff;

@@ -175,8 +175,8 @@ $obj->add_field(
 	array(
 		'id'          => 'text_large',
 		'type'        => 'text',
-		'title'       => esc_html__( 'Text Regular', 'optioner' ),
-		'description' => esc_html__( 'Description of text regular.', 'optioner' ),
+		'title'       => esc_html__( 'Text Large', 'optioner' ),
+		'description' => esc_html__( 'Description of text large.', 'optioner' ),
 		'class'       => 'large-text',
 	)
 );
@@ -389,7 +389,7 @@ $obj->add_field(
 		'type'        => 'editor',
 		'title'       => esc_html__( 'Editor Visual Mode Only', 'optioner' ),
 		'description' => esc_html__( 'Description for editor visual mode only.', 'optioner' ),
-		'size'        => 500, // Max width, in px.
+		'size'        => 460, // Max width, in px.
 		'settings'    => array(
 			'textarea_rows' => 5,
 			'media_buttons' => false,
@@ -406,7 +406,7 @@ $obj->add_field(
 		'type'        => 'editor',
 		'title'       => esc_html__( 'Editor Text Mode Only', 'optioner' ),
 		'description' => esc_html__( 'Description for editor text mode only.', 'optioner' ),
-		'size'        => 500, // Max width, in px.
+		'size'        => 460, // Max width, in px.
 		'settings'    => array(
 			'textarea_rows' => 5,
 			'media_buttons' => false,
@@ -423,7 +423,7 @@ $obj->add_field(
 		'type'        => 'editor',
 		'title'       => esc_html__( 'Editor Small', 'optioner' ),
 		'description' => esc_html__( 'Description for editor small.', 'optioner' ),
-		'size'        => 500, // Max width, in px.
+		'size'        => 460, // Max width, in px.
 		'settings'    => array(
 			'textarea_rows' => 5,
 			'media_buttons' => false,
@@ -451,6 +451,9 @@ $obj->add_tab(
 	)
 );
 
+// Set sidebar.
+$obj->set_sidebar( __NAMESPACE__ . '\optioner_render_sidebar' );
+
 // Render now.
 $obj->run();
 
@@ -461,4 +464,37 @@ $obj->run();
  */
 function optioner_render_features_tab() {
 	echo esc_html__( 'I am callback for features tab.', 'optioner' );
+}
+
+/**
+ * Render features tab.
+ *
+ * @since 1.0.0
+ */
+function optioner_render_sidebar() {
+	?>
+	<div class="sidebox">
+		<h3 class="box-heading">Help &amp; Support</h3>
+		<div class="box-content">
+			<ul>
+				<li><strong>Questions, bugs, or great ideas?</strong></li>
+				<li><a href="https://github.com/ernilambar/optioner/issues" target="_blank">Create issue in the repo</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="sidebox">
+		<h3 class="box-heading">Sample Links</h3>
+		<div class="box-content">
+			<p>Lorem ipsum dolor sit amet, conse ctetur adipiscing elit.</p>
+			<ul>
+				<li><strong>Important links</strong></li>
+				<li><a href="#">Sample Link One</a></li>
+				<li><a href="#">Sample Link Two</a></li>
+				<li><a href="#">Sample Link Three</a></li>
+				<li><a href="#">Sample Link Four</a></li>
+				<li><a href="#">Sample Link Five</a></li>
+			</ul>
+		</div>
+	</div>
+	<?php
 }
