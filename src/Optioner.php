@@ -373,6 +373,22 @@ class Optioner {
 	}
 
 	/**
+	 * Render field markup.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $html HTML markup.
+	 * @param array $args Arguments.
+	 */
+	public function render_field_markup( $html, $args ) {
+		$html = sprintf( '<div class="form-field-%1$s form-field-%2$s">%3$s</div>', $args['field']['type'], $args['field']['id'], $html );
+
+		do_action( 'optioner_field_top_' . $args['field']['type'], $args['field']['id'], $this->page['menu_slug'], $args );
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		do_action( 'optioner_field_bottom_' . $args['field']['type'], $args['field']['id'], $this->page['menu_slug'], $args );
+	}
+
+	/**
 	 * Render text.
 	 *
 	 * @since 1.0.0
@@ -397,11 +413,7 @@ class Optioner {
 
 		$html .= $this->get_field_description( $args );
 
-		$html = sprintf( '<div class="form-field-%1$s form-field-%2$s">%3$s</div>', $attr['type'], $args['field']['id'], $html );
-
-		do_action( 'optioner_field_top_' . $args['field']['type'], $args['field']['id'], $this->page['menu_slug'], $args );
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		do_action( 'optioner_field_bottom_' . $args['field']['type'], $args['field']['id'], $this->page['menu_slug'], $args );
+		$this->render_field_markup( $html, $args );
 	}
 
 	/**
@@ -465,9 +477,7 @@ class Optioner {
 
 		$html .= $this->get_field_description( $args );
 
-		$html = sprintf( '<div class="field-checkbox">%s</div>', $html );
-
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$this->render_field_markup( $html, $args );
 	}
 
 	/**
@@ -508,9 +518,7 @@ class Optioner {
 
 		$html .= $this->get_field_description( $args );
 
-		$html = sprintf( '<div class="field-multicheck">%s</div>', $html );
-
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$this->render_field_markup( $html, $args );
 	}
 
 	/**
@@ -537,9 +545,7 @@ class Optioner {
 
 		$html .= $this->get_field_description( $args );
 
-		$html = sprintf( '<div class="field-textarea">%s</div>', $html );
-
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$this->render_field_markup( $html, $args );
 	}
 
 	/**
@@ -603,9 +609,7 @@ class Optioner {
 
 		$html .= $this->get_field_description( $args );
 
-		$html = sprintf( '<div class="field-color">%s</div>', $html );
-
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$this->render_field_markup( $html, $args );
 	}
 
 	/**
@@ -626,9 +630,7 @@ class Optioner {
 
 		$html .= $this->get_field_description( $args );
 
-		$html = sprintf( '<div class="field-heading">%s</div>', $html );
-
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$this->render_field_markup( $html, $args );
 	}
 
 
@@ -662,9 +664,7 @@ class Optioner {
 
 		$html .= $this->get_field_description( $args );
 
-		$html = sprintf( '<div class="field-select">%s</div>', $html );
-
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$this->render_field_markup( $html, $args );
 	}
 
 	/**
@@ -707,9 +707,7 @@ class Optioner {
 
 		$html .= $this->get_field_description( $args );
 
-		$html = sprintf( '<div class="field-radio">%s</div>', $html );
-
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$this->render_field_markup( $html, $args );
 	}
 
 	/**
