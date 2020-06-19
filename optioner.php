@@ -452,7 +452,11 @@ $obj->add_tab(
 );
 
 // Set sidebar.
-$obj->set_sidebar( __NAMESPACE__ . '\optioner_render_sidebar' );
+$obj->set_sidebar(
+	array(
+		'render_callback' => __NAMESPACE__ . '\optioner_render_sidebar',
+	)
+);
 
 // Render now.
 $obj->run();

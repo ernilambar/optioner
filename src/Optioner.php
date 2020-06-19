@@ -90,6 +90,15 @@ class Optioner {
 	protected $is_sidebar = false;
 
 	/**
+	 * Sidebar width.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var int
+	 */
+	protected $sidebar_width;
+
+	/**
 	 * Sidebar callback.
 	 *
 	 * @since 1.0.0
@@ -199,7 +208,9 @@ class Optioner {
 		echo '</div><!-- .wrap-primary -->';
 
 		if ( true === $this->is_sidebar ) {
-			echo '<div class="wrap-secondary">';
+			$sidebar_styles = 'flex-basis:' . absint( $this->sidebar_width ) . '%;';
+
+			echo '<div class="wrap-secondary" style="' . esc_attr( $sidebar_styles ) . '">';
 
 			if ( is_callable( $this->sidebar_callback ) ) {
 				call_user_func( $this->sidebar_callback );
@@ -252,7 +263,7 @@ class Optioner {
 				do_action( 'optioner_form_bottom_' . $tab['id'], $tab );
 				echo '</div>';
 			} else {
-				echo '<div class="tab-content-inner">';
+				echo '<div class="tab-content-inner tab-content-inner-fields">';
 				do_action( 'optioner_form_top_' . $tab['id'], $tab );
 				do_settings_sections( $tab['id'] . '-' . $this->page['menu_slug'] );
 				do_action( 'optioner_form_bottom_' . $tab['id'], $tab );
@@ -858,12 +869,27 @@ class Optioner {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $cb Callback function.
+	 * @param array $args Arguments.
 	 */
-	public function set_sidebar( $cb ) {
+	public function set_sidebar( $args ) {
 		$this->is_sidebar = true;
 
-		$this->sidebar_callback = $cb;
+		$defaults = array(
+			'render_callback' => '',
+			'width'           => 20,
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		if ( absint( $args['width'] ) > 0 && absint( $args['width'] ) < 100 ) {
+			$this->sidebar_width = absint( $args['width'] );
+		} else {
+			$this->sidebar_width = 20;
+		}
+
+		if ( is_callable( $args['render_callback'] ) ) {
+			$this->sidebar_callback = $args['render_callback'];
+		}
 	}
 
 	/**
@@ -1050,9 +1076,7 @@ class Optioner {
 			}
 
 			.wrap-content.tab-disabled {
-				margin-top: 10px;
 				display: flex;
-				border-top: 1px #CCC solid;
 			}
 
 			.wrap-primary {
@@ -1060,9 +1084,8 @@ class Optioner {
 			}
 
 			.wrap-secondary {
-				flex-basis: 20%;
-				margin-left: 20px;
-				margin-top: 40px;
+				margin-left: 15px;
+				margin-top: 43px;
 			}
 
 			.tab-disabled .wrap-secondary {
@@ -1071,7 +1094,29 @@ class Optioner {
 
 			.tab-content .tab-content-inner {
 				background-color: #fff;
-				padding: 10px 20px;
+				box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+				border: 1px solid #ccd0d4;
+				border-top: none;
+			}
+
+			.tab-disabled .tab-content-inner {
+				margin-top: 20px;
+				border-top: 1px solid #ccd0d4;
+			}
+
+			.tab-content-inner-fields {
+				padding: 5px 20px 15px 20px;
+			}
+
+			.tab-content-inner-custom {
+				padding: 20px;
+			}
+
+			.tab-content-inner-custom p:first-child {
+				margin-top: 0;
+			}
+			.tab-content-inner-custom p:last-child {
+				margin-bottom: 0;
 			}
 
 			.tab-content p.submit {
