@@ -321,55 +321,62 @@ class Optioner {
 
 			foreach ( $tab as $field ) {
 				if ( isset( $input[ $field['id'] ] ) ) {
-					switch ( strtolower( $field['type'] ) ) {
-						case 'text':
-						case 'select':
-						case 'radio':
-							$output[ $field['id'] ] = sanitize_text_field( $input[ $field['id'] ] );
-							break;
 
-						case 'url':
-						case 'image':
-							$output[ $field['id'] ] = esc_url_raw( $input[ $field['id'] ] );
-							break;
+					if ( isset( $field['sanitize_callback'] ) && is_callable( $field['sanitize_callback'] ) ) {
+						// Custom sanitization.
+						$output[ $field['id'] ] = call_user_func_array( $field['sanitize_callback'], array( $input[ $field['id'] ] ) );
+					} else {
+						// Default sanitization.
+						switch ( strtolower( $field['type'] ) ) {
+							case 'text':
+							case 'select':
+							case 'radio':
+								$output[ $field['id'] ] = sanitize_text_field( $input[ $field['id'] ] );
+								break;
 
-						case 'email':
-							$output[ $field['id'] ] = sanitize_email( $input[ $field['id'] ] );
-							break;
+							case 'url':
+							case 'image':
+								$output[ $field['id'] ] = esc_url_raw( $input[ $field['id'] ] );
+								break;
 
-						case 'number':
-							$output[ $field['id'] ] = intval( $input[ $field['id'] ] );
-							break;
+							case 'email':
+								$output[ $field['id'] ] = sanitize_email( $input[ $field['id'] ] );
+								break;
 
-						case 'textarea':
-							$output[ $field['id'] ] = sanitize_textarea_field( $input[ $field['id'] ] );
-							break;
+							case 'number':
+								$output[ $field['id'] ] = intval( $input[ $field['id'] ] );
+								break;
 
-						case 'editor':
-							$output[ $field['id'] ] = wp_kses_post( $input[ $field['id'] ] );
-							break;
+							case 'textarea':
+								$output[ $field['id'] ] = sanitize_textarea_field( $input[ $field['id'] ] );
+								break;
 
-						case 'checkbox':
-							$output[ $field['id'] ] = $input[ $field['id'] ] ? true : false;
-							break;
+							case 'editor':
+								$output[ $field['id'] ] = wp_kses_post( $input[ $field['id'] ] );
+								break;
 
-						case 'multicheck':
-							$val = array();
+							case 'checkbox':
+								$output[ $field['id'] ] = $input[ $field['id'] ] ? true : false;
+								break;
 
-							if ( is_array( $input[ $field['id'] ] ) && ! empty( $input[ $field['id'] ] ) ) {
-								foreach ( $input[ $field['id'] ] as $v ) {
-									$val[] = sanitize_text_field( $v );
+							case 'multicheck':
+								$val = array();
+
+								if ( is_array( $input[ $field['id'] ] ) && ! empty( $input[ $field['id'] ] ) ) {
+									foreach ( $input[ $field['id'] ] as $v ) {
+										$val[] = sanitize_text_field( $v );
+									}
 								}
-							}
 
-							if ( ! empty( $val ) ) {
-								$output[ $field['id'] ] = $val;
-							}
-							break;
+								if ( ! empty( $val ) ) {
+									$output[ $field['id'] ] = $val;
+								}
+								break;
 
-						default:
-							$output[ $field['id'] ] = sanitize_text_field( $input[ $field['id'] ] );
-							break;
+							default:
+								$output[ $field['id'] ] = sanitize_text_field( $input[ $field['id'] ] );
+								break;
+						}
 					}
 				} else {
 					$output[ $field['id'] ] = null;
