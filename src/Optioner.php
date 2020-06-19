@@ -54,6 +54,15 @@ class Optioner {
 	protected $tabs = array();
 
 	/**
+	 * Tab status
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var bool
+	 */
+	protected $tab_status = false;
+
+	/**
 	 * Fields.
 	 *
 	 * @since 1.0.0
@@ -123,6 +132,10 @@ class Optioner {
 			$this->parent_page = 'options-general.php';
 		}
 
+		if ( count( $this->tabs ) > 1 ) {
+			$this->tab_status = true;
+		}
+
 		// Create admin page.
 		add_action( 'admin_menu', array( $this, 'create_menu_page' ) );
 
@@ -171,11 +184,15 @@ class Optioner {
 
 		echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
 
-		echo '<div class="wrap-content">';
+		$tab_status_class = ( true === $this->tab_status ) ? 'tab-enabled': 'tab-disabled';
+
+		echo '<div class="wrap-content ' . esc_attr( $tab_status_class ) . '">';
 
 		echo '<div class="wrap-primary">';
 
-		$this->render_navigation();
+		if ( true === $this->tab_status ) {
+			$this->render_navigation();
+		}
 
 		$this->render_forms();
 
@@ -963,6 +980,12 @@ class Optioner {
 				display: flex;
 			}
 
+			.wrap-content.tab-disabled {
+				margin-top: 10px;
+				display: flex;
+				border-top: 1px #CCCCCC solid;
+			}
+
 			.wrap-primary {
 				flex: 1;
 			}
@@ -971,6 +994,10 @@ class Optioner {
 				flex-basis: 20%;
 				margin-left: 30px;
 				margin-top: 40px;
+			}
+
+			.tab-disabled .wrap-secondary {
+				margin-top: 20px;
 			}
 
 			.sidebox {
