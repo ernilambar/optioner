@@ -1359,5 +1359,31 @@ class Optioner {
 	public function get_underscored_string( $title ) {
 		return str_replace( '-', '_', sanitize_title_with_dashes( $title ) );
 	}
+
+	/**
+	 * Return settings page URL.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string URL.
+	 */
+	public function get_page_url() {
+		$parent = $this->parent_page;
+
+		if ( true === $this->top_level_menu ) {
+			$parent = 'admin.php';
+		}
+
+		$base_url = admin_url( $parent );
+
+		$output = add_query_arg(
+			array(
+				'page' => $this->page['menu_slug'],
+			),
+			$base_url
+		);
+
+		return $output;
+	}
 }
 
