@@ -1115,6 +1115,7 @@ class Optioner {
 			.tab-content-inner-custom p:first-child {
 				margin-top: 0;
 			}
+
 			.tab-content-inner-custom p:last-child {
 				margin-bottom: 0;
 			}
@@ -1212,7 +1213,7 @@ class Optioner {
 		$storage_key = $slug . '_activetab';
 		?>
 		<script>
-			var custom_theme_file_frame;
+			var optioner_custom_file_frame;
 
 			jQuery( document ).ready( function( $ ) {
 				//Initiate Color Picker.
@@ -1229,8 +1230,6 @@ class Optioner {
 					$tr.find('th').hide();
 
 					$tr.find('td').attr('colspan',2);
-
-
 				});
 
 				// Switches tabs.
@@ -1271,15 +1270,14 @@ class Optioner {
 
 				// Uploads.
 				jQuery(document).on('click', 'input.select-img', function( event ){
-
 					var $this = $(this);
 
 					event.preventDefault();
 
-					var CustomThemeImage = wp.media.controller.Library.extend({
+					var OptionerCustomImage = wp.media.controller.Library.extend({
 						defaults :  _.defaults({
-							id:        'custom-theme-insert-image',
-							title:      $this.data( 'uploader_title' ),
+							id: 'optioner-custom-insert-image',
+							title: $this.data( 'uploader_title' ),
 							allowLocalEdits: false,
 							displaySettings: true,
 							displayUserSettings: false,
@@ -1289,20 +1287,20 @@ class Optioner {
 					});
 
 					// Create the media frame.
-					custom_theme_file_frame = wp.media.frames.custom_theme_file_frame = wp.media({
+					optioner_custom_file_frame = wp.media.frames.optioner_custom_file_frame = wp.media({
 						button: {
 							text: jQuery( this ).data( 'uploader_button_text' )
 						},
-						state : 'custom-theme-insert-image',
+						state : 'optioner-custom-insert-image',
 						states : [
-						new CustomThemeImage()
+						new OptionerCustomImage()
 						],
 						multiple: false
 					});
 
 					// When an image is selected, run a callback.
-					custom_theme_file_frame.on( 'select', function() {
-						var state = custom_theme_file_frame.state('custom-theme-insert-image');
+					optioner_custom_file_frame.on( 'select', function() {
+						var state = optioner_custom_file_frame.state('optioner-custom-insert-image');
 						var selection = state.get('selection');
 						var display = state.display( selection.first() ).toJSON();
 						var obj_attachment = selection.first().toJSON();
@@ -1314,23 +1312,25 @@ class Optioner {
 						// Copy image URL.
 						image_field.val(imgurl);
 						image_field.trigger('change');
+
 						// Show in preview.
 						var image_preview_wrap = $this.siblings('.image-preview-wrap');
-						var image_html = '<img src="' + imgurl+ '" alt="" style="max-width:100%;max-height:200px;" />';
+						var image_html = '<img src="' + imgurl + '" alt="" style="max-width:100%;max-height:200px;" />';
 						image_preview_wrap.html( image_html );
+
 						// Show Remove button.
 						var image_remove_button = $this.siblings('.btn-image-remove');
 						image_remove_button.css('display','inline-block');
 					});
 
 					// Finally, open the modal.
-					custom_theme_file_frame.open();
+					optioner_custom_file_frame.open();
 				});
 
 				// Remove image.
 				jQuery(document).on('click', 'input.btn-image-remove', function( e ) {
-
 					e.preventDefault();
+
 					var $this = $(this);
 					var image_field = $this.siblings('.img');
 					image_field.val('');
@@ -1338,12 +1338,8 @@ class Optioner {
 					image_preview_wrap.html('');
 					$this.css('display','none');
 					image_field.trigger('change');
-
 				});
-
-
 			});
-
 		</script>
 		<?php
 	}
