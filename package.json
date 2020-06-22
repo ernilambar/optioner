@@ -1,7 +1,7 @@
 {
   "name": "optioner",
   "title": "Optioner",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "license": "GPL-2.0-or-later",
   "scripts": {
     "textdomain": "wpi18n addtextdomain"

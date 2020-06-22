@@ -1063,9 +1063,11 @@ class Optioner {
 		}
 		?>
 		<style>
-			.tab-content {
-				display: none;
-			}
+			<?php if ( true === $this->tab_status ) : ?>
+				.tab-content {
+					display: none;
+				}
+			<?php endif; ?>
 
 			.tab-content .tab-content-inner > h2 {
 				display: none;
@@ -1232,41 +1234,47 @@ class Optioner {
 					$tr.find('td').attr('colspan',2);
 				});
 
-				// Switches tabs.
-				$( '.tab-content' ).hide();
+				var $is_tab = $('.wrap-content').hasClass('tab-enabled');
 
-				var activetab = '';
-
-				if ( 'undefined' != typeof localStorage ) {
-					activetab = localStorage.getItem( '<?php echo esc_attr( $storage_key ); ?>' );
-				}
-
-				if ( '' != activetab && $( activetab ).length ) {
-					$( activetab ).fadeIn();
-				} else {
-					$( '.tab-content:first' ).fadeIn();
-				}
-
-				// Tab links.
-				if ( '' != activetab && $( activetab + '-tab' ).length ) {
-					$( activetab + '-tab' ).addClass( 'nav-tab-active' );
-				} else {
-					$( '.nav-tab-wrapper a:first' ).addClass( 'nav-tab-active' );
-				}
-
-				// Tab switcher.
-				$( '.nav-tab-wrapper a' ).click( function( evt ) {
-					$( '.nav-tab-wrapper a' ).removeClass( 'nav-tab-active' );
-					$( this ).addClass( 'nav-tab-active' ).blur();
-
-					var clicked_group = $( this ).attr( 'href' );
-					if ( 'undefined' != typeof localStorage ) {
-						localStorage.setItem( '<?php echo esc_attr( $storage_key ); ?>', $( this ).attr( 'href' ) );
-					}
+				if ( true == $is_tab ) {
+					// Switches tabs.
 					$( '.tab-content' ).hide();
-					$( clicked_group ).fadeIn();
-					evt.preventDefault();
-				});
+
+					var activetab = '';
+
+					if ( 'undefined' != typeof localStorage ) {
+						activetab = localStorage.getItem( '<?php echo esc_attr( $storage_key ); ?>' );
+					}
+
+					if ( '' != activetab && $( activetab ).length ) {
+						$( activetab ).fadeIn();
+					} else {
+						$( '.tab-content:first' ).fadeIn();
+					}
+
+					// Tab links.
+					if ( '' != activetab && $( activetab + '-tab' ).length ) {
+						$( activetab + '-tab' ).addClass( 'nav-tab-active' );
+					} else {
+						$( '.nav-tab-wrapper a:first' ).addClass( 'nav-tab-active' );
+					}
+
+					// Tab switcher.
+					$( '.nav-tab-wrapper a' ).click( function( evt ) {
+						$( '.nav-tab-wrapper a' ).removeClass( 'nav-tab-active' );
+						$( this ).addClass( 'nav-tab-active' ).blur();
+
+						var clicked_group = $( this ).attr( 'href' );
+						if ( 'undefined' != typeof localStorage ) {
+							localStorage.setItem( '<?php echo esc_attr( $storage_key ); ?>', $( this ).attr( 'href' ) );
+						}
+						$( '.tab-content' ).hide();
+						$( clicked_group ).fadeIn();
+						evt.preventDefault();
+					});
+
+				} // End if is_tab.
+
 
 				// Uploads.
 				jQuery(document).on('click', 'input.select-img', function( event ){
@@ -1382,4 +1390,3 @@ class Optioner {
 		return $output;
 	}
 }
-
