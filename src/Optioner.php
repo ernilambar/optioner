@@ -169,7 +169,8 @@ class Optioner {
 				$this->page['menu_title'],
 				$this->page['capability'],
 				$this->page['menu_slug'],
-				array( $this, 'render_page' )
+				array( $this, 'render_page' ),
+				$this->page['menu_icon']
 			);
 		} else {
 			add_submenu_page(
@@ -859,6 +860,7 @@ class Optioner {
 			'capability'  => 'manage_options',
 			'menu_slug'   => 'optioner',
 			'option_slug' => 'optioner',
+			'menu_icon'   => 'dashicons-admin-generic',
 		);
 
 		$this->page = wp_parse_args( $args, $defaults );
