@@ -4,10 +4,15 @@
   "version": "1.0.7",
   "license": "GPL-2.0-or-later",
   "scripts": {
+    "build": "gulp build",
     "textdomain": "wpi18n addtextdomain"
   },
   "repository": "github:ernilambar/optioner",
   "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-plumber": "^1.2.1",
+    "gulp-sass": "^4.1.0",
     "node-wp-i18n": "^1.2.3"
   }
 }
