@@ -18,6 +18,15 @@ namespace Nilambar\Optioner;
 class Optioner {
 
 	/**
+	 * Version.
+	 *
+	 * @since 1.0.8
+	 *
+	 * @var array
+	 */
+	protected $version = '1.0.8';
+
+	/**
 	 * Options.
 	 *
 	 * @since 1.0.0
@@ -1006,13 +1015,13 @@ class Optioner {
 
 		$file_path = str_replace( 'src', '', $file_path );
 
-		$script_full_path = $file_path .  '/assets/js/script.js';
+		$script_full_path = $file_path . '/assets/js/script.js';
 		$style_full_path  = $file_path . '/assets/css/style.css';
 
 		$script_url = \Kirki\URL::get_from_path( $script_full_path );
 		$style_url  = \Kirki\URL::get_from_path( $style_full_path );
 
-		wp_enqueue_style( 'optioner-style', $style_url, array(), '1.0.0' );
+		wp_enqueue_style( 'optioner-style', $style_url, array(), $this->version );
 
 		$custom_css = '';
 
@@ -1021,13 +1030,13 @@ class Optioner {
 		}
 
 		if ( ! empty( $custom_css ) ) {
-	        wp_add_inline_style( 'optioner-style', $custom_css );
+			wp_add_inline_style( 'optioner-style', $custom_css );
 		}
 
-		wp_enqueue_script( 'optioner-scripts', $script_url, array( 'jquery', 'wp-color-picker' ), '1.0.0', true );
+		wp_enqueue_script( 'optioner-scripts', $script_url, array( 'jquery', 'wp-color-picker' ), $this->version, true );
 
 		$localized_array = array(
-		    'storage_key' => $this->page['menu_slug'] . 'activetab',
+			'storage_key' => $this->page['menu_slug'] . 'activetab',
 		);
 
 		wp_localize_script( 'optioner-scripts', 'OPTIONER_OBJ', $localized_array );
