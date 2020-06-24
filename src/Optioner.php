@@ -1004,10 +1004,10 @@ class Optioner {
 
 		$file_path = realpath( dirname( __FILE__ ) );
 
-		$package = 'ernilambar/optioner';
+		$file_path = str_replace( 'src', '', $file_path );
 
-		$script_full_path = $file_path . '/vendor/' . $package . '/assets/js/script.js';
-		$style_full_path  = $file_path . '/vendor/' . $package . '/assets/css/style.css';
+		$script_full_path = $file_path .  '/assets/js/script.js';
+		$style_full_path  = $file_path . '/assets/css/style.css';
 
 		$script_url = \Kirki\URL::get_from_path( $script_full_path );
 		$style_url  = \Kirki\URL::get_from_path( $style_full_path );
