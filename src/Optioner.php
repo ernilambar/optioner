@@ -152,8 +152,7 @@ class Optioner {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 
 		// Register admin assets.
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
-		add_action( 'admin_head', array( $this, 'admin_style' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
 	}
 
@@ -986,11 +985,11 @@ class Optioner {
 	}
 
 	/**
-	 * Admin Scripts.
+	 * Enqueue assets.
 	 *
 	 * @since 1.0.0
 	 */
-	public function admin_scripts() {
+	public function enqueue_assets() {
 		$screen = get_current_screen();
 
 		$required_screen = $this->get_required_screen();
@@ -1048,154 +1047,6 @@ class Optioner {
 		$output .= $this->page['menu_slug'];
 
 		return $output;
-	}
-
-	/**
-	 * Admin style.
-	 *
-	 * @since 1.0.0
-	 */
-	public function admin_style() {
-		$screen = get_current_screen();
-
-		$required_screen = $this->get_required_screen();
-
-		if ( $required_screen !== $screen->id ) {
-			return;
-		}
-		?>
-		<style>
-			<?php if ( true === $this->tab_status ) : ?>
-				.tab-content {
-					display: none;
-				}
-			<?php endif; ?>
-
-			.tab-content .tab-content-inner > h2 {
-				display: none;
-			}
-
-			.wrap-content {
-				display: flex;
-			}
-
-			.wrap-content.tab-disabled {
-				display: flex;
-			}
-
-			.wrap-primary {
-				flex: 1;
-			}
-
-			.wrap-secondary {
-				margin-left: 15px;
-				margin-top: 43px;
-			}
-
-			.tab-disabled .wrap-secondary {
-				margin-top: 20px;
-			}
-
-			.tab-content .tab-content-inner {
-				background-color: #fff;
-				box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-				border: 1px solid #ccd0d4;
-				border-top: none;
-			}
-
-			.tab-disabled .tab-content-inner {
-				margin-top: 20px;
-				border-top: 1px solid #ccd0d4;
-			}
-
-			.tab-content-inner-fields {
-				padding: 5px 20px 15px 20px;
-			}
-
-			.tab-content-inner-custom {
-				padding: 20px;
-			}
-
-			.tab-content-inner-custom p:first-child {
-				margin-top: 0;
-			}
-
-			.tab-content-inner-custom p:last-child {
-				margin-bottom: 0;
-			}
-
-			.tab-content p.submit {
-				padding-bottom: 0;
-			}
-
-			.nav-tab-active,
-			.nav-tab-active:hover {
-				background-color: #fff;
-				border-bottom-color: #fff;
-			}
-
-			.sidebox {
-				position: relative;
-				min-width: 200px;
-				border: 1px solid #ccd0d4;
-				box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-				background: #fff;
-				padding: 15px;
-				margin-bottom: 15px;
-			}
-
-			.sidebox .box-heading {
-				font-size: 1.2em;
-				margin-top: 0;
-			}
-
-			.sidebox .box-content ul,
-			.sidebox .box-content ol,
-			.sidebox .box-content p {
-				margin-top: 0;
-			}
-
-			.sidebox .box-content p:last-child {
-				margin-bottom: 0;
-			}
-
-			.form-field-heading {
-				margin-left: -10px;
-			}
-
-			.form-field-heading h2 {
-				margin-top: 0;
-			}
-
-			.form-field-heading .description {
-				font-size: 13px;
-				font-style: inherit;
-				color: #444;
-			}
-
-			.form-field-radio .layout-horizontal {
-				display: flex;
-			}
-
-			.form-field-radio .radio-list {
-				margin: 0;
-				padding: 0;
-			}
-
-			.form-field-radio .radio-list li {
-				margin-right: 10px;
-			}
-
-			.form-field-image .image-preview-wrap {
-				margin-top: 10px;
-				max-width: 200px;
-			}
-
-			.form-field-image .image-preview-wrap img {
-				width: 100%;
-			}
-		</style>
-		<?php
 	}
 
 	/**
