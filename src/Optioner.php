@@ -151,9 +151,8 @@ class Optioner {
 		// Register settings.
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 
-		// Register admin assets.
+		// Enqueue assets.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
-		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
 	}
 
 	/**
@@ -998,12 +997,23 @@ class Optioner {
 			return;
 		}
 
-		wp_enqueue_script( 'jquery' );
-
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_script( 'wp-color-picker' );
 
 		wp_enqueue_media();
+
+		$file_path = realpath( dirname( __FILE__ ) );
+
+		$package = 'ernilambar/optioner';
+
+		$script_full_path = $file_path . '/vendor/' . $package . '/assets/js/script.js';
+		$style_full_path  = $file_path . '/vendor/' . $package . '/assets/css/style.css';
+
+		$script_url = \Kirki\URL::get_from_path( $script_full_path );
+		$style_url  = \Kirki\URL::get_from_path( $style_full_path );
+
+		wp_enqueue_style( 'optioner-style', $style_url, array(), '1.0.0' );
+		wp_enqueue_script( 'optioner-scripts', $script_url, array( 'jquery', 'wp-color-picker' ), '1.0.0', true );
 	}
 
 	/**
@@ -1047,162 +1057,6 @@ class Optioner {
 		$output .= $this->page['menu_slug'];
 
 		return $output;
-	}
-
-	/**
-	 * Footer Scripts.
-	 *
-	 * @since 1.0.0
-	 */
-	public function footer_scripts() {
-		$screen = get_current_screen();
-
-		$required_screen = $this->get_required_screen();
-
-		if ( $required_screen !== $screen->id ) {
-			return;
-		}
-
-		$slug = $this->get_underscored_string( $this->page['menu_slug'] );
-
-		$storage_key = $slug . '_activetab';
-		?>
-		<script>
-			var optioner_custom_file_frame;
-
-			jQuery( document ).ready( function( $ ) {
-				//Initiate Color Picker.
-				$('.optioner-color').each(function(){
-					$(this).wpColorPicker();
-				});
-
-				// Heading fix.
-				$('.form-field-heading').each(function(i, el){
-					$el = $(el);
-
-					$tr = $el.parent().parent();
-
-					$tr.find('th').hide();
-
-					$tr.find('td').attr('colspan',2);
-				});
-
-				var $is_tab = $('.wrap-content').hasClass('tab-enabled');
-
-				if ( true == $is_tab ) {
-					// Switches tabs.
-					$( '.tab-content' ).hide();
-
-					var activetab = '';
-
-					if ( 'undefined' != typeof localStorage ) {
-						activetab = localStorage.getItem( '<?php echo esc_attr( $storage_key ); ?>' );
-					}
-
-					if ( '' != activetab && $( activetab ).length ) {
-						$( activetab ).fadeIn();
-					} else {
-						$( '.tab-content:first' ).fadeIn();
-					}
-
-					// Tab links.
-					if ( '' != activetab && $( activetab + '-tab' ).length ) {
-						$( activetab + '-tab' ).addClass( 'nav-tab-active' );
-					} else {
-						$( '.nav-tab-wrapper a:first' ).addClass( 'nav-tab-active' );
-					}
-
-					// Tab switcher.
-					$( '.nav-tab-wrapper a' ).click( function( evt ) {
-						$( '.nav-tab-wrapper a' ).removeClass( 'nav-tab-active' );
-						$( this ).addClass( 'nav-tab-active' ).blur();
-
-						var clicked_group = $( this ).attr( 'href' );
-						if ( 'undefined' != typeof localStorage ) {
-							localStorage.setItem( '<?php echo esc_attr( $storage_key ); ?>', $( this ).attr( 'href' ) );
-						}
-						$( '.tab-content' ).hide();
-						$( clicked_group ).fadeIn();
-						evt.preventDefault();
-					});
-
-				} // End if is_tab.
-
-
-				// Uploads.
-				jQuery(document).on('click', 'input.select-img', function( event ){
-					var $this = $(this);
-
-					event.preventDefault();
-
-					var OptionerCustomImage = wp.media.controller.Library.extend({
-						defaults :  _.defaults({
-							id: 'optioner-custom-insert-image',
-							title: $this.data( 'uploader_title' ),
-							allowLocalEdits: false,
-							displaySettings: true,
-							displayUserSettings: false,
-							multiple : false,
-							library: wp.media.query( { type: 'image' } )
-						}, wp.media.controller.Library.prototype.defaults )
-					});
-
-					// Create the media frame.
-					optioner_custom_file_frame = wp.media.frames.optioner_custom_file_frame = wp.media({
-						button: {
-							text: jQuery( this ).data( 'uploader_button_text' )
-						},
-						state : 'optioner-custom-insert-image',
-						states : [
-						new OptionerCustomImage()
-						],
-						multiple: false
-					});
-
-					// When an image is selected, run a callback.
-					optioner_custom_file_frame.on( 'select', function() {
-						var state = optioner_custom_file_frame.state('optioner-custom-insert-image');
-						var selection = state.get('selection');
-						var display = state.display( selection.first() ).toJSON();
-						var obj_attachment = selection.first().toJSON();
-						display = wp.media.string.props( display, obj_attachment );
-
-						var image_field = $this.siblings('.img');
-						var imgurl = display.src;
-
-						// Copy image URL.
-						image_field.val(imgurl);
-						image_field.trigger('change');
-
-						// Show in preview.
-						var image_preview_wrap = $this.siblings('.image-preview-wrap');
-						var image_html = '<img src="' + imgurl + '" alt="" style="max-width:100%;max-height:200px;" />';
-						image_preview_wrap.html( image_html );
-
-						// Show Remove button.
-						var image_remove_button = $this.siblings('.btn-image-remove');
-						image_remove_button.css('display','inline-block');
-					});
-
-					// Finally, open the modal.
-					optioner_custom_file_frame.open();
-				});
-
-				// Remove image.
-				jQuery(document).on('click', 'input.btn-image-remove', function( e ) {
-					e.preventDefault();
-
-					var $this = $(this);
-					var image_field = $this.siblings('.img');
-					image_field.val('');
-					var image_preview_wrap = $this.siblings('.image-preview-wrap');
-					image_preview_wrap.html('');
-					$this.css('display','none');
-					image_field.trigger('change');
-				});
-			});
-		</script>
-		<?php
 	}
 
 	/**
