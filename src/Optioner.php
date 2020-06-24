@@ -1013,7 +1013,14 @@ class Optioner {
 		$style_url  = \Kirki\URL::get_from_path( $style_full_path );
 
 		wp_enqueue_style( 'optioner-style', $style_url, array(), '1.0.0' );
+
 		wp_enqueue_script( 'optioner-scripts', $script_url, array( 'jquery', 'wp-color-picker' ), '1.0.0', true );
+
+		$localized_array = array(
+		    'storage_key' => $this->page['menu_slug'] . 'activetab',
+		);
+
+		wp_localize_script( 'optioner-scripts', 'OPTIONER_OBJ', $localized_array );
 	}
 
 	/**

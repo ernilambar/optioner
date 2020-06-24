@@ -2,8 +2,6 @@
 
 	var optioner_custom_file_frame;
 
-	var OPTIONER_OBJ.storage_key = 'asdfasdf123';
-
 	jQuery( document ).ready( function( $ ) {
 		//Initiate Color Picker.
 		$('.optioner-color').each(function(){
