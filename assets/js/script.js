@@ -2,7 +2,9 @@
 
 	var optioner_custom_file_frame;
 
-	var OPTIONER_OBJ.storage_key = 'asdfasdf123';
+	var OPTIONER_OBJ = {
+		"storage_key" : "vfvdfgf"
+	};
 
 	jQuery( document ).ready( function( $ ) {
 		//Initiate Color Picker.
