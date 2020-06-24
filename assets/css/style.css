@@ -13,7 +13,7 @@
 .optioner-wrap .tab-disabled .wrap-secondary {
   margin-top: 20px; }
 
-.optioner-wrap .tab-disabled .tab-content-inner {
+.optioner-wrap .tab-disabled .tab-content .tab-content-inner {
   margin-top: 20px;
   border-top: 1px solid #ccd0d4; }
 
