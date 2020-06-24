@@ -1014,6 +1014,16 @@ class Optioner {
 
 		wp_enqueue_style( 'optioner-style', $style_url, array(), '1.0.0' );
 
+		$custom_css = '';
+
+		if ( true === $this->tab_status ) {
+			$custom_css .= '.tab-content{display:none;}';
+		}
+
+		if ( ! empty( $custom_css ) ) {
+	        wp_add_inline_style( 'optioner-style', $custom_css );
+		}
+
 		wp_enqueue_script( 'optioner-scripts', $script_url, array( 'jquery', 'wp-color-picker' ), '1.0.0', true );
 
 		$localized_array = array(
