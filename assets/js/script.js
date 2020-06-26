@@ -2,7 +2,6 @@
 
 (function ($) {
   var optioner_custom_file_frame;
-  console.log("Test");
   jQuery(document).ready(function ($) {
     //Initiate Color Picker.
     $('.optioner-color').each(function () {
