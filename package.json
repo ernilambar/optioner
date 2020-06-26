@@ -12,12 +12,7 @@
   },
   "repository": "github:ernilambar/optioner",
   "devDependencies": {
-    "@wordpress/browserslist-config": "^2.7.0",
     "autoprefixer": "^9.8.4",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-plumber": "^1.2.1",
-    "gulp-sass": "^4.1.0",
     "node-wp-i18n": "^1.2.3",
     "postcss-cli": "^7.1.1"
   },
