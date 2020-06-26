@@ -4,7 +4,8 @@
   "version": "1.0.8",
   "license": "GPL-2.0-or-later",
   "scripts": {
-    "build": "gulp build",
+    "build": "yarn run build:scss && yarn run build:pot",
+    "build:pot": "yarn run textdomain",
     "textdomain": "wpi18n addtextdomain --textdomain=optioner",
     "build:scss": "yarn run scss && yarn run optimizecss",
     "scss": "node-sass resources/sass/style.scss -o assets/css --no-source-maps",
@@ -13,10 +14,11 @@
   "repository": "github:ernilambar/optioner",
   "devDependencies": {
     "autoprefixer": "^9.8.4",
+    "node-sass": "^4.14.1",
     "node-wp-i18n": "^1.2.3",
     "postcss-cli": "^7.1.1"
   },
-  "browserslist" : [
+  "browserslist": [
     "last 4 versions"
   ]
 }
