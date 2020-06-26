@@ -5,14 +5,23 @@
   "license": "GPL-2.0-or-later",
   "scripts": {
     "build": "gulp build",
-    "textdomain": "wpi18n addtextdomain"
+    "textdomain": "wpi18n addtextdomain --textdomain=optioner",
+    "build:scss": "yarn run scss && yarn run optimizecss",
+    "scss": "node-sass resources/sass/style.scss -o assets/css --no-source-maps",
+    "optimizecss": "postcss assets/css/style.css -c postcss.config.js -o assets/css/style.css --use autoprefixer --no-map"
   },
   "repository": "github:ernilambar/optioner",
   "devDependencies": {
+    "@wordpress/browserslist-config": "^2.7.0",
+    "autoprefixer": "^9.8.4",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-plumber": "^1.2.1",
     "gulp-sass": "^4.1.0",
-    "node-wp-i18n": "^1.2.3"
-  }
+    "node-wp-i18n": "^1.2.3",
+    "postcss-cli": "^7.1.1"
+  },
+  "browserslist" : [
+    "last 4 versions"
+  ]
 }
