@@ -37,9 +37,37 @@ class App {
 		const tabContents = document.getElementsByClassName( 'tab-content' );
 		const tabLinks = document.querySelectorAll( '.nav-tab-wrapper a' );
 
+		localStorage.clear();
+
 		// Initially hide tab content.
 		for ( let i = 0; i < tabContents.length; i++ ) {
 		   tabContents[i].style.display = 'none';
+		}
+
+		var activeTab = '';
+
+		if ( 'undefined' != typeof localStorage ) {
+			activeTab = localStorage.getItem( OPTIONER_OBJ.storage_key );
+		}
+
+		// console.log(activeTab, 'bahira' );
+
+		// Initial status for tab content.
+		if ( null !== activeTab && document.getElementById(activeTab) ) {
+			// console.log('main');
+			// console.log(document.getElementById(activeTab));
+			let targetGroup = document.getElementById(activeTab);
+			if ( targetGroup ) {
+				targetGroup.style.display = 'block';
+			}
+		} else {
+			tabContents[0].style.display = 'block';
+		}
+
+		// Initial status for tab nav.
+		if ( null !== activeTab && document.getElementById(activeTab) ) {
+		} else {
+			tabLinks[0].classList.add('nav-tab-active');
 		}
 
 		for ( let i = 0; i < tabLinks.length; i++ ) {
@@ -58,7 +86,6 @@ class App {
 
 				// Get target.
 				let target_group = tabLink.getAttribute('href');
-				// console.log( target_group );
 
 				for ( let i = 0; i < tabContents.length; i++ ) {
 				   tabContents[i].style.display = 'none';
