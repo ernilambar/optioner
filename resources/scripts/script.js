@@ -26,7 +26,7 @@ class App {
 			let elem = uploadField[i];
 
 			const uploaderTitle = elem.dataset.uploader_title;
-			const uploadButtonText = elem.dataset.uploader_button_text;
+			const uploaderButtonText = elem.dataset.uploader_button_text;
 
 			elem.addEventListener('click', (e) => {
 				e.preventDefault();
@@ -51,7 +51,7 @@ class App {
 				// Create the media frame.
 				optioner_custom_file_frame = wp.media.frames.optioner_custom_file_frame = wp.media({
 					button: {
-						text: uploadButtonText
+						text: uploaderButtonText
 					},
 					state : 'optioner-custom-insert-image',
 					states : [
@@ -68,7 +68,8 @@ class App {
 					let image_details = current_image.toJSON();
 					let { url } = image_details.sizes[size];
 
-					// console.log( url, 'url' );
+					// Now assign value.
+					elem.parentNode.querySelector('.img').value = url;
 				});
 
 				// Open.

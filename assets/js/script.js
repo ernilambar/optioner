@@ -35,7 +35,7 @@ var App = /*#__PURE__*/function () {
       var _loop = function _loop(i) {
         var elem = uploadField[i];
         var uploaderTitle = elem.dataset.uploader_title;
-        var uploadButtonText = elem.dataset.uploader_button_text;
+        var uploaderButtonText = elem.dataset.uploader_button_text;
         elem.addEventListener('click', function (e) {
           e.preventDefault();
 
@@ -60,7 +60,7 @@ var App = /*#__PURE__*/function () {
 
           optioner_custom_file_frame = wp.media.frames.optioner_custom_file_frame = wp.media({
             button: {
-              text: uploadButtonText
+              text: uploaderButtonText
             },
             state: 'optioner-custom-insert-image',
             states: [new OptionerCustomImage()],
@@ -72,7 +72,9 @@ var App = /*#__PURE__*/function () {
             var meta = state.display(current_image).toJSON();
             var size = meta.size;
             var image_details = current_image.toJSON();
-            var url = image_details.sizes[size].url; // console.log( url, 'url' );
+            var url = image_details.sizes[size].url; // Now assign value.
+
+            elem.parentNode.querySelector('.img').value = url;
           }); // Open.
 
           optioner_custom_file_frame.open();
