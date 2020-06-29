@@ -13,6 +13,11 @@ var App = /*#__PURE__*/function () {
     this.initHeading();
     this.initColor();
     this.initMedia();
+    var isTab = document.querySelector('.wrap-content').classList.contains('tab-enabled');
+
+    if (true == isTab) {
+      this.initTab();
+    }
   }
 
   _createClass(App, [{
@@ -35,6 +40,15 @@ var App = /*#__PURE__*/function () {
       for (var i = 0; i < fieldColor.length; i++) {
         var elem = fieldColor[i];
         jQuery(elem).wpColorPicker();
+      }
+    }
+  }, {
+    key: "initTab",
+    value: function initTab() {
+      var tabContents = document.getElementsByClassName('tab-content');
+
+      for (var i = 0; i < tabContents.length; i++) {
+        tabContents[i].style.display = 'none';
       }
     }
   }, {
@@ -142,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
   jQuery(document).ready(function ($) {
     var $is_tab = $('.wrap-content').hasClass('tab-enabled');
 
-    if (true == $is_tab) {
+    if (false == $is_tab) {
       // Switches tabs.
       $('.tab-content').hide();
       var activetab = '';

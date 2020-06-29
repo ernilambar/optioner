@@ -4,6 +4,12 @@ class App {
 		this.initHeading();
 		this.initColor();
 		this.initMedia();
+
+		const isTab = document.querySelector('.wrap-content').classList.contains('tab-enabled');
+
+		if ( true == isTab ) {
+			this.initTab();
+		}
 	}
 
 	initHeading() {
@@ -25,6 +31,15 @@ class App {
 		   let elem = fieldColor[i];
 		   jQuery(elem).wpColorPicker();
 		}
+	}
+
+	initTab() {
+		const tabContents = document.getElementsByClassName( 'tab-content' );
+
+		for ( let i = 0; i < tabContents.length; i++ ) {
+		   tabContents[i].style.display = 'none';
+		}
+
 	}
 
 	initMedia() {
@@ -130,7 +145,7 @@ document.addEventListener('DOMContentLoaded',function() {
 	jQuery( document ).ready( function( $ ) {
 		var $is_tab = $('.wrap-content').hasClass('tab-enabled');
 
-		if ( true == $is_tab ) {
+		if ( false == $is_tab ) {
 			// Switches tabs.
 			$( '.tab-content' ).hide();
 
