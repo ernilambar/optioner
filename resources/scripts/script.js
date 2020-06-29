@@ -2,6 +2,7 @@ class App {
 
 	constructor() {
 		this.initHeading();
+		this.initColor();
 		this.initMedia();
 	}
 
@@ -13,7 +14,16 @@ class App {
 		   let tr = elem.parentNode.parentNode;
 
 		   tr.querySelector('th').style.display = 'none';
-		   tr.querySelector('td').setAttribute('colspan', 2);
+		   tr.querySelector('td').setAttribute( 'colspan', 2 );
+		}
+	}
+
+	initColor() {
+		const fieldColor = document.getElementsByClassName( 'optioner-color' );
+
+		for ( let i = 0; i < fieldColor.length; i++ ) {
+		   let elem = fieldColor[i];
+		   jQuery(elem).wpColorPicker();
 		}
 	}
 
@@ -117,14 +127,7 @@ document.addEventListener('DOMContentLoaded',function() {
 
 ( function( $ ) {
 
-	var optioner_custom_file_frame;
-
 	jQuery( document ).ready( function( $ ) {
-		//Initiate Color Picker.
-		$('.optioner-color').each(function(){
-			$(this).wpColorPicker();
-		});
-
 		var $is_tab = $('.wrap-content').hasClass('tab-enabled');
 
 		if ( true == $is_tab ) {

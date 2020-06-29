@@ -11,6 +11,7 @@ var App = /*#__PURE__*/function () {
     _classCallCheck(this, App);
 
     this.initHeading();
+    this.initColor();
     this.initMedia();
   }
 
@@ -24,6 +25,16 @@ var App = /*#__PURE__*/function () {
         var tr = elem.parentNode.parentNode;
         tr.querySelector('th').style.display = 'none';
         tr.querySelector('td').setAttribute('colspan', 2);
+      }
+    }
+  }, {
+    key: "initColor",
+    value: function initColor() {
+      var fieldColor = document.getElementsByClassName('optioner-color');
+
+      for (var i = 0; i < fieldColor.length; i++) {
+        var elem = fieldColor[i];
+        jQuery(elem).wpColorPicker();
       }
     }
   }, {
@@ -128,12 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 (function ($) {
-  var optioner_custom_file_frame;
   jQuery(document).ready(function ($) {
-    //Initiate Color Picker.
-    $('.optioner-color').each(function () {
-      $(this).wpColorPicker();
-    });
     var $is_tab = $('.wrap-content').hasClass('tab-enabled');
 
     if (true == $is_tab) {
