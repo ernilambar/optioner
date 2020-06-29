@@ -61,12 +61,14 @@ var App = /*#__PURE__*/function () {
     value: function initTab() {
       var optionerWrapper = document.getElementById('optioner-wrapper');
       var tabContents = document.getElementsByClassName('tab-content');
-      var tabLinks = document.querySelectorAll('.nav-tab-wrapper a'); // Initially hide tab content.
+      var tabLinks = document.querySelectorAll('.nav-tab-wrapper a');
 
-      for (var i = 0; i < tabContents.length; i++) {
-        tabContents[i].style.display = 'none';
-      }
+      var tabContentsArray = _toConsumableArray(tabContents); // Initially hide tab content.
 
+
+      tabContentsArray.forEach(function (elem) {
+        elem.style.display = 'none';
+      });
       var activeTab = '';
 
       if ('undefined' != typeof localStorage) {
@@ -95,13 +97,13 @@ var App = /*#__PURE__*/function () {
         tabLinks[0].classList.add('nav-tab-active');
       }
 
-      var _loop = function _loop(_i) {
-        var tabLink = tabLinks[_i];
+      var _loop = function _loop(i) {
+        var tabLink = tabLinks[i];
         tabLink.addEventListener('click', function (e) {
           e.preventDefault(); // Remove tab active class from all.
 
-          for (var _i2 = 0; _i2 < tabLinks.length; _i2++) {
-            tabLinks[_i2].classList.remove('nav-tab-active');
+          for (var _i = 0; _i < tabLinks.length; _i++) {
+            tabLinks[_i].classList.remove('nav-tab-active');
           } // Add active class to current tab.
 
 
@@ -113,16 +115,16 @@ var App = /*#__PURE__*/function () {
             localStorage.setItem(OPTIONER_OBJ.storage_key, target_group.replace('#', ''));
           }
 
-          for (var _i3 = 0; _i3 < tabContents.length; _i3++) {
-            tabContents[_i3].style.display = 'none';
+          for (var _i2 = 0; _i2 < tabContents.length; _i2++) {
+            tabContents[_i2].style.display = 'none';
           }
 
           document.getElementById(target_group.replace('#', '')).style.display = 'block';
         });
       };
 
-      for (var _i = 0; _i < tabLinks.length; _i++) {
-        _loop(_i);
+      for (var i = 0; i < tabLinks.length; i++) {
+        _loop(i);
       }
     }
   }, {
@@ -199,8 +201,9 @@ var App = /*#__PURE__*/function () {
 
       var btnRemoveImage = document.getElementsByClassName('js-remove-image');
 
-      var _loop3 = function _loop3(_i4) {
-        var elem = btnRemoveImage[_i4];
+      var btnRemoveImageArray = _toConsumableArray(btnRemoveImage);
+
+      btnRemoveImageArray.forEach(function (elem) {
         elem.addEventListener('click', function (e) {
           e.preventDefault(); // Empty value.
 
@@ -211,11 +214,7 @@ var App = /*#__PURE__*/function () {
           elem.classList.remove('show');
           elem.classList.add('hide');
         });
-      };
-
-      for (var _i4 = 0; _i4 < btnRemoveImage.length; _i4++) {
-        _loop3(_i4);
-      }
+      });
     }
   }]);
 

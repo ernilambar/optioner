@@ -38,10 +38,12 @@ class App {
 		const tabContents = document.getElementsByClassName( 'tab-content' );
 		const tabLinks = document.querySelectorAll( '.nav-tab-wrapper a' );
 
+		const tabContentsArray = [...tabContents];
+
 		// Initially hide tab content.
-		for ( let i = 0; i < tabContents.length; i++ ) {
-		   tabContents[i].style.display = 'none';
-		}
+		tabContentsArray.forEach( (elem) => {
+			elem.style.display = 'none';
+		});
 
 		var activeTab = '';
 
@@ -177,10 +179,9 @@ class App {
 		}
 
 		const btnRemoveImage = document.getElementsByClassName('js-remove-image');
+		const btnRemoveImageArray = [...btnRemoveImage];
 
-		for ( let i = 0; i < btnRemoveImage.length; i++ ) {
-			let elem = btnRemoveImage[i];
-
+		btnRemoveImageArray.forEach( (elem) => {
 			elem.addEventListener('click', (e) => {
 				e.preventDefault();
 				// Empty value.
@@ -191,7 +192,7 @@ class App {
 				elem.classList.remove('show');
 				elem.classList.add('hide');
 			});
-		}
+		});
 	}
 }
 
