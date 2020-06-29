@@ -76,6 +76,20 @@ class App {
 				optioner_custom_file_frame.open();
 			});
 		}
+
+		const btnRemoveImage = document.getElementsByClassName('btn-image-remove');
+
+		for ( let i = 0; i < btnRemoveImage.length; i++ ) {
+			let elem = btnRemoveImage[i];
+
+			elem.addEventListener('click', (e) => {
+				// console.log(elem);
+
+				elem.parentNode.querySelector('.img').value = '';
+			});
+
+		}
+
 	}
 }
 
@@ -192,19 +206,6 @@ document.addEventListener('DOMContentLoaded',function() {
 
 			// Finally, open the modal.
 			optioner_custom_file_frame.open();
-		});
-
-		// Remove image.
-		jQuery(document).on('click', 'input.btn-image-remove', function( e ) {
-			e.preventDefault();
-
-			var $this = $(this);
-			var image_field = $this.siblings('.img');
-			image_field.val('');
-			var image_preview_wrap = $this.siblings('.image-preview-wrap');
-			image_preview_wrap.html('');
-			$this.css('display','none');
-			image_field.trigger('change');
 		});
 	});
 

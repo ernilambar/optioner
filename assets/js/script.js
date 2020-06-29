@@ -84,6 +84,20 @@ var App = /*#__PURE__*/function () {
       for (var i = 0; i < uploadField.length; i++) {
         _loop(i);
       }
+
+      var btnRemoveImage = document.getElementsByClassName('btn-image-remove');
+
+      var _loop2 = function _loop2(_i) {
+        var elem = btnRemoveImage[_i];
+        elem.addEventListener('click', function (e) {
+          // console.log(elem);
+          elem.parentNode.querySelector('.img').value = '';
+        });
+      };
+
+      for (var _i = 0; _i < btnRemoveImage.length; _i++) {
+        _loop2(_i);
+      }
     }
   }]);
 
@@ -190,17 +204,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }); // Finally, open the modal.
 
       optioner_custom_file_frame.open();
-    }); // Remove image.
-
-    jQuery(document).on('click', 'input.btn-image-remove', function (e) {
-      e.preventDefault();
-      var $this = $(this);
-      var image_field = $this.siblings('.img');
-      image_field.val('');
-      var image_preview_wrap = $this.siblings('.image-preview-wrap');
-      image_preview_wrap.html('');
-      $this.css('display', 'none');
-      image_field.trigger('change');
     });
   });
 })(jQuery);

@@ -656,7 +656,7 @@ class Optioner {
 			}
 			?>
 			<input type="button" value="<?php echo esc_attr( _x( 'X', 'remove button', 'optioner' ) ); ?>" class="button button-secondary btn-image-remove" style="<?php echo esc_attr( $remove_button_style ); ?>" />
-			<input type="hidden" class="img" name="<?php echo esc_attr( $args['field_name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
+			<input type="text" class="img" name="<?php echo esc_attr( $args['field_name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
 			<div class="image-preview-wrap">
 			<?php if ( ! empty( $value ) ) : ?>
 				<img src="<?php echo esc_attr( $value ); ?>" alt="" />
