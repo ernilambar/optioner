@@ -1,3 +1,16 @@
+document.addEventListener('DOMContentLoaded',function() {
+	// Heading fix.
+	const formFieldHeading = document.getElementsByClassName('form-field-heading');
+
+	for ( let i = 0; i < formFieldHeading.length; i++ ) {
+	   let elem = formFieldHeading[i];
+	   let tr = elem.parentNode.parentNode;
+
+	   tr.querySelector('th').style.display = 'none';
+	   tr.querySelector('td').setAttribute('colspan', 2);
+	}
+});
+
 ( function( $ ) {
 
 	var optioner_custom_file_frame;
@@ -6,17 +19,6 @@
 		//Initiate Color Picker.
 		$('.optioner-color').each(function(){
 			$(this).wpColorPicker();
-		});
-
-		// Heading fix.
-		$('.form-field-heading').each(function(i, el){
-			$el = $(el);
-
-			$tr = $el.parent().parent();
-
-			$tr.find('th').hide();
-
-			$tr.find('td').attr('colspan',2);
 		});
 
 		var $is_tab = $('.wrap-content').hasClass('tab-enabled');
