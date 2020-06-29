@@ -1021,7 +1021,7 @@ class Optioner {
 		$custom_css = '';
 
 		if ( true === $this->tab_status ) {
-			$custom_css .= '.tab-content{display:none;border:2px red solid}';
+			$custom_css .= '.tab-content{display:none;}';
 		}
 
 		if ( ! empty( $custom_css ) ) {
