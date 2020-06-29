@@ -1,15 +1,86 @@
 "use strict";
 
-document.addEventListener('DOMContentLoaded', function () {
-  // Heading fix.
-  var formFieldHeading = document.getElementsByClassName('form-field-heading');
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  for (var i = 0; i < formFieldHeading.length; i++) {
-    var elem = formFieldHeading[i];
-    var tr = elem.parentNode.parentNode;
-    tr.querySelector('th').style.display = 'none';
-    tr.querySelector('td').setAttribute('colspan', 2);
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var App = /*#__PURE__*/function () {
+  function App() {
+    _classCallCheck(this, App);
+
+    this.initHeading();
+    this.initMedia();
   }
+
+  _createClass(App, [{
+    key: "initHeading",
+    value: function initHeading() {
+      var formFieldHeading = document.getElementsByClassName('form-field-heading');
+
+      for (var i = 0; i < formFieldHeading.length; i++) {
+        var elem = formFieldHeading[i];
+        var tr = elem.parentNode.parentNode;
+        tr.querySelector('th').style.display = 'none';
+        tr.querySelector('td').setAttribute('colspan', 2);
+      }
+    }
+  }, {
+    key: "initMedia",
+    value: function initMedia() {
+      var optioner_custom_file_frame = '';
+      var uploadField = document.getElementsByClassName('select-img');
+
+      for (var i = 0; i < uploadField.length; i++) {
+        var elem = uploadField[i];
+        elem.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          if (optioner_custom_file_frame) {
+            optioner_custom_file_frame.open();
+            return;
+          }
+
+          var OptionerCustomImage = wp.media.controller.Library.extend({
+            defaults: _.defaults({
+              id: 'optioner-custom-insert-image',
+              title: 'uploader_title',
+              allowLocalEdits: false,
+              displaySettings: true,
+              displayUserSettings: false,
+              multiple: false,
+              library: wp.media.query({
+                type: 'image'
+              })
+            }, wp.media.controller.Library.prototype.defaults)
+          }); // Create the media frame.
+
+          optioner_custom_file_frame = wp.media.frames.optioner_custom_file_frame = wp.media({
+            button: {
+              text: 'Upload button text'
+            },
+            state: 'optioner-custom-insert-image',
+            states: [new OptionerCustomImage()],
+            multiple: false
+          });
+          optioner_custom_file_frame.on('select', function () {
+            var state = optioner_custom_file_frame.state('optioner-custom-insert-image');
+            var uploaded_image = state.get('selection').first().toJSON();
+            console.log(uploaded_image);
+          }); // Open.
+
+          optioner_custom_file_frame.open();
+        });
+      }
+    }
+  }]);
+
+  return App;
+}();
+
+document.addEventListener('DOMContentLoaded', function () {
+  var a = new App();
 });
 
 (function ($) {
@@ -61,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Uploads.
 
 
-    jQuery(document).on('click', 'input.select-img', function (event) {
+    jQuery(document).on('click', 'input.select-img1', function (event) {
       var $this = $(this);
       event.preventDefault();
       var OptionerCustomImage = wp.media.controller.Library.extend({

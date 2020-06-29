@@ -1,14 +1,78 @@
-document.addEventListener('DOMContentLoaded',function() {
-	// Heading fix.
-	const formFieldHeading = document.getElementsByClassName('form-field-heading');
+class App {
 
-	for ( let i = 0; i < formFieldHeading.length; i++ ) {
-	   let elem = formFieldHeading[i];
-	   let tr = elem.parentNode.parentNode;
-
-	   tr.querySelector('th').style.display = 'none';
-	   tr.querySelector('td').setAttribute('colspan', 2);
+	constructor() {
+		this.initHeading();
+		this.initMedia();
 	}
+
+	initHeading() {
+		const formFieldHeading = document.getElementsByClassName('form-field-heading');
+
+		for ( let i = 0; i < formFieldHeading.length; i++ ) {
+		   let elem = formFieldHeading[i];
+		   let tr = elem.parentNode.parentNode;
+
+		   tr.querySelector('th').style.display = 'none';
+		   tr.querySelector('td').setAttribute('colspan', 2);
+		}
+	}
+
+	initMedia() {
+		let optioner_custom_file_frame = '';
+
+		const uploadField = document.getElementsByClassName('select-img');
+
+		for ( let i = 0; i < uploadField.length; i++ ) {
+			let elem = uploadField[i];
+
+			elem.addEventListener('click', (e) => {
+				e.preventDefault();
+
+				if ( optioner_custom_file_frame ) {
+					optioner_custom_file_frame.open();
+					return;
+				}
+
+				var OptionerCustomImage = wp.media.controller.Library.extend({
+					defaults :  _.defaults({
+						id: 'optioner-custom-insert-image',
+						title: 'uploader_title',
+						allowLocalEdits: false,
+						displaySettings: true,
+						displayUserSettings: false,
+						multiple : false,
+						library: wp.media.query( { type: 'image' } )
+					}, wp.media.controller.Library.prototype.defaults )
+				});
+
+				// Create the media frame.
+				optioner_custom_file_frame = wp.media.frames.optioner_custom_file_frame = wp.media({
+					button: {
+						text: 'Upload button text'
+					},
+					state : 'optioner-custom-insert-image',
+					states : [
+						new OptionerCustomImage()
+					],
+					multiple: false
+				});
+
+				optioner_custom_file_frame.on('select', () => {
+					var state = optioner_custom_file_frame.state('optioner-custom-insert-image');
+					var uploaded_image = state.get('selection').first().toJSON();
+
+					console.log( uploaded_image );
+				});
+
+				// Open.
+				optioner_custom_file_frame.open();
+			});
+		}
+	}
+}
+
+document.addEventListener('DOMContentLoaded',function() {
+	let a = new App();
 });
 
 ( function( $ ) {
@@ -64,7 +128,7 @@ document.addEventListener('DOMContentLoaded',function() {
 
 
 		// Uploads.
-		jQuery(document).on('click', 'input.select-img', function( event ){
+		jQuery(document).on('click', 'input.select-img1', function( event ){
 			var $this = $(this);
 
 			event.preventDefault();
