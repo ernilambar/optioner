@@ -55,15 +55,22 @@ var App = /*#__PURE__*/function () {
       var _loop = function _loop(_i) {
         var tabLink = tabLinks[_i];
         tabLink.addEventListener('click', function (e) {
-          e.preventDefault();
-          console.log(tabLink); // Remove tab active class from all.
+          e.preventDefault(); // Remove tab active class from all.
 
           for (var _i2 = 0; _i2 < tabLinks.length; _i2++) {
             tabLinks[_i2].classList.remove('nav-tab-active');
           } // Add active class to current tab.
 
 
-          tabLink.classList.add('nav-tab-active'); // tabLink.classList.remove('nav-tab-active');
+          tabLink.classList.add('nav-tab-active'); // Get target.
+
+          var target_group = tabLink.getAttribute('href'); // console.log( target_group );
+
+          for (var _i3 = 0; _i3 < tabContents.length; _i3++) {
+            tabContents[_i3].style.display = 'none';
+          }
+
+          document.getElementById(target_group.replace('#', '')).style.display = 'block';
         });
       };
 
@@ -145,8 +152,8 @@ var App = /*#__PURE__*/function () {
 
       var btnRemoveImage = document.getElementsByClassName('js-remove-image');
 
-      var _loop3 = function _loop3(_i3) {
-        var elem = btnRemoveImage[_i3];
+      var _loop3 = function _loop3(_i4) {
+        var elem = btnRemoveImage[_i4];
         elem.addEventListener('click', function (e) {
           e.preventDefault(); // Empty value.
 
@@ -159,8 +166,8 @@ var App = /*#__PURE__*/function () {
         });
       };
 
-      for (var _i3 = 0; _i3 < btnRemoveImage.length; _i3++) {
-        _loop3(_i3);
+      for (var _i4 = 0; _i4 < btnRemoveImage.length; _i4++) {
+        _loop3(_i4);
       }
     }
   }]);

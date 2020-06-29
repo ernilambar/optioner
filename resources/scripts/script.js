@@ -47,7 +47,6 @@ class App {
 
 			tabLink.addEventListener('click', (e) => {
 				e.preventDefault();
-				console.log(tabLink);
 
 				// Remove tab active class from all.
 				for ( let i = 0; i < tabLinks.length; i++ ) {
@@ -57,10 +56,17 @@ class App {
 				// Add active class to current tab.
 				tabLink.classList.add('nav-tab-active');
 
-				// tabLink.classList.remove('nav-tab-active');
+				// Get target.
+				let target_group = tabLink.getAttribute('href');
+				// console.log( target_group );
+
+				for ( let i = 0; i < tabContents.length; i++ ) {
+				   tabContents[i].style.display = 'none';
+				}
+
+				document.getElementById( target_group.replace('#', '') ).style.display = 'block';
 			});
 		}
-
 
 	}
 
