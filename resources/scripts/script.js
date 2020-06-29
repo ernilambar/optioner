@@ -14,23 +14,23 @@ class App {
 
 	initHeading() {
 		const formFieldHeading = document.getElementsByClassName('form-field-heading');
+		const formFieldHeadingArray = [...formFieldHeading];
 
-		for ( let i = 0; i < formFieldHeading.length; i++ ) {
-		   let elem = formFieldHeading[i];
-		   let tr = elem.parentNode.parentNode;
+		formFieldHeadingArray.forEach( (elem) => {
+			let tr = elem.parentNode.parentNode;
 
-		   tr.querySelector('th').style.display = 'none';
-		   tr.querySelector('td').setAttribute( 'colspan', 2 );
-		}
+			tr.querySelector('th').style.display = 'none';
+			tr.querySelector('td').setAttribute( 'colspan', 2 );
+		});
 	}
 
 	initColor() {
 		const fieldColor = document.getElementsByClassName( 'optioner-color' );
+		const fieldColorArray = [...fieldColor];
 
-		for ( let i = 0; i < fieldColor.length; i++ ) {
-		   let elem = fieldColor[i];
-		   jQuery(elem).wpColorPicker();
-		}
+		fieldColorArray.forEach( (elem) => {
+			jQuery(elem).wpColorPicker();
+		});
 	}
 
 	initTab() {

@@ -1,5 +1,17 @@
 "use strict";
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -25,22 +37,24 @@ var App = /*#__PURE__*/function () {
     value: function initHeading() {
       var formFieldHeading = document.getElementsByClassName('form-field-heading');
 
-      for (var i = 0; i < formFieldHeading.length; i++) {
-        var elem = formFieldHeading[i];
+      var formFieldHeadingArray = _toConsumableArray(formFieldHeading);
+
+      formFieldHeadingArray.forEach(function (elem) {
         var tr = elem.parentNode.parentNode;
         tr.querySelector('th').style.display = 'none';
         tr.querySelector('td').setAttribute('colspan', 2);
-      }
+      });
     }
   }, {
     key: "initColor",
     value: function initColor() {
       var fieldColor = document.getElementsByClassName('optioner-color');
 
-      for (var i = 0; i < fieldColor.length; i++) {
-        var elem = fieldColor[i];
+      var fieldColorArray = _toConsumableArray(fieldColor);
+
+      fieldColorArray.forEach(function (elem) {
         jQuery(elem).wpColorPicker();
-      }
+      });
     }
   }, {
     key: "initTab",
