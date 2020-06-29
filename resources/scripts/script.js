@@ -72,10 +72,8 @@ class App {
 			tabLinks[0].classList.add('nav-tab-active');
 		}
 
-		for ( let i = 0; i < tabLinks.length; i++ ) {
-			let tabLink = tabLinks[i];
-
-			tabLink.addEventListener('click', (e) => {
+		tabLinksArray.forEach( (elem) => {
+			elem.addEventListener('click', (e) => {
 				e.preventDefault();
 
 				// Remove tab active class from all.
@@ -84,10 +82,10 @@ class App {
 				});
 
 				// Add active class to current tab.
-				tabLink.classList.add('nav-tab-active');
+				elem.classList.add('nav-tab-active');
 
 				// Get target.
-				let target_group = tabLink.getAttribute('href');
+				let target_group = elem.getAttribute('href');
 
 				// Save active tab in local storage.
 				if ( 'undefined' !== typeof localStorage ) {
@@ -100,8 +98,7 @@ class App {
 
 				document.getElementById( target_group.replace('#', '') ).style.display = 'block';
 			});
-		}
-
+		});
 	}
 
 	initMedia() {

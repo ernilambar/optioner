@@ -99,18 +99,17 @@ var App = /*#__PURE__*/function () {
         tabLinks[0].classList.add('nav-tab-active');
       }
 
-      var _loop = function _loop(i) {
-        var tabLink = tabLinks[i];
-        tabLink.addEventListener('click', function (e) {
+      tabLinksArray.forEach(function (elem) {
+        elem.addEventListener('click', function (e) {
           e.preventDefault(); // Remove tab active class from all.
 
           tabLinksArray.forEach(function (elem) {
             elem.classList.remove('nav-tab-active');
           }); // Add active class to current tab.
 
-          tabLink.classList.add('nav-tab-active'); // Get target.
+          elem.classList.add('nav-tab-active'); // Get target.
 
-          var target_group = tabLink.getAttribute('href'); // Save active tab in local storage.
+          var target_group = elem.getAttribute('href'); // Save active tab in local storage.
 
           if ('undefined' !== typeof localStorage) {
             localStorage.setItem(OPTIONER_OBJ.storage_key, target_group.replace('#', ''));
@@ -121,11 +120,7 @@ var App = /*#__PURE__*/function () {
           });
           document.getElementById(target_group.replace('#', '')).style.display = 'block';
         });
-      };
-
-      for (var i = 0; i < tabLinks.length; i++) {
-        _loop(i);
-      }
+      });
     }
   }, {
     key: "initMedia",
