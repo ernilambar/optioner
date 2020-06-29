@@ -66,8 +66,12 @@ var App = /*#__PURE__*/function () {
           });
           optioner_custom_file_frame.on('select', function () {
             var state = optioner_custom_file_frame.state('optioner-custom-insert-image');
-            var uploaded_image = state.get('selection').first().toJSON();
-            console.log(uploaded_image);
+            var current_image = state.get('selection').first();
+            var meta = state.display(current_image).toJSON();
+            var size = meta.size;
+            var image_details = current_image.toJSON();
+            var url = image_details.sizes[size].url;
+            console.log(url, 'url');
           }); // Open.
 
           optioner_custom_file_frame.open();

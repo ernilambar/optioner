@@ -58,10 +58,14 @@ class App {
 				});
 
 				optioner_custom_file_frame.on('select', () => {
-					var state = optioner_custom_file_frame.state('optioner-custom-insert-image');
-					var uploaded_image = state.get('selection').first().toJSON();
+					let state = optioner_custom_file_frame.state('optioner-custom-insert-image');
+					let current_image = state.get('selection').first();
+					let meta = state.display( current_image ).toJSON();
+					let { size } = meta;
+					let image_details = current_image.toJSON();
+					let { url } = image_details.sizes[size];
 
-					console.log( uploaded_image );
+					console.log( url, 'url' );
 				});
 
 				// Open.
