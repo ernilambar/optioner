@@ -75,7 +75,7 @@ var App = /*#__PURE__*/function () {
             var url = image_details.sizes[size].url; // Now assign value.
 
             elem.parentNode.querySelector('.img').value = url;
-          }); // Open.
+          }); // Open modal.
 
           optioner_custom_file_frame.open();
         });
@@ -90,7 +90,7 @@ var App = /*#__PURE__*/function () {
       var _loop2 = function _loop2(_i) {
         var elem = btnRemoveImage[_i];
         elem.addEventListener('click', function (e) {
-          // console.log(elem);
+          e.preventDefault();
           elem.parentNode.querySelector('.img').value = '';
         });
       };

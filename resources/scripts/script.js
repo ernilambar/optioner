@@ -72,7 +72,7 @@ class App {
 					elem.parentNode.querySelector('.img').value = url;
 				});
 
-				// Open.
+				// Open modal.
 				optioner_custom_file_frame.open();
 			});
 		}
@@ -83,8 +83,7 @@ class App {
 			let elem = btnRemoveImage[i];
 
 			elem.addEventListener('click', (e) => {
-				// console.log(elem);
-
+				e.preventDefault();
 				elem.parentNode.querySelector('.img').value = '';
 			});
 
