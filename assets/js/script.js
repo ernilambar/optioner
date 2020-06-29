@@ -45,9 +45,9 @@ var App = /*#__PURE__*/function () {
   }, {
     key: "initTab",
     value: function initTab() {
+      var optionerWrapper = document.getElementById('optioner-wrapper');
       var tabContents = document.getElementsByClassName('tab-content');
-      var tabLinks = document.querySelectorAll('.nav-tab-wrapper a');
-      localStorage.clear(); // Initially hide tab content.
+      var tabLinks = document.querySelectorAll('.nav-tab-wrapper a'); // Initially hide tab content.
 
       for (var i = 0; i < tabContents.length; i++) {
         tabContents[i].style.display = 'none';
@@ -57,13 +57,10 @@ var App = /*#__PURE__*/function () {
 
       if ('undefined' != typeof localStorage) {
         activeTab = localStorage.getItem(OPTIONER_OBJ.storage_key);
-      } // console.log(activeTab, 'bahira' );
-      // Initial status for tab content.
+      } // Initial status for tab content.
 
 
       if (null !== activeTab && document.getElementById(activeTab)) {
-        // console.log('main');
-        // console.log(document.getElementById(activeTab));
         var targetGroup = document.getElementById(activeTab);
 
         if (targetGroup) {
@@ -74,7 +71,13 @@ var App = /*#__PURE__*/function () {
       } // Initial status for tab nav.
 
 
-      if (null !== activeTab && document.getElementById(activeTab)) {} else {
+      if (null !== activeTab && document.getElementById(activeTab)) {
+        var targetNav = optionerWrapper.querySelector(".nav-tab-wrapper a[href=\"#".concat(activeTab, "\"]"));
+
+        if (targetNav) {
+          targetNav.classList.add('nav-tab-active');
+        }
+      } else {
         tabLinks[0].classList.add('nav-tab-active');
       }
 
@@ -90,7 +93,11 @@ var App = /*#__PURE__*/function () {
 
           tabLink.classList.add('nav-tab-active'); // Get target.
 
-          var target_group = tabLink.getAttribute('href');
+          var target_group = tabLink.getAttribute('href'); // Save active tab in local storage.
+
+          if ('undefined' !== typeof localStorage) {
+            localStorage.setItem(OPTIONER_OBJ.storage_key, target_group.replace('#', ''));
+          }
 
           for (var _i3 = 0; _i3 < tabContents.length; _i3++) {
             tabContents[_i3].style.display = 'none';

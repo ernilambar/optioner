@@ -34,10 +34,9 @@ class App {
 	}
 
 	initTab() {
+		const optionerWrapper = document.getElementById( 'optioner-wrapper' );
 		const tabContents = document.getElementsByClassName( 'tab-content' );
 		const tabLinks = document.querySelectorAll( '.nav-tab-wrapper a' );
-
-		localStorage.clear();
 
 		// Initially hide tab content.
 		for ( let i = 0; i < tabContents.length; i++ ) {
@@ -50,12 +49,8 @@ class App {
 			activeTab = localStorage.getItem( OPTIONER_OBJ.storage_key );
 		}
 
-		// console.log(activeTab, 'bahira' );
-
 		// Initial status for tab content.
 		if ( null !== activeTab && document.getElementById(activeTab) ) {
-			// console.log('main');
-			// console.log(document.getElementById(activeTab));
 			let targetGroup = document.getElementById(activeTab);
 			if ( targetGroup ) {
 				targetGroup.style.display = 'block';
@@ -66,6 +61,10 @@ class App {
 
 		// Initial status for tab nav.
 		if ( null !== activeTab && document.getElementById(activeTab) ) {
+			let targetNav = optionerWrapper.querySelector(`.nav-tab-wrapper a[href="#${activeTab}"]`);
+			if ( targetNav ) {
+				targetNav.classList.add('nav-tab-active');
+			}
 		} else {
 			tabLinks[0].classList.add('nav-tab-active');
 		}
@@ -86,6 +85,11 @@ class App {
 
 				// Get target.
 				let target_group = tabLink.getAttribute('href');
+
+				// Save active tab in local storage.
+				if ( 'undefined' !== typeof localStorage ) {
+					localStorage.setItem( OPTIONER_OBJ.storage_key, target_group.replace('#', '') );
+				}
 
 				for ( let i = 0; i < tabContents.length; i++ ) {
 				   tabContents[i].style.display = 'none';

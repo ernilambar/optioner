@@ -197,7 +197,7 @@ class Optioner {
 	 * @since 1.0.0
 	 */
 	public function render_page() {
-		echo '<div class="wrap optioner-wrap">';
+		echo '<div class="wrap optioner-wrap" id="optioner-wrapper">';
 
 		echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
 
@@ -1031,7 +1031,7 @@ class Optioner {
 		wp_enqueue_script( 'optioner-scripts', $script_url, array( 'jquery', 'wp-color-picker' ), $this->version, true );
 
 		$localized_array = array(
-			'storage_key' => $this->page['menu_slug'] . 'activetab',
+			'storage_key' => $this->page['menu_slug'] . '-activetab',
 		);
 
 		wp_localize_script( 'optioner-scripts', 'OPTIONER_OBJ', $localized_array );
