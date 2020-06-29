@@ -124,6 +124,14 @@
 	}
 
 	.form-field-image {
+		.show {
+			display: inline-block;
+		}
+
+		.hide {
+			display: none;
+		}
+
 		.image-preview-wrap {
 			margin-top: 10px;
 			max-width: 200px;

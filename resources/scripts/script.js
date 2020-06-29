@@ -36,7 +36,8 @@ class App {
 					return;
 				}
 
-				var OptionerCustomImage = wp.media.controller.Library.extend({
+				// Setup modal.
+				const OptionerCustomImage = wp.media.controller.Library.extend({
 					defaults :  _.defaults({
 						id: 'optioner-custom-insert-image',
 						title: uploaderTitle,
@@ -61,15 +62,29 @@ class App {
 				});
 
 				optioner_custom_file_frame.on('select', () => {
+					// Get state.
 					let state = optioner_custom_file_frame.state('optioner-custom-insert-image');
+					// Get image.
 					let current_image = state.get('selection').first();
+					// Get image status.
 					let meta = state.display( current_image ).toJSON();
+					// We need only size.
 					let { size } = meta;
+					// Get image details
 					let image_details = current_image.toJSON();
+					// Final image URL.
 					let { url } = image_details.sizes[size];
 
 					// Now assign value.
 					elem.parentNode.querySelector('.img').value = url;
+
+					// Show preview.
+					let previewWrap = elem.parentNode.querySelector('.image-preview-wrap').innerHTML = `<img src="${url}" alt="" />`;
+
+					// Show remove button.
+					let removeButton = elem.parentNode.querySelector('.js-remove-image');
+					removeButton.classList.remove('hide');
+					removeButton.classList.add('show');
 				});
 
 				// Open modal.
@@ -77,18 +92,22 @@ class App {
 			});
 		}
 
-		const btnRemoveImage = document.getElementsByClassName('btn-image-remove');
+		const btnRemoveImage = document.getElementsByClassName('js-remove-image');
 
 		for ( let i = 0; i < btnRemoveImage.length; i++ ) {
 			let elem = btnRemoveImage[i];
 
 			elem.addEventListener('click', (e) => {
 				e.preventDefault();
+				// Empty value.
 				elem.parentNode.querySelector('.img').value = '';
+				// Hide preview.
+				elem.parentNode.querySelector('.image-preview-wrap').innerHTML = '';
+				// Hide remove button.
+				elem.classList.remove('show');
+				elem.classList.add('hide');
 			});
-
 		}
-
 	}
 }
 
@@ -146,66 +165,6 @@ document.addEventListener('DOMContentLoaded',function() {
 			});
 
 		} // End if is_tab.
-
-
-		// Uploads.
-		jQuery(document).on('click', 'input.select-img1', function( event ){
-			var $this = $(this);
-
-			event.preventDefault();
-
-			var OptionerCustomImage = wp.media.controller.Library.extend({
-				defaults :  _.defaults({
-					id: 'optioner-custom-insert-image',
-					title: $this.data( 'uploader_title' ),
-					allowLocalEdits: false,
-					displaySettings: true,
-					displayUserSettings: false,
-					multiple : false,
-					library: wp.media.query( { type: 'image' } )
-				}, wp.media.controller.Library.prototype.defaults )
-			});
-
-			// Create the media frame.
-			optioner_custom_file_frame = wp.media.frames.optioner_custom_file_frame = wp.media({
-				button: {
-					text: jQuery( this ).data( 'uploader_button_text' )
-				},
-				state : 'optioner-custom-insert-image',
-				states : [
-				new OptionerCustomImage()
-				],
-				multiple: false
-			});
-
-			// When an image is selected, run a callback.
-			optioner_custom_file_frame.on( 'select', function() {
-				var state = optioner_custom_file_frame.state('optioner-custom-insert-image');
-				var selection = state.get('selection');
-				var display = state.display( selection.first() ).toJSON();
-				var obj_attachment = selection.first().toJSON();
-				display = wp.media.string.props( display, obj_attachment );
-
-				var image_field = $this.siblings('.img');
-				var imgurl = display.src;
-
-				// Copy image URL.
-				image_field.val(imgurl);
-				image_field.trigger('change');
-
-				// Show in preview.
-				var image_preview_wrap = $this.siblings('.image-preview-wrap');
-				var image_html = '<img src="' + imgurl + '" alt="" style="max-width:100%;max-height:200px;" />';
-				image_preview_wrap.html( image_html );
-
-				// Show Remove button.
-				var image_remove_button = $this.siblings('.btn-image-remove');
-				image_remove_button.css('display','inline-block');
-			});
-
-			// Finally, open the modal.
-			optioner_custom_file_frame.open();
-		});
 	});
 
 

@@ -85,6 +85,12 @@
   .optioner-wrap .form-field-radio .radio-list li {
     margin-right: 10px; }
 
+.optioner-wrap .form-field-image .show {
+  display: inline-block; }
+
+.optioner-wrap .form-field-image .hide {
+  display: none; }
+
 .optioner-wrap .form-field-image .image-preview-wrap {
   margin-top: 10px;
   max-width: 200px; }
