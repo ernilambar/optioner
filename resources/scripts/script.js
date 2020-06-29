@@ -39,6 +39,7 @@ class App {
 		const tabLinks = document.querySelectorAll( '.nav-tab-wrapper a' );
 
 		const tabContentsArray = [...tabContents];
+		const tabLinksArray = [...tabLinks];
 
 		// Initially hide tab content.
 		tabContentsArray.forEach( (elem) => {
@@ -78,9 +79,9 @@ class App {
 				e.preventDefault();
 
 				// Remove tab active class from all.
-				for ( let i = 0; i < tabLinks.length; i++ ) {
-				   tabLinks[i].classList.remove('nav-tab-active');
-				}
+				tabLinksArray.forEach( (elem) => {
+					elem.classList.remove('nav-tab-active');
+				});
 
 				// Add active class to current tab.
 				tabLink.classList.add('nav-tab-active');
@@ -93,9 +94,9 @@ class App {
 					localStorage.setItem( OPTIONER_OBJ.storage_key, target_group.replace('#', '') );
 				}
 
-				for ( let i = 0; i < tabContents.length; i++ ) {
-				   tabContents[i].style.display = 'none';
-				}
+				tabContentsArray.forEach( (elem) => {
+					elem.style.display = 'none';
+				});
 
 				document.getElementById( target_group.replace('#', '') ).style.display = 'block';
 			});
@@ -107,10 +108,9 @@ class App {
 		let optioner_custom_file_frame = '';
 
 		const uploadField = document.getElementsByClassName('select-img');
+		const uploadFieldArray = [...uploadField];
 
-		for ( let i = 0; i < uploadField.length; i++ ) {
-			let elem = uploadField[i];
-
+		uploadFieldArray.forEach( (elem) => {
 			const uploaderTitle = elem.dataset.uploader_title;
 			const uploaderButtonText = elem.dataset.uploader_button_text;
 
@@ -176,7 +176,7 @@ class App {
 				// Open modal.
 				optioner_custom_file_frame.open();
 			});
-		}
+		});
 
 		const btnRemoveImage = document.getElementsByClassName('js-remove-image');
 		const btnRemoveImageArray = [...btnRemoveImage];

@@ -63,7 +63,9 @@ var App = /*#__PURE__*/function () {
       var tabContents = document.getElementsByClassName('tab-content');
       var tabLinks = document.querySelectorAll('.nav-tab-wrapper a');
 
-      var tabContentsArray = _toConsumableArray(tabContents); // Initially hide tab content.
+      var tabContentsArray = _toConsumableArray(tabContents);
+
+      var tabLinksArray = _toConsumableArray(tabLinks); // Initially hide tab content.
 
 
       tabContentsArray.forEach(function (elem) {
@@ -102,10 +104,9 @@ var App = /*#__PURE__*/function () {
         tabLink.addEventListener('click', function (e) {
           e.preventDefault(); // Remove tab active class from all.
 
-          for (var _i = 0; _i < tabLinks.length; _i++) {
-            tabLinks[_i].classList.remove('nav-tab-active');
-          } // Add active class to current tab.
-
+          tabLinksArray.forEach(function (elem) {
+            elem.classList.remove('nav-tab-active');
+          }); // Add active class to current tab.
 
           tabLink.classList.add('nav-tab-active'); // Get target.
 
@@ -115,10 +116,9 @@ var App = /*#__PURE__*/function () {
             localStorage.setItem(OPTIONER_OBJ.storage_key, target_group.replace('#', ''));
           }
 
-          for (var _i2 = 0; _i2 < tabContents.length; _i2++) {
-            tabContents[_i2].style.display = 'none';
-          }
-
+          tabContentsArray.forEach(function (elem) {
+            elem.style.display = 'none';
+          });
           document.getElementById(target_group.replace('#', '')).style.display = 'block';
         });
       };
@@ -133,8 +133,9 @@ var App = /*#__PURE__*/function () {
       var optioner_custom_file_frame = '';
       var uploadField = document.getElementsByClassName('select-img');
 
-      var _loop2 = function _loop2(i) {
-        var elem = uploadField[i];
+      var uploadFieldArray = _toConsumableArray(uploadField);
+
+      uploadFieldArray.forEach(function (elem) {
         var uploaderTitle = elem.dataset.uploader_title;
         var uploaderButtonText = elem.dataset.uploader_button_text;
         elem.addEventListener('click', function (e) {
@@ -193,12 +194,7 @@ var App = /*#__PURE__*/function () {
 
           optioner_custom_file_frame.open();
         });
-      };
-
-      for (var i = 0; i < uploadField.length; i++) {
-        _loop2(i);
-      }
-
+      });
       var btnRemoveImage = document.getElementsByClassName('js-remove-image');
 
       var btnRemoveImageArray = _toConsumableArray(btnRemoveImage);
