@@ -35,10 +35,32 @@ class App {
 
 	initTab() {
 		const tabContents = document.getElementsByClassName( 'tab-content' );
+		const tabLinks = document.querySelectorAll( '.nav-tab-wrapper a' );
 
+		// Initially hide tab content.
 		for ( let i = 0; i < tabContents.length; i++ ) {
 		   tabContents[i].style.display = 'none';
 		}
+
+		for ( let i = 0; i < tabLinks.length; i++ ) {
+			let tabLink = tabLinks[i];
+
+			tabLink.addEventListener('click', (e) => {
+				e.preventDefault();
+				console.log(tabLink);
+
+				// Remove tab active class from all.
+				for ( let i = 0; i < tabLinks.length; i++ ) {
+				   tabLinks[i].classList.remove('nav-tab-active');
+				}
+
+				// Add active class to current tab.
+				tabLink.classList.add('nav-tab-active');
+
+				// tabLink.classList.remove('nav-tab-active');
+			});
+		}
+
 
 	}
 

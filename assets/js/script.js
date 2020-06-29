@@ -46,9 +46,29 @@ var App = /*#__PURE__*/function () {
     key: "initTab",
     value: function initTab() {
       var tabContents = document.getElementsByClassName('tab-content');
+      var tabLinks = document.querySelectorAll('.nav-tab-wrapper a'); // Initially hide tab content.
 
       for (var i = 0; i < tabContents.length; i++) {
         tabContents[i].style.display = 'none';
+      }
+
+      var _loop = function _loop(_i) {
+        var tabLink = tabLinks[_i];
+        tabLink.addEventListener('click', function (e) {
+          e.preventDefault();
+          console.log(tabLink); // Remove tab active class from all.
+
+          for (var _i2 = 0; _i2 < tabLinks.length; _i2++) {
+            tabLinks[_i2].classList.remove('nav-tab-active');
+          } // Add active class to current tab.
+
+
+          tabLink.classList.add('nav-tab-active'); // tabLink.classList.remove('nav-tab-active');
+        });
+      };
+
+      for (var _i = 0; _i < tabLinks.length; _i++) {
+        _loop(_i);
       }
     }
   }, {
@@ -57,7 +77,7 @@ var App = /*#__PURE__*/function () {
       var optioner_custom_file_frame = '';
       var uploadField = document.getElementsByClassName('select-img');
 
-      var _loop = function _loop(i) {
+      var _loop2 = function _loop2(i) {
         var elem = uploadField[i];
         var uploaderTitle = elem.dataset.uploader_title;
         var uploaderButtonText = elem.dataset.uploader_button_text;
@@ -120,13 +140,13 @@ var App = /*#__PURE__*/function () {
       };
 
       for (var i = 0; i < uploadField.length; i++) {
-        _loop(i);
+        _loop2(i);
       }
 
       var btnRemoveImage = document.getElementsByClassName('js-remove-image');
 
-      var _loop2 = function _loop2(_i) {
-        var elem = btnRemoveImage[_i];
+      var _loop3 = function _loop3(_i3) {
+        var elem = btnRemoveImage[_i3];
         elem.addEventListener('click', function (e) {
           e.preventDefault(); // Empty value.
 
@@ -139,8 +159,8 @@ var App = /*#__PURE__*/function () {
         });
       };
 
-      for (var _i = 0; _i < btnRemoveImage.length; _i++) {
-        _loop2(_i);
+      for (var _i3 = 0; _i3 < btnRemoveImage.length; _i3++) {
+        _loop3(_i3);
       }
     }
   }]);
