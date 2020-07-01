@@ -24,7 +24,7 @@ class Optioner {
 	 *
 	 * @var array
 	 */
-	protected $version = '1.0.8';
+	protected $version = '1.0.9';
 
 	/**
 	 * Options.

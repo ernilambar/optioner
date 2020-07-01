@@ -1,7 +1,7 @@
 {
   "name": "optioner",
   "title": "Optioner",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "license": "GPL-2.0-or-later",
   "scripts": {
     "build": "yarn run build:scss && yarn run build:js && yarn run build:pot",
