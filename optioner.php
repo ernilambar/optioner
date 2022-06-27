@@ -20,8 +20,13 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'OPTIONER_BASENAME', basename( dirname( __FILE__ ) ) );
+define( 'OPTIONER_BASEFILE', plugin_basename( __FILE__ ) );
 define( 'OPTIONER_DIR', rtrim( plugin_dir_path( __FILE__ ), '/' ) );
 define( 'OPTIONER_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
+
+if ( file_exists( OPTIONER_DIR . '/vendor/autoload.php' ) ) {
+	require_once OPTIONER_DIR . '/vendor/autoload.php';
+}
 
 require_once OPTIONER_DIR . '/src/Optioner.php';
 
@@ -505,3 +510,23 @@ function optioner_render_sidebar() {
 	</div>
 	<?php
 }
+
+/**
+ * Customize plugin links.
+ *
+ * @since 1.1.0
+ *
+ * @param array $actions Links.
+ * @return array Modified links.
+ */
+function customize_plugin_links( $actions ) {
+	$new_links = array(
+		'<a href="' . esc_url( admin_url( 'options-general.php?page=optioner' ) ) . '">' . esc_html__( 'Settings', 'optioner' ) . '</a>',
+	);
+
+	$actions = array_merge( $new_links, $actions );
+
+	return $actions;
+}
+
+add_filter( 'plugin_action_links_' . OPTIONER_BASEFILE, __NAMESPACE__ . '\\customize_plugin_links' );
