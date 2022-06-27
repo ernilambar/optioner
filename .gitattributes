@@ -1,9 +1,0 @@
-/resources export-ignore
-/tests export-ignore
-/.gitattributes export-ignore
-/.editorconfig export-ignore
-/.gitignore export-ignore
-/.travis.yml export-ignore
-/gulpfile.js export-ignore
-/package.json export-ignore
-/yarn.lock export-ignore
