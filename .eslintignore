@@ -1,0 +1,6 @@
+deploy/
+node_modules/
+vendor/
+third-party/
+assets/
+resources/

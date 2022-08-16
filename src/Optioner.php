@@ -159,9 +159,6 @@ class Optioner {
 
 		// Register settings.
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
-
-		// Enqueue assets.
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 	}
 
 	/**
@@ -985,56 +982,6 @@ class Optioner {
 		} else {
 			return $html;
 		}
-	}
-
-	/**
-	 * Enqueue assets.
-	 *
-	 * @since 1.0.0
-	 */
-	public function enqueue_assets() {
-		$screen = get_current_screen();
-
-		$required_screen = $this->get_required_screen();
-
-		if ( $required_screen !== $screen->id ) {
-			return;
-		}
-
-		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script( 'wp-color-picker' );
-
-		wp_enqueue_media();
-
-		$file_path = realpath( dirname( __FILE__ ) );
-
-		$file_path = str_replace( 'src', '', $file_path );
-
-		$script_full_path = $file_path . '/assets/js/script.js';
-		$style_full_path  = $file_path . '/assets/css/style.css';
-
-		$script_url = \Kirki\URL::get_from_path( $script_full_path );
-		$style_url  = \Kirki\URL::get_from_path( $style_full_path );
-
-		wp_enqueue_style( 'optioner-style', $style_url, array(), $this->version );
-
-		$custom_css = '';
-
-		if ( true === $this->tab_status ) {
-			$custom_css .= '.tab-content{display:none;}';
-		}
-
-		if ( ! empty( $custom_css ) ) {
-			wp_add_inline_style( 'optioner-style', $custom_css );
-		}
-
-		wp_enqueue_script( 'optioner-scripts', $script_url, array( 'jquery', 'wp-color-picker' ), $this->version, true );
-
-		$localized_array = array(
-			'storage_key' => $this->page['menu_slug'] . '-activetab',
-		);
-
-		wp_localize_script( 'optioner-scripts', 'OPTIONER_OBJ', $localized_array );
 	}
 
 	/**
