@@ -63,7 +63,7 @@ class Optioner {
 	protected $tabs = array();
 
 	/**
-	 * Tab status
+	 * Tab status.
 	 *
 	 * @since 1.0.0
 	 *

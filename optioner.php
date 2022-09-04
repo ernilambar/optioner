@@ -7,7 +7,7 @@
 
 namespace Nilambar\Optioner;
 
-define( 'OPTIONER_VERSION' , '1.0.9' );
+define( 'OPTIONER_VERSION' , '2.0.0' );
 define( 'OPTIONER_SLUG' , 'optioner' );
 
 define( 'OPTIONER_BASENAME', basename( dirname( __FILE__ ) ) );
@@ -49,17 +49,6 @@ class Init {
 		wp_enqueue_media();
 
 		wp_enqueue_style( 'optioner-style', OPTIONER_URL . '/assets/optioner.css', array(), OPTIONER_VERSION );
-
-		$custom_css = '';
-
-		// TODO.
-		// if ( true === $this->tab_status ) {
-		// 	$custom_css .= '.tab-content{display:none;}';
-		// }
-
-		if ( ! empty( $custom_css ) ) {
-			wp_add_inline_style( 'optioner-style', $custom_css );
-		}
 
 		wp_enqueue_script( 'optioner-scripts', OPTIONER_URL . '/assets/optioner.js', array( 'jquery', 'wp-color-picker' ), OPTIONER_VERSION, true );
 

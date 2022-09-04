@@ -8,7 +8,7 @@ class App {
 
 		const isTab = document.querySelector( '.wrap-content' ).classList.contains( 'tab-enabled' );
 
-		if ( true == isTab ) {
+		if ( true === isTab ) {
 			this.initTab();
 		}
 	}
@@ -78,32 +78,32 @@ class App {
 				e.preventDefault();
 
 				// Remove tab active class from all.
-				tabLinksArray.forEach( ( elem ) => {
-					elem.classList.remove( 'nav-tab-active' );
+				tabLinksArray.forEach( ( elemLink ) => {
+					elemLink.classList.remove( 'nav-tab-active' );
 				} );
 
 				// Add active class to current tab.
 				elem.classList.add( 'nav-tab-active' );
 
 				// Get target.
-				const target_group = elem.getAttribute( 'href' );
+				const targetGroup = elem.getAttribute( 'href' );
 
 				// Save active tab in local storage.
 				if ( 'undefined' !== typeof localStorage ) {
-					localStorage.setItem( OPTIONER_OBJ.storage_key, target_group.replace( '#', '' ) );
+					localStorage.setItem( OPTIONER_OBJ.storage_key, targetGroup.replace( '#', '' ) );
 				}
 
-				tabContentsArray.forEach( ( elem ) => {
-					elem.style.display = 'none';
+				tabContentsArray.forEach( ( elemContent ) => {
+					elemContent.style.display = 'none';
 				} );
 
-				document.getElementById( target_group.replace( '#', '' ) ).style.display = 'block';
+				document.getElementById( targetGroup.replace( '#', '' ) ).style.display = 'block';
 			} );
 		} );
 	}
 
 	initMedia() {
-		let optioner_custom_file_frame = '';
+		let optionerCustomFileFrame = '';
 
 		const uploadField = document.getElementsByClassName( 'select-img' );
 		const uploadFieldArray = [ ...uploadField ];
@@ -115,8 +115,8 @@ class App {
 			elem.addEventListener( 'click', ( e ) => {
 				e.preventDefault();
 
-				if ( optioner_custom_file_frame ) {
-					optioner_custom_file_frame.open();
+				if ( optionerCustomFileFrame ) {
+					optionerCustomFileFrame.open();
 					return;
 				}
 
@@ -126,7 +126,7 @@ class App {
 						id: 'optioner-custom-insert-image',
 						title: uploaderTitle,
 						allowLocalEdits: false,
-						displaySettings: true,
+						displaySettings: false,
 						displayUserSettings: false,
 						multiple: false,
 						library: wp.media.query( { type: 'image' } ),
@@ -134,7 +134,7 @@ class App {
 				} );
 
 				// Create the media frame.
-				optioner_custom_file_frame = wp.media.frames.optioner_custom_file_frame = wp.media( {
+				optionerCustomFileFrame = wp.media.frames.optionerCustomFileFrame = wp.media( {
 					button: {
 						text: uploaderButtonText,
 					},
@@ -145,25 +145,14 @@ class App {
 					multiple: false,
 				} );
 
-				optioner_custom_file_frame.on( 'select', () => {
-					// Get state.
-					const state = optioner_custom_file_frame.state( 'optioner-custom-insert-image' );
-					// Get image.
-					const current_image = state.get( 'selection' ).first();
-					// Get image status.
-					const meta = state.display( current_image ).toJSON();
-					// We need only size.
-					const { size } = meta;
-					// Get image details
-					const image_details = current_image.toJSON();
-					// Final image URL.
-					const { url } = image_details.sizes[ size ];
+				optionerCustomFileFrame.on( 'select', () => {
+					const state = optionerCustomFileFrame.state( 'optioner-custom-insert-image' );
+					const currentImage = state.get( 'selection' ).first();
+					const url = currentImage.toJSON().url;
 
-					// Now assign value.
 					elem.parentNode.querySelector( '.img' ).value = url;
 
-					// Show preview.
-					const previewWrap = elem.parentNode.querySelector( '.image-preview-wrap' ).innerHTML = `<img src="${ url }" alt="" />`;
+					elem.parentNode.querySelector( '.image-preview-wrap' ).innerHTML = `<img src="${ url }" alt="" />`;
 
 					// Show remove button.
 					const removeButton = elem.parentNode.querySelector( '.js-remove-image' );
@@ -172,7 +161,7 @@ class App {
 				} );
 
 				// Open modal.
-				optioner_custom_file_frame.open();
+				optionerCustomFileFrame.open();
 			} );
 		} );
 
@@ -195,5 +184,5 @@ class App {
 }
 
 document.addEventListener( 'DOMContentLoaded', function() {
-	const a = new App();
+	new App();
 } );

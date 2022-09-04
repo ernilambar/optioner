@@ -9,6 +9,8 @@
   },
   "globals": {
     "wp": true,
+    "_": true,
+    "OPTIONER_OBJ": true,
     "jQuery": true
   },
   "rules": {
