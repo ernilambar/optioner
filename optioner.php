@@ -7,18 +7,18 @@
 
 namespace Nilambar\Optioner;
 
-define( 'OPTIONER_VERSION' , '2.0.0' );
-define( 'OPTIONER_SLUG' , 'optioner' );
+define( 'OPTIONER_VERSION', '2.0.0' );
+define( 'OPTIONER_SLUG', 'optioner' );
 
 define( 'OPTIONER_BASENAME', basename( dirname( __FILE__ ) ) );
 define( 'OPTIONER_BASEFILE', plugin_basename( __FILE__ ) );
 
 if ( ! defined( 'OPTIONER_DIR' ) ) {
-	define( 'OPTIONER_DIR' , rtrim( plugin_dir_path( __FILE__ ), '/' ) );
+	define( 'OPTIONER_DIR', rtrim( plugin_dir_path( __FILE__ ), '/' ) );
 }
 
 if ( ! defined( 'OPTIONER_URL' ) ) {
-	define( 'OPTIONER_URL' , rtrim( plugin_dir_url( __FILE__ ), '/' )  );
+	define( 'OPTIONER_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
 }
 
 /**
