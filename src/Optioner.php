@@ -647,14 +647,9 @@ class Optioner {
 		ob_start();
 		?>
 		<div class="field-image">
-			<input type="text" class="img" name="<?php echo esc_attr( $args['field_name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
-			<input type="button"
-				class="select-img button button-primary"
-				value="<?php esc_attr_e( 'Upload', 'optioner' ); ?>"
-				data-uploader_title="<?php esc_attr_e( 'Select Image', 'optioner' ); ?>"
-				data-uploader_button_text="<?php esc_attr_e( 'Choose Image', 'optioner' ); ?>"
-				/>
-			<input type="button" value="<?php echo esc_attr( _x( 'X', 'remove button', 'optioner' ) ); ?>" class="button button-secondary js-remove-image <?php echo ( ! empty( $value ) ) ? 'show' : 'hide'; ?>" />
+			<input type="text" class="img regular-text" name="<?php echo esc_attr( $args['field_name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
+			<a href="javascript:void(0);" class="select-img optioner-button" data-uploader_title="<?php esc_attr_e( 'Select Image', 'optioner' ); ?>" data-uploader_button_text="<?php esc_attr_e( 'Choose Image', 'optioner' ); ?>"><span class="dashicons dashicons-upload"></span></a>
+			<a href="javascript:void(0);" class="optioner-button optioner-button-danger js-remove-image <?php echo ( ! empty( $value ) ) ? 'show' : 'hide'; ?>"><span class="dashicons dashicons-no"></span></a>
 			<div class="image-preview-wrap">
 				<?php if ( ! empty( $value ) ) : ?>
 					<img src="<?php echo esc_attr( $value ); ?>" alt="" />
