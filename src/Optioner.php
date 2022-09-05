@@ -198,6 +198,12 @@ class Optioner {
 
 		echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
 
+		$current_screen = get_current_screen();
+
+		if ( ! ( $current_screen && 'options-general' === $current_screen->parent_base ) ) {
+			settings_errors();
+		}
+
 		$tab_status_class = ( true === $this->tab_status ) ? 'tab-enabled' : 'tab-disabled';
 
 		echo '<div class="wrap-content ' . esc_attr( $tab_status_class ) . '">';
