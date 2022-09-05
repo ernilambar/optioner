@@ -52,11 +52,8 @@ class Init {
 
 		wp_enqueue_script( 'optioner-scripts', OPTIONER_URL . '/assets/optioner.js', array( 'jquery', 'wp-color-picker' ), OPTIONER_VERSION, true );
 
-		// TODO.
-		$menu_slug = 'asdf2345';
-
 		$localized_array = array(
-			'storage_key' => $menu_slug . '-activetab',
+			'storage_key' => wp_unique_id( 'optioner-' ) . '-activetab',
 		);
 
 		wp_localize_script( 'optioner-scripts', 'OPTIONER_OBJ', $localized_array );
