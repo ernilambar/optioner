@@ -18,10 +18,14 @@ specifiers:
   prettier: ^2.7.1
   sass: ^1.54.4
   sass-loader: ^13.0.2
+  select2: 4.1.0-rc.0
   style-loader: ^3.3.1
   terser-webpack-plugin: ^5.3.3
   webpack: ^5.74.0
   webpack-cli: ^4.10.0
+
+dependencies:
+  select2: 4.1.0-rc.0
 
 devDependencies:
   '@babel/cli': 7.18.10_@babel+core@7.18.10
@@ -5248,6 +5252,10 @@ packages:
       ajv-formats: 2.1.1
       ajv-keywords: 5.1.0_ajv@8.11.0
     dev: true
+
+  /select2/4.1.0-rc.0:
+    resolution: {integrity: sha512-Hr9TdhyHCZUtwznEH2CBf7967mEM0idtJ5nMtjvk3Up5tPukOLXbHUNmh10oRfeNIhj+3GD3niu+g6sVK+gK0A==}
+    dev: false
 
   /semver/5.7.1:
     resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}
