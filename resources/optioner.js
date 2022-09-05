@@ -2,205 +2,181 @@ import './sass/optioner.scss';
 
 import 'select2';
 
-class App {
-	constructor() {
+( function( $ ) {
+	class App {
+		wrapper;
 
-		if ( jQuery('#optioner-wrapper').length === 0 ) {
-			return;
-		}
+		constructor() {
+			this.wrapper = $( '#optioner-wrapper' );
 
-		this.initHeading();
-		this.initSelect();
-		this.initColor();
-		this.initMedia();
-
-		const isTab = document.querySelector( '.wrap-content' ).classList.contains( 'tab-enabled' );
-
-		if ( true === isTab ) {
-			this.initTab();
-		}
-	}
-
-	initHeading() {
-		const formFieldHeading = document.getElementsByClassName( 'form-field-heading' );
-		const formFieldHeadingArray = [ ...formFieldHeading ];
-
-		formFieldHeadingArray.forEach( ( elem ) => {
-			const tr = elem.parentNode.parentNode;
-
-			tr.querySelector( 'th' ).style.display = 'none';
-			tr.querySelector( 'td' ).setAttribute( 'colspan', 2 );
-		} );
-	}
-
-	initSelect() {
-		const fieldSelect = document.getElementsByClassName( 'optioner-select' );
-		const fieldSelectArray = [ ...fieldSelect ];
-
-		fieldSelectArray.forEach( ( elem ) => {
-			jQuery( elem ).select2({minimumResultsForSearch: 10});
-		} );
-
-	}
-
-	initColor() {
-		const fieldColor = document.getElementsByClassName( 'optioner-color' );
-		const fieldColorArray = [ ...fieldColor ];
-
-		fieldColorArray.forEach( ( elem ) => {
-			jQuery( elem ).wpColorPicker();
-		} );
-	}
-
-	initTab() {
-		const optionerWrapper = document.getElementById( 'optioner-wrapper' );
-		const tabContents = document.getElementsByClassName( 'tab-content' );
-		const tabLinks = document.querySelectorAll( '.nav-tab-wrapper a' );
-
-		const tabContentsArray = [ ...tabContents ];
-		const tabLinksArray = [ ...tabLinks ];
-
-		// Initially hide tab content.
-		tabContentsArray.forEach( ( elem ) => {
-			elem.style.display = 'none';
-		} );
-
-		let activeTab = '';
-
-		if ( 'undefined' !== typeof localStorage ) {
-			activeTab = localStorage.getItem( OPTIONER_OBJ.storage_key );
-		}
-
-		// Initial status for tab content.
-		if ( null !== activeTab && document.getElementById( activeTab ) ) {
-			const targetGroup = document.getElementById( activeTab );
-			if ( targetGroup ) {
-				targetGroup.style.display = 'block';
+			if ( this.wrapper.length === 0 ) {
+				return;
 			}
-		} else {
-			tabContents[ 0 ].style.display = 'block';
-		}
 
-		// Initial status for tab nav.
-		if ( null !== activeTab && document.getElementById( activeTab ) ) {
-			const targetNav = optionerWrapper.querySelector( `.nav-tab-wrapper a[href="#${ activeTab }"]` );
-			if ( targetNav ) {
-				targetNav.classList.add( 'nav-tab-active' );
+			this.initHeading();
+			this.initMessage();
+			this.initSelect();
+			this.initColor();
+			this.initMedia();
+
+			const isTab = this.wrapper.find( '.wrap-content' ).hasClass( 'tab-enabled' );
+
+			if ( true === isTab ) {
+				this.initTab();
 			}
-		} else {
-			tabLinks[ 0 ].classList.add( 'nav-tab-active' );
 		}
 
-		tabLinksArray.forEach( ( elem ) => {
-			elem.addEventListener( 'click', ( e ) => {
+		initHeading() {
+			this.wrapper.find( '.form-field-heading' ).each( function() {
+				const tr = $( this ).parent().parent();
+				tr.find( 'th' ).hide();
+				tr.find( 'td' ).attr( 'colspan', '2' );
+			} );
+		}
+
+		initMessage() {
+			console.log('messs')
+			this.wrapper.find( '.form-field-message' ).each( function() {
+				const tr = $( this ).parent().parent();
+				tr.find( 'th' ).hide();
+				tr.find( 'td' ).attr( 'colspan', '2' );
+			} );
+		}
+
+		initSelect() {
+			this.wrapper.find( '.form-field-select select' ).each( function() {
+				$( this ).select2( { minimumResultsForSearch: 10 } );
+			} );
+		}
+
+		initColor() {
+			this.wrapper.find( '.form-field-color input' ).each( function() {
+				$( this ).wpColorPicker();
+			} );
+		}
+
+		initTab() {
+			this.wrapper.find( '.tab-content' ).hide();
+
+			let activeTab = '';
+
+			if ( 'undefined' !== typeof localStorage ) {
+				activeTab = localStorage.getItem( OPTIONER_OBJ.storage_key );
+			}
+
+			// Initial status for tab content.
+			if ( null !== activeTab && $( `#${ activeTab }` ) ) {
+				$( `#${ activeTab }` ).show();
+				$( `.nav-tab-wrapper a[href="#${ activeTab }"]` ).addClass( 'nav-tab-active' );
+			} else {
+				this.wrapper.find( '.tab-content' ).first().show();
+				this.wrapper.find( '.nav-tab-wrapper a' ).first().addClass( 'nav-tab-active' );
+			}
+
+			this.wrapper.find( '.nav-tab-wrapper a' ).on( 'click', ( e ) => {
 				e.preventDefault();
 
-				// Remove tab active class from all.
-				tabLinksArray.forEach( ( elemLink ) => {
-					elemLink.classList.remove( 'nav-tab-active' );
-				} );
-
-				// Add active class to current tab.
-				elem.classList.add( 'nav-tab-active' );
+				this.wrapper.find( '.nav-tab-wrapper a' ).removeClass( 'nav-tab-active' );
+				$( e.target ).addClass( 'nav-tab-active' );
 
 				// Get target.
-				const targetGroup = elem.getAttribute( 'href' );
+				const targetGroup = $( e.target ).attr( 'href' );
 
 				// Save active tab in local storage.
 				if ( 'undefined' !== typeof localStorage ) {
 					localStorage.setItem( OPTIONER_OBJ.storage_key, targetGroup.replace( '#', '' ) );
 				}
 
-				tabContentsArray.forEach( ( elemContent ) => {
-					elemContent.style.display = 'none';
-				} );
-
-				document.getElementById( targetGroup.replace( '#', '' ) ).style.display = 'block';
+				this.wrapper.find( '.tab-content' ).hide();
+				$( targetGroup ).show();
 			} );
-		} );
-	}
+		}
 
-	initMedia() {
-		let optionerCustomFileFrame = '';
+		initMedia() {
+			let optionerCustomFileFrame = '';
 
-		const uploadField = document.getElementsByClassName( 'select-img' );
-		const uploadFieldArray = [ ...uploadField ];
+			const $imageField = this.wrapper.find( '.form-field-image' );
 
-		uploadFieldArray.forEach( ( elem ) => {
-			const uploaderTitle = elem.dataset.uploader_title;
-			const uploaderButtonText = elem.dataset.uploader_button_text;
+			$imageField.find( '.js-upload-image' ).each( ( i, elem ) => {
+				const uploaderTitle = $( elem ).data( 'uploader_title' );
+				const uploaderButtonText = $( elem ).data( 'uploader_button_text' );
 
-			elem.addEventListener( 'click', ( e ) => {
-				e.preventDefault();
+				$( elem ).on( 'click', ( e ) => {
+					e.preventDefault();
 
-				if ( optionerCustomFileFrame ) {
-					optionerCustomFileFrame.open();
-					return;
-				}
+					if ( optionerCustomFileFrame ) {
+						optionerCustomFileFrame.open();
+						return;
+					}
 
-				// Setup modal.
-				const OptionerCustomImage = wp.media.controller.Library.extend( {
-					defaults: _.defaults( {
-						id: 'optioner-custom-insert-image',
-						title: uploaderTitle,
-						allowLocalEdits: false,
-						displaySettings: false,
-						displayUserSettings: false,
+					// Setup modal.
+					const OptionerCustomImage = wp.media.controller.Library.extend( {
+						defaults: _.defaults( {
+							id: 'optioner-custom-insert-image',
+							title: uploaderTitle,
+							allowLocalEdits: false,
+							displaySettings: false,
+							displayUserSettings: false,
+							multiple: false,
+							library: wp.media.query( { type: 'image' } ),
+						}, wp.media.controller.Library.prototype.defaults ),
+					} );
+
+					// Create the media frame.
+					optionerCustomFileFrame = wp.media.frames.optionerCustomFileFrame = wp.media( {
+						button: {
+							text: uploaderButtonText,
+						},
+						state: 'optioner-custom-insert-image',
+						states: [
+							new OptionerCustomImage(),
+						],
 						multiple: false,
-						library: wp.media.query( { type: 'image' } ),
-					}, wp.media.controller.Library.prototype.defaults ),
+					} );
+
+					optionerCustomFileFrame.on( 'select', () => {
+						const currentImage = optionerCustomFileFrame.state( 'optioner-custom-insert-image' ).get( 'selection' ).first();
+						const attachmentURL = currentImage.toJSON().url;
+
+						$( elem ).parent().find( '.field-input' ).val( attachmentURL );
+						$( elem ).parent().find( '.preview-wrap' ).addClass( 'preview-on' );
+						$( elem ).parent().find( '.field-preview' ).attr( 'src', attachmentURL );
+						$( elem ).parent().find( '.js-remove-image' ).removeClass( 'hide' );
+					} );
+
+					// Open modal.
+					optionerCustomFileFrame.open();
 				} );
-
-				// Create the media frame.
-				optionerCustomFileFrame = wp.media.frames.optionerCustomFileFrame = wp.media( {
-					button: {
-						text: uploaderButtonText,
-					},
-					state: 'optioner-custom-insert-image',
-					states: [
-						new OptionerCustomImage(),
-					],
-					multiple: false,
-				} );
-
-				optionerCustomFileFrame.on( 'select', () => {
-					const state = optionerCustomFileFrame.state( 'optioner-custom-insert-image' );
-					const currentImage = state.get( 'selection' ).first();
-					const url = currentImage.toJSON().url;
-
-					elem.parentNode.querySelector( '.img' ).value = url;
-
-					elem.parentNode.querySelector( '.image-preview-wrap' ).innerHTML = `<img src="${ url }" alt="" />`;
-
-					// Show remove button.
-					const removeButton = elem.parentNode.querySelector( '.js-remove-image' );
-					removeButton.classList.remove( 'hide' );
-					removeButton.classList.add( 'show' );
-				} );
-
-				// Open modal.
-				optionerCustomFileFrame.open();
 			} );
-		} );
 
-		const btnRemoveImage = document.getElementsByClassName( 'js-remove-image' );
-		const btnRemoveImageArray = [ ...btnRemoveImage ];
-
-		btnRemoveImageArray.forEach( ( elem ) => {
-			elem.addEventListener( 'click', ( e ) => {
-				e.preventDefault();
-				// Empty value.
-				elem.parentNode.querySelector( '.img' ).value = '';
-				// Hide preview.
-				elem.parentNode.querySelector( '.image-preview-wrap' ).innerHTML = '';
-				// Hide remove button.
-				elem.classList.remove( 'show' );
-				elem.classList.add( 'hide' );
+			$imageField.find( '.js-remove-image' ).each( ( i, el ) => {
+				$( el ).on( 'click', ( e ) => {
+					e.preventDefault();
+					$( el ).parent().find( '.field-input' ).val( '' );
+					$( el ).parent().find( '.preview-wrap' ).removeClass( 'preview-on' );
+					$( el ).parent().find( '.field-preview' ).attr( 'src', '' );
+					$( el ).parent().find( '.js-remove-image' ).addClass( 'hide' );
+				} );
 			} );
-		} );
+
+			$imageField.find( '.field-input' ).each( ( i, elInput ) => {
+				$( elInput ).on( 'change keyup paste click', () => {
+					const inputValue = $( elInput ).val();
+
+					if ( inputValue !== '' ) {
+						$( elInput ).parent().find( '.preview-wrap' ).addClass( 'preview-on' );
+						$( elInput ).parent().find( '.field-preview' ).attr( 'src', inputValue );
+						$( elInput ).parent().find( '.js-remove-image' ).removeClass( 'hide' );
+					} else {
+						$( elInput ).parent().find( '.preview-wrap' ).removeClass( 'preview-on' );
+						$( elInput ).parent().find( '.js-remove-image' ).addClass( 'hide' );
+					}
+				} );
+			} );
+		}
 	}
-}
 
-document.addEventListener( 'DOMContentLoaded', function() {
-	new App();
-} );
+	document.addEventListener( 'DOMContentLoaded', function() {
+		new App();
+	} );
+}( jQuery ) );

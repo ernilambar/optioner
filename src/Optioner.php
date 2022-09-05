@@ -317,7 +317,7 @@ class Optioner {
 
 					add_settings_field(
 						$field_key,
-						$field['title'],
+						isset( $field['title'] ) ? $field['title'] : '',
 						array( $this, 'callback_' . $field['type'] ),
 						$tab['id'] . '-' . $this->page['menu_slug'],
 						$tab['id'] . '_settings-' . $this->page['menu_slug'],
@@ -647,13 +647,11 @@ class Optioner {
 		ob_start();
 		?>
 		<div class="field-image">
-			<input type="text" class="img regular-text" name="<?php echo esc_attr( $args['field_name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
-			<a href="javascript:void(0);" class="select-img optioner-button" data-uploader_title="<?php esc_attr_e( 'Select Image', 'optioner' ); ?>" data-uploader_button_text="<?php esc_attr_e( 'Choose Image', 'optioner' ); ?>"><span class="dashicons dashicons-upload"></span></a>
-			<a href="javascript:void(0);" class="optioner-button optioner-button-danger js-remove-image <?php echo ( ! empty( $value ) ) ? 'show' : 'hide'; ?>"><span class="dashicons dashicons-no"></span></a>
-			<div class="image-preview-wrap">
-				<?php if ( ! empty( $value ) ) : ?>
-					<img src="<?php echo esc_attr( $value ); ?>" alt="" />
-				<?php endif; ?>
+			<input type="text" class="field-input regular-text" name="<?php echo esc_attr( $args['field_name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
+			<a href="javascript:void(0);" class="js-upload-image optioner-button" data-uploader_title="<?php esc_attr_e( 'Select Image', 'optioner' ); ?>" data-uploader_button_text="<?php esc_attr_e( 'Choose Image', 'optioner' ); ?>"><span class="dashicons dashicons-upload"></span></a>
+			<a href="javascript:void(0);" class="optioner-button optioner-button-danger js-remove-image <?php echo ( empty( $value ) ) ? 'hide' : ''; ?>"><span class="dashicons dashicons-no"></span></a>
+			<div class="preview-wrap <?php echo ( ! empty( $value ) ? 'preview-on' : '' ); ?>">
+				<img class="field-preview" src="<?php echo esc_attr( $value ); ?>" alt="" draggable="false" />
 			</div>
 		</div>
 
@@ -712,6 +710,25 @@ class Optioner {
 		$html = sprintf( '<h2 %s>%s</h2>', $attributes, esc_html( $args['field']['title'] ) );
 
 		$html .= $this->get_field_description( $args );
+
+		$this->render_field_markup( $html, $args );
+	}
+
+	/**
+	 * Render message.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_message( $args ) {
+		$attr = array(
+			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : '',
+		);
+
+		$attributes = $this->render_attr( $attr, false );
+
+		$html = sprintf( '<div %s>%s</div>', $attributes, wp_kses_post( $args['field']['description'] ) );
 
 		$this->render_field_markup( $html, $args );
 	}
