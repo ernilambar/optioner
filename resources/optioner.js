@@ -4,6 +4,11 @@ import 'select2';
 
 class App {
 	constructor() {
+
+		if ( jQuery('#optioner-wrapper').length === 0 ) {
+			return;
+		}
+
 		this.initHeading();
 		this.initSelect();
 		this.initColor();
