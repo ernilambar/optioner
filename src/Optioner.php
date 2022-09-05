@@ -647,6 +647,7 @@ class Optioner {
 		ob_start();
 		?>
 		<div class="field-image">
+			<input type="text" class="img" name="<?php echo esc_attr( $args['field_name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
 			<input type="button"
 				class="select-img button button-primary"
 				value="<?php esc_attr_e( 'Upload', 'optioner' ); ?>"
@@ -654,7 +655,6 @@ class Optioner {
 				data-uploader_button_text="<?php esc_attr_e( 'Choose Image', 'optioner' ); ?>"
 				/>
 			<input type="button" value="<?php echo esc_attr( _x( 'X', 'remove button', 'optioner' ) ); ?>" class="button button-secondary js-remove-image <?php echo ( ! empty( $value ) ) ? 'show' : 'hide'; ?>" />
-			<input type="hidden" class="img" name="<?php echo esc_attr( $args['field_name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
 			<div class="image-preview-wrap">
 				<?php if ( ! empty( $value ) ) : ?>
 					<img src="<?php echo esc_attr( $value ); ?>" alt="" />
