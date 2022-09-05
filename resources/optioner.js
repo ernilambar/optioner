@@ -1,8 +1,11 @@
 import './sass/optioner.scss';
 
+import 'select2';
+
 class App {
 	constructor() {
 		this.initHeading();
+		this.initSelect();
 		this.initColor();
 		this.initMedia();
 
@@ -23,6 +26,16 @@ class App {
 			tr.querySelector( 'th' ).style.display = 'none';
 			tr.querySelector( 'td' ).setAttribute( 'colspan', 2 );
 		} );
+	}
+
+	initSelect() {
+		const fieldSelect = document.getElementsByClassName( 'optioner-select' );
+		const fieldSelectArray = [ ...fieldSelect ];
+
+		fieldSelectArray.forEach( ( elem ) => {
+			jQuery( elem ).select2({minimumResultsForSearch: 10});
+		} );
+
 	}
 
 	initColor() {

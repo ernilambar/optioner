@@ -728,6 +728,8 @@ class Optioner {
 			'name' => $args['field_name'],
 		);
 
+		$attr['class'] = ' optioner-select';
+
 		$attributes = $this->render_attr( $attr, false );
 
 		$html = sprintf( '<select %s>', $attributes );
