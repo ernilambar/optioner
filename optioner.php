@@ -7,7 +7,7 @@
 
 namespace Nilambar\Optioner;
 
-define( 'OPTIONER_VERSION', '2.0.1' );
+define( 'OPTIONER_VERSION', '2.0.2' );
 define( 'OPTIONER_SLUG', 'optioner' );
 
 define( 'OPTIONER_BASENAME', basename( dirname( __FILE__ ) ) );
