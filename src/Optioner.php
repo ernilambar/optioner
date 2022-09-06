@@ -325,6 +325,7 @@ class Optioner {
 						'field_name'  => $this->page['option_slug'] . '[' . $field['id'] . ']',
 						'field_value' => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
 						'class'       => 'field-row-' . $field['type'],
+						'label_for'   => $this->page['option_slug'] . '[' . $field['id'] . ']',
 					);
 
 					add_settings_field(
@@ -448,6 +449,7 @@ class Optioner {
 		$attr = array(
 			'type'  => $args['field']['type'],
 			'name'  => $args['field_name'],
+			'id'    => $args['field_name'],
 			'value' => $this->get_value( $args ),
 			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
 		);
@@ -521,6 +523,7 @@ class Optioner {
 			'type'  => 'checkbox',
 			'name'  => $args['field_name'],
 			'value' => 1,
+			'id'    => $args['field_name'],
 		);
 
 		$attributes = $this->render_attr( $attr, false );
@@ -591,6 +594,7 @@ class Optioner {
 	public function callback_textarea( $args ) {
 		$attr = array(
 			'name'  => $args['field_name'],
+			'id'    => $args['field_name'],
 			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
 			'rows'  => isset( $args['field']['rows'] ) ? $args['field']['rows'] : 5,
 		);
@@ -659,7 +663,7 @@ class Optioner {
 		ob_start();
 		?>
 		<div class="field-image">
-			<input type="text" class="field-input regular-text" name="<?php echo esc_attr( $args['field_name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
+			<input type="text" class="field-input regular-text" name="<?php echo esc_attr( $args['field_name'] ); ?>" id="<?php echo esc_attr( $args['field_name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
 			<a href="javascript:void(0);" class="js-upload-image optioner-button" data-uploader_title="<?php esc_attr_e( 'Select Image', 'optioner' ); ?>" data-uploader_button_text="<?php esc_attr_e( 'Choose Image', 'optioner' ); ?>"><span class="dashicons dashicons-upload"></span></a>
 			<a href="javascript:void(0);" class="optioner-button optioner-button-danger js-remove-image <?php echo ( empty( $value ) ) ? 'hide' : ''; ?>"><span class="dashicons dashicons-no"></span></a>
 			<div class="preview-wrap <?php echo ( ! empty( $value ) ? 'preview-on' : '' ); ?>">
@@ -686,6 +690,7 @@ class Optioner {
 		$attr = array(
 			'type'  => 'text',
 			'name'  => $args['field_name'],
+			'id'    => $args['field_name'],
 			'value' => $this->get_value( $args ),
 			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
 		);
@@ -756,9 +761,12 @@ class Optioner {
 	public function callback_select( $args ) {
 		$attr = array(
 			'name' => $args['field_name'],
+			'id'   => $args['field_name'],
 		);
 
-		$attr['class'] = ' optioner-select';
+		if ( isset( $args['field']['stylish'] ) && true === $args['field']['stylish'] ) {
+			$attr['class'] = ' optioner-stylish-select';
+		}
 
 		$attributes = $this->render_attr( $attr, false );
 
