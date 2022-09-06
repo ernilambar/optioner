@@ -6,6 +6,11 @@ $color_primary: #008dd4;
 	.wrap-content {
 		display: flex;
 
+		&.sticky-sidebar {
+			position: relative;
+			align-items: flex-start;
+		}
+
 		.wrap-primary {
 			flex: 1;
 		}
@@ -13,6 +18,13 @@ $color_primary: #008dd4;
 		.wrap-secondary {
 			margin-left: 15px;
 			margin-top: 43px;
+		}
+	}
+
+	.sticky-sidebar {
+		.wrap-secondary {
+			position: sticky;
+			top: 42px;
 		}
 	}
 
