@@ -381,6 +381,10 @@ class Optioner {
 								$output[ $field['id'] ] = wp_kses_post( $input[ $field['id'] ] );
 								break;
 
+							case 'code':
+								$output[ $field['id'] ] = $input[ $field['id'] ];
+								break;
+
 							case 'checkbox':
 								$output[ $field['id'] ] = $input[ $field['id'] ] ? true : false;
 								break;
@@ -593,6 +597,37 @@ class Optioner {
 		if ( isset( $args['field']['placeholder'] ) ) {
 			$attr['placeholder'] = $args['field']['placeholder'];
 		}
+
+		$attributes = $this->render_attr( $attr, false );
+
+		$html = sprintf( '<textarea %s>%s</textarea>', $attributes, esc_textarea( $this->get_value( $args ) ) );
+
+		$html .= $this->get_field_description( $args );
+
+		$this->render_field_markup( $html, $args );
+	}
+
+	/**
+	 * Render code editor.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_code( $args ) {
+		$attr = array(
+			'name'      => $args['field_name'],
+			'id'        => $args['field_name'],
+			'class'     => isset( $args['field']['class'] ) ? $args['field']['class'] : '',
+			'rows'      => isset( $args['field']['rows'] ) ? $args['field']['rows'] : 5,
+			'data-mime' => isset( $args['field']['mime_type'] ) ? $args['field']['mime_type'] : 'css',
+		);
+
+		if ( isset( $args['field']['placeholder'] ) ) {
+			$attr['placeholder'] = $args['field']['placeholder'];
+		}
+
+		$attr['class'] .= ' code-editor';
 
 		$attributes = $this->render_attr( $attr, false );
 
