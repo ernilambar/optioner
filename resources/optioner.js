@@ -23,22 +23,21 @@ import 'select2';
 
 			if ( true === isTab ) {
 				this.initTab();
+			} else {
+				this.wrapper.find( '.tab-content' ).fadeIn( 'fast' );
 			}
 		}
 
 		initHeading() {
 			this.wrapper.find( '.form-field-heading' ).each( function() {
 				const tr = $( this ).parent().parent();
-				tr.find( 'th' ).hide();
 				tr.find( 'td' ).attr( 'colspan', '2' );
 			} );
 		}
 
 		initMessage() {
-			console.log('messs')
 			this.wrapper.find( '.form-field-message' ).each( function() {
 				const tr = $( this ).parent().parent();
-				tr.find( 'th' ).hide();
 				tr.find( 'td' ).attr( 'colspan', '2' );
 			} );
 		}
@@ -66,10 +65,10 @@ import 'select2';
 
 			// Initial status for tab content.
 			if ( null !== activeTab && $( `#${ activeTab }` ) ) {
-				$( `#${ activeTab }` ).show();
+				$( `#${ activeTab }` ).hide().fadeIn( 'fast' );
 				$( `.nav-tab-wrapper a[href="#${ activeTab }"]` ).addClass( 'nav-tab-active' );
 			} else {
-				this.wrapper.find( '.tab-content' ).first().show();
+				this.wrapper.find( '.tab-content' ).first().hide().fadeIn( 'fast' );
 				this.wrapper.find( '.nav-tab-wrapper a' ).first().addClass( 'nav-tab-active' );
 			}
 
@@ -88,7 +87,7 @@ import 'select2';
 				}
 
 				this.wrapper.find( '.tab-content' ).hide();
-				$( targetGroup ).show();
+				$( targetGroup ).fadeIn( 'fast' );
 			} );
 		}
 

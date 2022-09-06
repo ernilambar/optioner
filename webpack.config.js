@@ -20,7 +20,7 @@ module.exports = {
 		jquery: 'jQuery',
 	},
 	mode: isProd ? 'production' : 'development',
-	devtool: isProd ? false : 'inline-source-map',
+	devtool: isProd ? false : 'source-map',
 	module: {
 		rules: [
 			{
