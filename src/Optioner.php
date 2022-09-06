@@ -99,6 +99,15 @@ class Optioner {
 	protected $is_sidebar = false;
 
 	/**
+	 * Sidebar sticky status.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var bool
+	 */
+	protected $is_sidebar_sticky = false;
+
+	/**
 	 * Sidebar width.
 	 *
 	 * @since 1.0.0
@@ -206,7 +215,9 @@ class Optioner {
 
 		$tab_status_class = ( true === $this->tab_status ) ? 'tab-enabled' : 'tab-disabled';
 
-		echo '<div class="wrap-content ' . esc_attr( $tab_status_class ) . '">';
+		$sticky_sidebar_class = ( true === $this->is_sidebar_sticky ) ? 'sticky-sidebar' : '';
+
+		echo '<div class="wrap-content ' . esc_attr( $tab_status_class . ' ' . $sticky_sidebar_class ) . '">';
 
 		echo '<div class="wrap-primary">';
 
@@ -313,7 +324,7 @@ class Optioner {
 						'field_id'    => $field['id'],
 						'field_name'  => $this->page['option_slug'] . '[' . $field['id'] . ']',
 						'field_value' => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
-						'class' => 'field-row-' . $field['type']
+						'class'       => 'field-row-' . $field['type'],
 					);
 
 					add_settings_field(
@@ -899,9 +910,12 @@ class Optioner {
 		$defaults = array(
 			'render_callback' => '',
 			'width'           => 20,
+			'sticky'          => false,
 		);
 
 		$args = wp_parse_args( $args, $defaults );
+
+		$this->is_sidebar_sticky = $args['sticky'];
 
 		if ( absint( $args['width'] ) > 0 && absint( $args['width'] ) < 100 ) {
 			$this->sidebar_width = absint( $args['width'] );
