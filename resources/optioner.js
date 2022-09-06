@@ -43,8 +43,8 @@ import 'select2';
 		}
 
 		initSelect() {
-			this.wrapper.find( '.form-field-select select' ).each( function() {
-				$( this ).select2( { minimumResultsForSearch: 10 } );
+			this.wrapper.find( '.form-field-select select.optioner-stylish-select' ).each( function() {
+				$( this ).select2( { width: '100%', minimumResultsForSearch: 10 } );
 			} );
 		}
 
