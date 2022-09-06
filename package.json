@@ -1,7 +1,8 @@
 {
   "name": "optioner",
   "title": "Optioner",
-  "version": "2.0.1",
+  "version": "2.0.2",
+  "main_file": "optioner.php",
   "license": "GPL-2.0-or-later",
   "scripts": {
     "dev": "webpack --watch",
@@ -10,9 +11,13 @@
     "preinstall": "npx only-allow pnpm",
     "eslint": "eslint --quiet .",
     "eslint:fix": "eslint --quiet --fix .",
-    "format": "prettier --write \"resources/sass/**/*.scss\""
+    "format": "prettier --write \"resources/sass/**/*.scss\"",
+    "version": "easy-replace-in-files"
   },
-  "repository": "github:ernilambar/optioner",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ernilambar/optioner"
+  },
   "prettier": "@wordpress/prettier-config",
   "browserslist": "> 1%, not dead",
   "devDependencies": {
@@ -25,6 +30,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.0.0",
+    "easy-replace-in-files": "^1.0.2",
     "eslint": "^8.22.0",
     "mini-css-extract-plugin": "^2.6.1",
     "postcss": "^8.4.14",

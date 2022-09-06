@@ -18,15 +18,6 @@ namespace Nilambar\Optioner;
 class Optioner {
 
 	/**
-	 * Version.
-	 *
-	 * @since 1.0.8
-	 *
-	 * @var array
-	 */
-	protected $version = '2.0.1';
-
-	/**
 	 * Options.
 	 *
 	 * @since 1.0.0
