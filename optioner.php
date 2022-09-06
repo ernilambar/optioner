@@ -43,6 +43,12 @@ class Init {
 	 * @since 1.0.0
 	 */
 	public function load_assets() {
+		$ce_settings['css'] = wp_enqueue_code_editor(array('type' => 'css'));
+		$ce_settings['javascript'] = wp_enqueue_code_editor(array('type' => 'javascript'));
+	  wp_localize_script('jquery', 'ce_settings', $ce_settings);
+
+	  wp_enqueue_style('wp-codemirror');
+
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_script( 'wp-color-picker' );
 
@@ -50,7 +56,7 @@ class Init {
 
 		wp_enqueue_style( 'optioner-style', OPTIONER_URL . '/assets/optioner.css', array(), OPTIONER_VERSION );
 
-		wp_enqueue_script( 'optioner-scripts', OPTIONER_URL . '/assets/optioner.js', array( 'jquery', 'wp-color-picker' ), OPTIONER_VERSION, true );
+		wp_enqueue_script( 'optioner-scripts', OPTIONER_URL . '/assets/optioner.js', array( 'jquery', 'wp-color-picker', 'code-editor' ), OPTIONER_VERSION, true );
 
 		$localized_array = array(
 			'storage_key' => wp_unique_id( 'optioner-' ) . '-activetab',

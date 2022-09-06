@@ -179,3 +179,10 @@ import 'select2';
 		new App();
 	} );
 }( jQuery ) );
+
+jQuery(document).ready(function($) {
+	$('.code-editor').each(function(){
+		const settings = ( 'javascript' === $(this).data('mime') ) ? ce_settings.javascript: ce_settings.css;
+	  wp.codeEditor.initialize($(this), settings);
+	});
+})
