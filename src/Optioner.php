@@ -313,6 +313,7 @@ class Optioner {
 						'field_id'    => $field['id'],
 						'field_name'  => $this->page['option_slug'] . '[' . $field['id'] . ']',
 						'field_value' => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
+						'class' => 'field-row-' . $field['type']
 					);
 
 					add_settings_field(
