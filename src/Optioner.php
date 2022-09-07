@@ -311,12 +311,13 @@ class Optioner {
 			if ( isset( $this->fields[ $tab['id'] ] ) && ! empty( $this->fields[ $tab['id'] ] ) ) {
 				foreach ( $this->fields[ $tab['id'] ] as $field_key => $field ) {
 					$args = array(
-						'field'       => $field,
-						'field_id'    => $field['id'],
-						'field_name'  => $this->page['option_slug'] . '[' . $field['id'] . ']',
-						'field_value' => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
-						'class'       => 'field-row-' . $field['type'],
-						'label_for'   => $this->page['option_slug'] . '[' . $field['id'] . ']',
+						'field'          => $field,
+						'field_id'       => $field['id'],
+						'field_name'     => $this->page['option_slug'] . '[' . $field['id'] . ']',
+						'field_clean_id' => $this->page['option_slug'] . '---' . $field['id'],
+						'field_value'    => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
+						'class'          => 'field-row-' . $field['type'],
+						'label_for'      => $this->page['option_slug'] . '---' . $field['id'],
 					);
 
 					add_settings_field(
@@ -426,11 +427,68 @@ class Optioner {
 	 * @param array  $args Arguments.
 	 */
 	public function render_field_markup( $html, $args ) {
-		$html = sprintf( '<div class="form-field-%1$s form-field-%2$s">%3$s</div>', $args['field']['type'], $args['field']['id'], $html );
+		$is_conditional_active = false;
+
+		if ( isset( $args['field']['conditional'] ) ) {
+			$is_conditional_active = true;
+		}
+
+		$conditional_class = ( $is_conditional_active ) ? 'conditional' : '';
+
+		$conditionals = '';
+
+		if ( $is_conditional_active ) {
+			$conditionals = $this->get_conditionals( $args );
+		}
+
+		$html = sprintf( '<div class="%5$s form-field-%1$s form-field-%2$s" data-condition="%4$s">%3$s</div>', $args['field']['type'], $args['field']['id'], $html, $conditionals, $conditional_class );
 
 		do_action( 'optioner_field_top_' . $args['field']['type'], $args['field']['id'], $this->page['menu_slug'], $args );
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		do_action( 'optioner_field_bottom_' . $args['field']['type'], $args['field']['id'], $this->page['menu_slug'], $args );
+	}
+
+	private function get_conditionals( $args ) {
+		$output = '';
+
+		$conditions = $args['field']['conditional'];
+
+		$cond = array_shift( $conditions );
+
+		$parent_field = $this->get_field_by_id( $cond['key']);
+
+		if ( empty( $parent_field ) ) {
+			return $output;
+		}
+
+		if ( 'checkbox' === $parent_field['type'] ) {
+			$output = '#' . $this->page['option_slug'] . '---' . $cond['key'];
+		} else {
+			$output = $this->page['option_slug'] . '[' . $cond['key'] . ']';
+
+			if ( isset( $cond['compare'] ) ) {
+				$output .= ' ' . $cond['compare'] . ' \'' . $cond['value']. '\'';
+			}
+		}
+
+		return $output;
+	}
+
+	private function get_field_by_id ( $id ) {
+		$output = array();
+
+		foreach ( $this->fields as $section_key => $section ) {
+
+			foreach ( $section as $field_key => $field ) {
+
+				if ( $id === $field_key ) {
+					$output = $field;
+					break;
+				}
+			}
+		}
+
+		return $output;
 	}
 
 	/**
@@ -444,7 +502,7 @@ class Optioner {
 		$attr = array(
 			'type'  => $args['field']['type'],
 			'name'  => $args['field_name'],
-			'id'    => $args['field_name'],
+			'id'    => $args['field_clean_id'],
 			'value' => $this->get_value( $args ),
 			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
 		);
@@ -518,7 +576,7 @@ class Optioner {
 			'type'  => 'checkbox',
 			'name'  => $args['field_name'],
 			'value' => 1,
-			'id'    => $args['field_name'],
+			'id'    => $args['field_clean_id'],
 		);
 
 		$attributes = $this->render_attr( $attr, false );
@@ -589,7 +647,7 @@ class Optioner {
 	public function callback_textarea( $args ) {
 		$attr = array(
 			'name'  => $args['field_name'],
-			'id'    => $args['field_name'],
+			'id'    => $args['field_clean_id'],
 			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
 			'rows'  => isset( $args['field']['rows'] ) ? $args['field']['rows'] : 5,
 		);
@@ -617,7 +675,7 @@ class Optioner {
 	public function callback_code( $args ) {
 		$attr = array(
 			'name'      => $args['field_name'],
-			'id'        => $args['field_name'],
+			'id'        => $args['field_clean_id'],
 			'class'     => isset( $args['field']['class'] ) ? $args['field']['class'] : '',
 			'rows'      => isset( $args['field']['rows'] ) ? $args['field']['rows'] : 5,
 			'data-mime' => isset( $args['field']['mime_type'] ) ? $args['field']['mime_type'] : 'css',
@@ -689,7 +747,7 @@ class Optioner {
 		ob_start();
 		?>
 		<div class="field-image">
-			<input type="text" class="field-input regular-text" name="<?php echo esc_attr( $args['field_name'] ); ?>" id="<?php echo esc_attr( $args['field_name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
+			<input type="text" class="field-input regular-text" name="<?php echo esc_attr( $args['field_name'] ); ?>" id="<?php echo esc_attr( $args['field_clean_id'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
 			<a href="javascript:void(0);" class="js-upload-image optioner-button" data-uploader_title="<?php esc_attr_e( 'Select Image', 'optioner' ); ?>" data-uploader_button_text="<?php esc_attr_e( 'Choose Image', 'optioner' ); ?>"><span class="dashicons dashicons-upload"></span></a>
 			<a href="javascript:void(0);" class="optioner-button optioner-button-danger js-remove-image <?php echo ( empty( $value ) ) ? 'hide' : ''; ?>"><span class="dashicons dashicons-no"></span></a>
 			<div class="preview-wrap <?php echo ( ! empty( $value ) ? 'preview-on' : '' ); ?>">
@@ -716,7 +774,7 @@ class Optioner {
 		$attr = array(
 			'type'  => 'text',
 			'name'  => $args['field_name'],
-			'id'    => $args['field_name'],
+			'id'    => $args['field_clean_id'],
 			'value' => $this->get_value( $args ),
 			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
 		);
@@ -787,7 +845,7 @@ class Optioner {
 	public function callback_select( $args ) {
 		$attr = array(
 			'name' => $args['field_name'],
-			'id'   => $args['field_name'],
+			'id'   => $args['field_clean_id'],
 		);
 
 		if ( isset( $args['field']['stylish'] ) && true === $args['field']['stylish'] ) {

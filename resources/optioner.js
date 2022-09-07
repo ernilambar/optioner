@@ -1,6 +1,7 @@
 import './sass/optioner.scss';
 
 import 'select2';
+import 'conditionize2';
 
 ( function( $ ) {
 	class App {
@@ -186,3 +187,15 @@ jQuery(document).ready(function($) {
 	  wp.codeEditor.initialize($(this), settings);
 	});
 })
+
+jQuery(function ($) {
+	$(".conditional").conditionize({
+		"onload": true,
+		ifTrue: function($s) {
+        $s.closest('tr').show();
+    },
+		ifFalse: function($s) {
+        $s.closest('tr').hide();
+    },
+	});
+});
