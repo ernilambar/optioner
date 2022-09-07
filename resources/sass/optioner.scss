@@ -181,11 +181,22 @@ $color_primary: #008dd4;
 			&.preview-on {
 				display: block;
 				margin-top: 10px;
+
+				img {
+					display: block;
+				}
 			}
 
 			img {
 				width: 100%;
+				display: none;
 			}
+		}
+	}
+
+	.field-row-multicheck {
+		.form-field-multicheck ul {
+			margin-top: 5px;
 		}
 	}
 
