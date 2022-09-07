@@ -429,7 +429,7 @@ class Optioner {
 	public function render_field_markup( $html, $args ) {
 		$is_conditional_active = false;
 
-		if ( isset( $args['field']['conditional'] ) ) {
+		if ( isset( $args['field']['condition'] ) ) {
 			$is_conditional_active = true;
 		}
 
@@ -451,7 +451,7 @@ class Optioner {
 	private function get_conditionals( $args ) {
 		$output = '';
 
-		$conditions = $args['field']['conditional'];
+		$conditions = $args['field']['condition'];
 
 		$cond = array_shift( $conditions );
 
