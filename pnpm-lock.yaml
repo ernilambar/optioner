@@ -8,6 +8,7 @@ specifiers:
   '@wordpress/prettier-config': ^1.4.0
   babel-loader: ^8.2.5
   clean-webpack-plugin: ^4.0.0
+  conditionize2: ^2.0.1
   css-loader: ^6.7.1
   css-minimizer-webpack-plugin: ^4.0.0
   easy-replace-in-files: ^1.0.2
@@ -26,6 +27,7 @@ specifiers:
   webpack-cli: ^4.10.0
 
 dependencies:
+  conditionize2: 2.0.1
   select2: 4.1.0-rc.0
 
 devDependencies:
@@ -2531,6 +2533,12 @@ packages:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: true
 
+  /conditionize2/2.0.1:
+    resolution: {integrity: sha512-TTQ8c5oOPeEPbn92qt4RmgZzwNke4lRkWC7uXmWDm3qpZ3YGtrkZxuOrGGuQUbTRpRLzbhEkAILloSAXc/i66Q==}
+    dependencies:
+      jquery: 3.6.1
+    dev: false
+
   /constant-case/3.0.4:
     resolution: {integrity: sha512-I2hSBi7Vvs7BEuJDr5dDHfzb/Ruj3FyvFyh7KLilAjNQw3Be+xgqUBA2W6scVEcL0hL1dwPRtIqEPVUCKkSsyQ==}
     dependencies:
@@ -3836,6 +3844,10 @@ packages:
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: true
+
+  /jquery/3.6.1:
+    resolution: {integrity: sha512-opJeO4nCucVnsjiXOE+/PcCgYw9Gwpvs/a6B1LL/lQhwWwpbVEVYDZ1FokFr8PRc7ghYlrFPuyHuiiDNTQxmcw==}
+    dev: false
 
   /js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
