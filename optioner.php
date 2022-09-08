@@ -7,13 +7,13 @@
 
 namespace Nilambar\Optioner;
 
-if ( ! class_exists( 'Init_2_0_3', false ) ) {
+if ( ! class_exists( 'Init_2_0_4', false ) ) {
 
-	class Init_2_0_3 {
+	class Init_2_0_4 {
 
-		const VERSION = '2.0.3';
+		const VERSION = '2.0.4';
 
-		const PRIORITY = 9999;
+		const PRIORITY = 9998;
 
 		public static $single_instance = null;
 
@@ -90,5 +90,5 @@ if ( ! class_exists( 'Init_2_0_3', false ) ) {
 
 	}
 
-	Init_2_0_3::initiate();
+	Init_2_0_4::initiate();
 }
