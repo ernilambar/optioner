@@ -463,6 +463,11 @@ class Optioner {
 
 		if ( 'checkbox' === $parent_field['type'] ) {
 			$output = '#' . $this->page['option_slug'] . '---' . $cond['key'];
+
+			// Reverse conditions.
+			if ( isset( $cond['compare'] ) && '!==' === $cond['compare'] ) {
+				$output = '!' . $output;
+			}
 		} else {
 			$output = $this->page['option_slug'] . '[' . $cond['key'] . ']';
 

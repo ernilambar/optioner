@@ -7,13 +7,13 @@
 
 namespace Nilambar\Optioner;
 
-if ( ! class_exists( 'Init_2_0_4', false ) ) {
+if ( ! class_exists( 'Init_2_0_5', false ) ) {
 
-	class Init_2_0_4 {
+	class Init_2_0_5 {
 
-		const VERSION = '2.0.4';
+		const VERSION = '2.0.5';
 
-		const PRIORITY = 9998;
+		const PRIORITY = 9997;
 
 		public static $single_instance = null;
 
@@ -68,6 +68,7 @@ if ( ! class_exists( 'Init_2_0_4', false ) ) {
 		public function load_assets() {
 			$ce_settings['css']        = wp_enqueue_code_editor( array( 'type' => 'css' ) );
 			$ce_settings['javascript'] = wp_enqueue_code_editor( array( 'type' => 'javascript' ) );
+
 			wp_localize_script( 'jquery', 'ce_settings', $ce_settings );
 
 			wp_enqueue_style( 'wp-codemirror' );
@@ -90,5 +91,5 @@ if ( ! class_exists( 'Init_2_0_4', false ) ) {
 
 	}
 
-	Init_2_0_4::initiate();
+	Init_2_0_5::initiate();
 }
