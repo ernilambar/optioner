@@ -451,29 +451,37 @@ class Optioner {
 	private function get_conditionals( $args ) {
 		$output = '';
 
+		$rules = array();
+
 		$conditions = $args['field']['condition'];
 
-		$cond = array_shift( $conditions );
+		foreach ( $conditions as $cond ) {
+			$parent_field = $this->get_field_by_id( $cond['key']);
 
-		$parent_field = $this->get_field_by_id( $cond['key']);
+			if ( empty( $parent_field ) ) {
+				continue;
+			}
 
-		if ( empty( $parent_field ) ) {
-			return $output;
+			if ( 'checkbox' === $parent_field['type'] ) {
+				$rule = '#' . $this->page['option_slug'] . '---' . $cond['key'];
+
+				// Reverse conditions.
+				if ( isset( $cond['compare'] ) && '!==' === $cond['compare'] ) {
+					$rule = '!' . $rule;
+				}
+			} else {
+				$rule = $this->page['option_slug'] . '[' . $cond['key'] . ']';
+
+				if ( isset( $cond['compare'] ) ) {
+					$rule .= ' ' . $cond['compare'] . ' \'' . $cond['value']. '\'';
+				}
+			}
+
+			$rules[] = $rule;
 		}
 
-		if ( 'checkbox' === $parent_field['type'] ) {
-			$output = '#' . $this->page['option_slug'] . '---' . $cond['key'];
-
-			// Reverse conditions.
-			if ( isset( $cond['compare'] ) && '!==' === $cond['compare'] ) {
-				$output = '!' . $output;
-			}
-		} else {
-			$output = $this->page['option_slug'] . '[' . $cond['key'] . ']';
-
-			if ( isset( $cond['compare'] ) ) {
-				$output .= ' ' . $cond['compare'] . ' \'' . $cond['value']. '\'';
-			}
+		if ( ! empty( $rules ) ) {
+			$output = join(' && ', $rules );
 		}
 
 		return $output;
