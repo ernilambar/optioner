@@ -4,6 +4,18 @@ import 'select2';
 import 'conditionize2';
 
 ( function( $ ) {
+	const initializeCodeEditor = ( tabId ) => {
+		jQuery( tabId ).find( '.code-editor' ).each( function() {
+			const isInitialized = $( this ).data( 'initialized' );
+			if ( '1' !== isInitialized ) {
+				const settings = ( 'javascript' === $( this ).data( 'mime' ) ) ? codeEditorSettings.javascript : codeEditorSettings.css;
+				const textareaId = $( this ).attr( 'id' );
+				$( this ).data( 'initialized', '1' );
+				wp.codeEditor.initialize( textareaId, settings );
+			}
+		} );
+	};
+
 	class App {
 		wrapper;
 
@@ -26,6 +38,8 @@ import 'conditionize2';
 				this.initTab();
 			} else {
 				this.wrapper.find( '.tab-content' ).fadeIn( 'fast' );
+				const tabSingleId = this.wrapper.find( '.tab-content' ).attr( 'id' );
+				initializeCodeEditor( `#${ tabSingleId }` );
 			}
 		}
 
@@ -67,6 +81,7 @@ import 'conditionize2';
 			// Initial status for tab content.
 			if ( null !== activeTab && $( `#${ activeTab }` ) ) {
 				$( `#${ activeTab }` ).hide().fadeIn( 'fast' );
+				initializeCodeEditor( `#${ activeTab }` );
 				$( `.nav-tab-wrapper a[href="#${ activeTab }"]` ).addClass( 'nav-tab-active' );
 			} else {
 				this.wrapper.find( '.tab-content' ).first().hide().fadeIn( 'fast' );
@@ -89,6 +104,7 @@ import 'conditionize2';
 
 				this.wrapper.find( '.tab-content' ).hide();
 				$( targetGroup ).fadeIn( 'fast' );
+				initializeCodeEditor( targetGroup );
 			} );
 		}
 
@@ -190,10 +206,3 @@ import 'conditionize2';
 		} );
 	} );
 }( jQuery ) );
-
-jQuery( document ).ready( function( $ ) {
-	$( '.code-editor' ).each( function() {
-		const settings = ( 'javascript' === $( this ).data( 'mime' ) ) ? codeEditorSettings.javascript : codeEditorSettings.css;
-		wp.codeEditor.initialize( $( this ), settings );
-	} );
-} );
