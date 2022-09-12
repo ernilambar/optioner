@@ -61,7 +61,7 @@ import 'conditionize2';
 			let activeTab = '';
 
 			if ( 'undefined' !== typeof localStorage ) {
-				activeTab = localStorage.getItem( OPTIONER_OBJ.storage_key );
+				activeTab = localStorage.getItem( optionerObject.storage_key );
 			}
 
 			// Initial status for tab content.
@@ -84,7 +84,7 @@ import 'conditionize2';
 
 				// Save active tab in local storage.
 				if ( 'undefined' !== typeof localStorage ) {
-					localStorage.setItem( OPTIONER_OBJ.storage_key, targetGroup.replace( '#', '' ) );
+					localStorage.setItem( optionerObject.storage_key, targetGroup.replace( '#', '' ) );
 				}
 
 				this.wrapper.find( '.tab-content' ).hide();
@@ -178,24 +178,22 @@ import 'conditionize2';
 
 	document.addEventListener( 'DOMContentLoaded', function() {
 		new App();
+
+		jQuery( '.conditional' ).conditionize( {
+			onload: true,
+			ifTrue( $s ) {
+				$s.closest( 'tr' ).show();
+			},
+			ifFalse( $s ) {
+				$s.closest( 'tr' ).hide();
+			},
+		} );
 	} );
 }( jQuery ) );
 
-jQuery(document).ready(function($) {
-	$('.code-editor').each(function(){
-		const settings = ( 'javascript' === $(this).data('mime') ) ? ce_settings.javascript: ce_settings.css;
-	  wp.codeEditor.initialize($(this), settings);
-	});
-})
-
-jQuery(function ($) {
-	$(".conditional").conditionize({
-		"onload": true,
-		ifTrue: function($s) {
-        $s.closest('tr').show();
-    },
-		ifFalse: function($s) {
-        $s.closest('tr').hide();
-    },
-	});
-});
+jQuery( document ).ready( function( $ ) {
+	$( '.code-editor' ).each( function() {
+		const settings = ( 'javascript' === $( this ).data( 'mime' ) ) ? codeEditorSettings.javascript : codeEditorSettings.css;
+		wp.codeEditor.initialize( $( this ), settings );
+	} );
+} );
