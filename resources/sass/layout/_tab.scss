@@ -1,0 +1,47 @@
+.optioner-wrap {
+	.nav-tab-active,
+	.nav-tab-active:hover {
+		background-color: #fff;
+		border-bottom-color: #fff;
+		box-shadow: none;
+	}
+
+	.tab-content {
+		.tab-content-inner {
+			background-color: #fff;
+			box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+			border: 1px solid #ccd0d4;
+			border-top: none;
+
+			& > h2 {
+				display: none;
+			}
+		}
+
+		.tab-content-inner-fields {
+			padding: 5px 20px 15px 20px;
+		}
+
+		.tab-content-inner-custom {
+			padding: 20px;
+		}
+
+		.tab-content-inner-custom p:first-child {
+			margin-top: 0;
+		}
+
+		.tab-content-inner-custom p:last-child {
+			margin-bottom: 0;
+		}
+
+		p.submit {
+			padding-bottom: 0;
+		}
+	}
+
+	.tab-enabled {
+		.tab-content {
+			display: none;
+		}
+	}
+}

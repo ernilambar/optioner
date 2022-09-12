@@ -1,0 +1,25 @@
+.optioner-wrap {
+	.optioner-button {
+		display: inline-block;
+		background-color: $color_primary;
+		border: 1px solid $color_primary;
+		color: #fff;
+		border-radius: 4px;
+		text-decoration: none;
+		padding: 4px;
+		transition: 0.2s;
+		width: 20px;
+		height: 20px;
+
+		&:hover,
+		&:focus,
+		&:active {
+			opacity: 0.9;
+		}
+
+		&-danger {
+			background-color: #b73b27;
+			border-color: #b73b27;
+		}
+	}
+}
