@@ -1,0 +1,16 @@
+.optioner-wrap {
+	.form-field-radio {
+		.layout-horizontal {
+			display: flex;
+		}
+
+		.radio-list {
+			margin: 0;
+			padding: 0;
+
+			li {
+				margin-right: 10px;
+			}
+		}
+	}
+}

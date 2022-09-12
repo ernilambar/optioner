@@ -1,0 +1,41 @@
+.optioner-wrap {
+	.wrap-content {
+		display: flex;
+
+		&.sticky-sidebar {
+			position: relative;
+			align-items: flex-start;
+		}
+
+		.wrap-primary {
+			flex: 1;
+		}
+
+		.wrap-secondary {
+			margin-left: 15px;
+			margin-top: 43px;
+		}
+	}
+
+	.sticky-sidebar {
+		.wrap-secondary {
+			position: sticky;
+			top: 42px;
+		}
+	}
+
+	.tab-disabled {
+		.wrap-secondary {
+			margin-top: 20px;
+		}
+
+		.tab-content {
+			display: none;
+
+			.tab-content-inner {
+				margin-top: 20px;
+				border-top: 1px solid #ccd0d4;
+			}
+		}
+	}
+}

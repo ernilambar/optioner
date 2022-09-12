@@ -1,0 +1,38 @@
+.optioner-wrap {
+	.sidebox {
+		position: relative;
+		min-width: 200px;
+		border: 1px solid #ccd0d4;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+		background: #fff;
+		padding: 15px;
+		margin-bottom: 15px;
+
+		.sidebox-heading {
+			font-size: 1.2em;
+			margin-top: 0;
+		}
+
+		.sidebox-content {
+			ul,
+			ol,
+			p {
+				margin-top: 0;
+			}
+
+			p:last-child {
+				margin-bottom: 0;
+			}
+
+			ul,
+			ol {
+				list-style-position: outside;
+				margin-left: 1.2em;
+			}
+
+			ul {
+				list-style-type: disc;
+			}
+		}
+	}
+}

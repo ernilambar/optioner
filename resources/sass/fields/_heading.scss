@@ -1,0 +1,22 @@
+.optioner-wrap {
+	.field-row-heading {
+		th {
+			display: none;
+		}
+	}
+
+	.form-field-heading {
+		margin-left: -10px;
+
+		h2 {
+			margin-top: 0;
+			font-size: 1rem;
+		}
+
+		.description {
+			font-size: 13px;
+			font-style: inherit;
+			color: #444;
+		}
+	}
+}

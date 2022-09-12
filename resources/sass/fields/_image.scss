@@ -1,0 +1,25 @@
+.optioner-wrap {
+	.form-field-image {
+		.hide {
+			display: none;
+		}
+
+		.preview-wrap {
+			max-width: 200px;
+
+			&.preview-on {
+				display: block;
+				margin-top: 10px;
+
+				img {
+					display: block;
+				}
+			}
+
+			img {
+				width: 100%;
+				display: none;
+			}
+		}
+	}
+}
