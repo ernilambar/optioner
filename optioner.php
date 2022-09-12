@@ -69,7 +69,7 @@ if ( ! class_exists( 'Init_2_0_5', false ) ) {
 			$ce_settings['css']        = wp_enqueue_code_editor( array( 'type' => 'css' ) );
 			$ce_settings['javascript'] = wp_enqueue_code_editor( array( 'type' => 'javascript' ) );
 
-			wp_localize_script( 'jquery', 'ce_settings', $ce_settings );
+			wp_localize_script( 'jquery', 'codeEditorSettings', $ce_settings );
 
 			wp_enqueue_style( 'wp-codemirror' );
 
@@ -86,7 +86,7 @@ if ( ! class_exists( 'Init_2_0_5', false ) ) {
 				'storage_key' => wp_unique_id( 'optioner-' ) . '-activetab',
 			);
 
-			wp_localize_script( 'optioner-scripts', 'OPTIONER_OBJ', $localized_array );
+			wp_localize_script( 'optioner-scripts', 'optionerObject', $localized_array );
 		}
 
 	}

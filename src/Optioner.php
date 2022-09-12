@@ -963,10 +963,12 @@ class Optioner {
 			$default = $args['field']['default'];
 		}
 
-		if ( isset( $this->options[ $args['field_id'] ] ) || is_null( $this->options[ $args['field_id'] ] ) ) {
+		if ( isset( $this->options[ $args['field_id'] ] ) ) {
 			$output = $this->options[ $args['field_id'] ];
 		} else {
-			$output = $default;
+			if ( 'multicheck' !== $args['field']['type'] ) {
+				$output = $default;
+			}
 		}
 
 		return $output;
