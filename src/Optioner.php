@@ -323,7 +323,7 @@ class Optioner {
 					add_settings_field(
 						$field_key,
 						isset( $field['title'] ) ? $field['title'] : '',
-						array( $this, 'callback_' . $field['type'] ),
+						is_callable( array($this, 'callback_' . $field['type'] ) ) ? array( $this, 'callback_' . $field['type'] ) : array( $this, 'callback_text' ),
 						$tab['id'] . '-' . $this->page['menu_slug'],
 						$tab['id'] . '_settings-' . $this->page['menu_slug'],
 						$args
@@ -387,6 +387,7 @@ class Optioner {
 								break;
 
 							case 'checkbox':
+							case 'toggle':
 								$output[ $field['id'] ] = $input[ $field['id'] ] ? true : false;
 								break;
 
@@ -599,6 +600,44 @@ class Optioner {
 		$html .= '<input type="hidden" name="' . esc_attr( $args['field_name'] ) . '" value="0" />';
 
 		$html .= sprintf( '<input %s %s />', $attributes, checked( $this->get_value( $args ), 1, false ) );
+
+		if ( isset( $args['field']['side_text'] ) && ! empty( $args['field']['side_text'] ) ) {
+			$html .= esc_html( $args['field']['side_text'] );
+		}
+
+		$html .= $this->get_field_description( $args );
+
+		$this->render_field_markup( $html, $args );
+	}
+
+	/**
+	 * Render toggle.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_toggle( $args ) {
+		$attr = array(
+			'type'  => 'checkbox',
+			'name'  => $args['field_name'],
+			'value' => 1,
+			'id'    => $args['field_clean_id'],
+		);
+
+		$attributes = $this->render_attr( $attr, false );
+
+		$html = '';
+
+		$html .= '<input type="hidden" name="' . esc_attr( $args['field_name'] ) . '" value="0" />';
+
+		$html .= '<label class="toggle">';
+
+		$html .= sprintf( '<input %s %s />', $attributes, checked( $this->get_value( $args ), 1, false ) );
+
+		$html .= '<span class="slider"></span>';
+
+		$html .= '</label>';
 
 		if ( isset( $args['field']['side_text'] ) && ! empty( $args['field']['side_text'] ) ) {
 			$html .= esc_html( $args['field']['side_text'] );
