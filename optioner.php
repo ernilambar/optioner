@@ -7,13 +7,13 @@
 
 namespace Nilambar\Optioner;
 
-if ( ! class_exists( 'Init_2_0_5', false ) ) {
+if ( ! class_exists( 'Init_2_0_6', false ) ) {
 
-	class Init_2_0_5 {
+	class Init_2_0_6 {
 
-		const VERSION = '2.0.5';
+		const VERSION = '2.0.6';
 
-		const PRIORITY = 9997;
+		const PRIORITY = 9996;
 
 		public static $single_instance = null;
 
@@ -88,8 +88,7 @@ if ( ! class_exists( 'Init_2_0_5', false ) ) {
 
 			wp_localize_script( 'optioner-scripts', 'optionerObject', $localized_array );
 		}
-
 	}
 
-	Init_2_0_5::initiate();
+	Init_2_0_6::initiate();
 }
