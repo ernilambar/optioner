@@ -463,7 +463,7 @@ class Optioner {
 				continue;
 			}
 
-			if ( 'checkbox' === $parent_field['type'] ) {
+			if ( 'checkbox' === $parent_field['type'] || 'toggle' === $parent_field['type'] ) {
 				$rule = '#' . $this->page['option_slug'] . '---' . $cond['key'];
 
 				// Reverse conditions.
