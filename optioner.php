@@ -34,7 +34,7 @@ if ( ! class_exists( Init_2_0_6::class, false ) ) {
 		}
 
 		public function include_lib() {
-			if ( class_exists( 'Optioner', false ) ) {
+			if ( class_exists( Optioner::class, false ) ) {
 				return;
 			}
 
