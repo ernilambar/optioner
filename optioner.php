@@ -7,7 +7,7 @@
 
 namespace Nilambar\Optioner;
 
-if ( ! class_exists( 'Init_2_0_6', false ) ) {
+if ( ! class_exists( Init_2_0_6::class, false ) ) {
 
 	class Init_2_0_6 {
 
