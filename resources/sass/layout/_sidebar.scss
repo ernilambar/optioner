@@ -1,38 +1,60 @@
-.optioner-wrap {
-	.sidebox {
-		position: relative;
-		min-width: 200px;
-		border: 1px solid #ccd0d4;
-		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-		background: #fff;
-		padding: 15px;
-		margin-bottom: 15px;
+.optioner-box {
+	position: relative;
+	margin-bottom: 20px;
+	padding: 20px;
+	border: 1px solid $color_border;
+	box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
+	background: #fff;
 
-		.sidebox-heading {
-			font-size: 1.2em;
-			margin-top: 0;
-		}
+	h3 {
+		margin-top: 0;
+		border-bottom: 1px solid $color_border;
+		padding-bottom: 10px;
+		font-size: 1.2em;
 
-		.sidebox-content {
-			ul,
-			ol,
-			p {
-				margin-top: 0;
-			}
-
-			p:last-child {
-				margin-bottom: 0;
-			}
-
-			ul,
-			ol {
-				list-style-position: outside;
-				margin-left: 1.2em;
-			}
-
-			ul {
-				list-style-type: disc;
-			}
+		span {
+			color: $blue;
+			margin-right: 5px;
 		}
 	}
+
+	p {
+		margin: 1.3em 0;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	ul {
+		list-style-type: disc;
+	}
+
+	ul,
+	ol {
+		margin-left: 15px;
+	}
+
+	&.gray {
+		background: #f8f9fd;
+	}
+
+	&.plain {
+		position: relative;
+		border: 1px solid $color_border;
+		background: #f8f9fd;
+		border-radius: 5px;
+		padding: 25px;
+
+		h3 {
+			border-bottom: none;
+			padding-bottom: 0;
+		}
+	}
+
+	.optioner-stars .dashicons-star-filled:before {
+		color: $yellow;
+		margin-right: 3px;
+	}
 }
+

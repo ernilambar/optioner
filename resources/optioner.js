@@ -82,17 +82,17 @@ import 'conditionize2';
 			if ( null !== activeTab && $( `#${ activeTab }` ) ) {
 				$( `#${ activeTab }` ).hide().fadeIn( 'fast' );
 				initializeCodeEditor( `#${ activeTab }` );
-				$( `.nav-tab-wrapper a[href="#${ activeTab }"]` ).addClass( 'nav-tab-active' );
+				$( `.optioner-tabs-nav a[href="#${ activeTab }"]` ).addClass( 'active' );
 			} else {
 				this.wrapper.find( '.tab-content' ).first().hide().fadeIn( 'fast' );
-				this.wrapper.find( '.nav-tab-wrapper a' ).first().addClass( 'nav-tab-active' );
+				this.wrapper.find( '.optioner-tabs-nav a' ).first().addClass( 'active' );
 			}
 
-			this.wrapper.find( '.nav-tab-wrapper a' ).on( 'click', ( e ) => {
+			this.wrapper.find( '.optioner-tabs-nav a' ).on( 'click', ( e ) => {
 				e.preventDefault();
 
-				this.wrapper.find( '.nav-tab-wrapper a' ).removeClass( 'nav-tab-active' );
-				$( e.target ).addClass( 'nav-tab-active' );
+				this.wrapper.find( '.optioner-tabs-nav a' ).removeClass( 'active' );
+				$( e.target ).addClass( 'active' );
 
 				// Get target.
 				const targetGroup = $( e.target ).attr( 'href' );
