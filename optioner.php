@@ -50,7 +50,9 @@ if ( ! class_exists( Init_2_0_6::class, false ) ) {
 				define( 'OPTIONER_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
 			}
 
-			require_once __DIR__ . '/Loader.php';
+			if ( ! class_exists( \WPTRT\Autoload\Loader::class, false ) ) {
+				require_once __DIR__ . '/Loader.php';
+			}
 
 			$loader = new \WPTRT\Autoload\Loader();
 			$loader->add( 'Nilambar\\Optioner\\', __DIR__ . '/src' );
