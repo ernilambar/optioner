@@ -1,1 +1,18 @@
-$color_primary: #008dd4;
+$white: #ffffff;
+$green: #36a583;
+$blue: #007cba;
+$azure: #008dd4;
+$yellow: #ffb900;
+$orange: #d54e21;
+
+$color_primary: $azure;
+$color_border: #dfdfdf;
+
+$bp0: 1140px;
+$bp1: 980px;
+$bp2: 840px;
+$bp3: 720px;
+$bp4: 680px;
+$bp5: 600px; // Mobile Menu (Sm Tablet Portrait)
+$bp6: 480px; // Mobile Landscape
+$bp7: 320px; // Mobile Portrait

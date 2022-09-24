@@ -81,6 +81,15 @@ class Optioner {
 	protected $page = array();
 
 	/**
+	 * Quick links.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array
+	 */
+	protected $quick_links = array();
+
+	/**
 	 * Sidebar status.
 	 *
 	 * @since 1.0.0
@@ -196,6 +205,7 @@ class Optioner {
 	public function render_page() {
 		echo '<div class="wrap optioner-wrap" id="optioner-wrapper">';
 
+		echo '<div class="optioner-header">';
 		echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
 
 		$current_screen = get_current_screen();
@@ -203,6 +213,14 @@ class Optioner {
 		if ( ! ( $current_screen && 'options-general' === $current_screen->parent_base ) ) {
 			settings_errors();
 		}
+
+		if ( ! empty( $this->page['page_subtitle'] ) ) {
+			echo '<p>' . esc_html( $this->page['page_subtitle'] ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+
+		$this->render_quick_links();
+
+		echo '</div><!-- .optioner-header -->';
 
 		$tab_status_class = ( true === $this->tab_status ) ? 'tab-enabled' : 'tab-disabled';
 
@@ -226,7 +244,7 @@ class Optioner {
 			echo '<div class="wrap-secondary" style="' . esc_attr( $sidebar_styles ) . '">';
 
 			if ( is_callable( $this->sidebar_callback ) ) {
-				call_user_func( $this->sidebar_callback );
+				call_user_func( $this->sidebar_callback, $this  );
 			}
 
 			echo '</div><!-- .wrap-secondary -->';
@@ -243,13 +261,13 @@ class Optioner {
 	 * @since 1.0.0
 	 */
 	public function render_navigation() {
-		$html = '<h2 class="nav-tab-wrapper">';
+		$html = '<div class="optioner-tabs-nav">';
 
 		foreach ( $this->tabs as $tab ) {
-			$html .= sprintf( '<a href="#%1$s" class="nav-tab" id="%1$s-tab">%2$s</a>', $tab['id'], $tab['title'] );
+			$html .= sprintf( '<h3><a href="#%1$s" class="tab-nav" id="%1$s-tab">%2$s</a></h3>', $tab['id'], $tab['title'] );
 		}
 
-		$html .= '</h2>';
+		$html .= '</div>';
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
@@ -1032,15 +1050,43 @@ class Optioner {
 	 */
 	public function set_page( $args = array() ) {
 		$defaults = array(
-			'page_title'  => esc_html__( 'Optioner', 'optioner' ),
-			'menu_title'  => esc_html__( 'Optioner', 'optioner' ),
-			'capability'  => 'manage_options',
-			'menu_slug'   => 'optioner',
-			'option_slug' => 'optioner',
-			'menu_icon'   => 'dashicons-admin-generic',
+			'page_title'    => esc_html__( 'Optioner', 'optioner' ),
+			'menu_title'    => esc_html__( 'Optioner', 'optioner' ),
+			'capability'    => 'manage_options',
+			'menu_slug'     => 'optioner',
+			'option_slug'   => 'optioner',
+			'menu_icon'     => 'dashicons-admin-generic',
+			'page_subtitle' => '',
 		);
 
 		$this->page = wp_parse_args( $args, $defaults );
+	}
+
+	/**
+	 * Set quick links.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $links Quick links array.
+	 */
+	public function set_quick_links( $links ) {
+		$output = array();
+
+		if ( empty( $links ) ) {
+			return $output;
+		}
+
+		foreach ( $links as $link ) {
+			$defaults = array(
+				'text' => esc_html__( 'Link', 'wp-welcome' ),
+				'url'  => '#',
+				'type' => 'primary',
+			);
+
+			$output[] = wp_parse_args( $link, $defaults );
+		}
+
+		$this->quick_links = $output;
 	}
 
 	/**
@@ -1055,7 +1101,7 @@ class Optioner {
 
 		$defaults = array(
 			'render_callback' => '',
-			'width'           => 20,
+			'width'           => 25,
 			'sticky'          => false,
 		);
 
@@ -1066,7 +1112,7 @@ class Optioner {
 		if ( absint( $args['width'] ) > 0 && absint( $args['width'] ) < 100 ) {
 			$this->sidebar_width = absint( $args['width'] );
 		} else {
-			$this->sidebar_width = 20;
+			$this->sidebar_width = 25;
 		}
 
 		if ( is_callable( $args['render_callback'] ) ) {
@@ -1141,7 +1187,6 @@ class Optioner {
 		$html = '';
 
 		foreach ( $attributes as $name => $value ) {
-
 			$esc_value = '';
 
 			if ( 'class' === $name && is_array( $value ) ) {
@@ -1155,7 +1200,11 @@ class Optioner {
 				$esc_value = esc_attr( $value );
 			}
 
-			$html .= false !== $value ? sprintf( ' %s="%s"', esc_html( $name ), $esc_value ) : esc_html( " {$name}" );
+			if ( ! in_array( $name, array( 'class', 'id', 'title', 'style', 'name' ), true ) ) {
+				$html .= false !== $value ? sprintf( ' %s="%s"', esc_html( $name ), $esc_value ) : esc_html( " {$name}" );
+			} else {
+				$html .= $value ? sprintf( ' %s="%s"', esc_html( $name ), $esc_value ) : '';
+			}
 		}
 
 		if ( ! empty( $html ) && true === $echo ) {
@@ -1245,4 +1294,133 @@ class Optioner {
 
 		return $output;
 	}
+
+		/**
+	 * Render sidebar box.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array   $args Sidebar box arguments.
+	 * @param Welcome $object Instance of Welcome.
+	 */
+	public function render_sidebar_box( $args = array(), $object ) {
+		$defaults = array(
+			'class'           => '',
+			'title'           => esc_html__( 'Box Title', 'wp-welcome' ),
+			'type'            => 'content',
+			'content'         => esc_html__( 'Box Content', 'wp-welcome' ),
+			'render_callback' => null,
+			'button_text'     => '',
+			'button_url'      => '#',
+			'button_class'    => '',
+			'button_new_tab'  => true,
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$object->render_sidebar_box_content( $args, $object );
+	}
+
+	/**
+	 * Render sidebar box.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array   $args Sidebar box arguments.
+	 * @param Welcome $obj Instance of Welcome.
+	 */
+	public static function render_sidebar_box_content( $args, $obj ) {
+		$box_attrs = array(
+			'class' => array( 'optioner-box' ),
+		);
+
+		if ( ! empty( $args['class'] ) ) {
+			$box_attrs['class'][] = $args['class'];
+		}
+
+		echo '<div ' . $obj->render_attr( $box_attrs, false ) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		if ( $args['title'] ) {
+			echo '<h3>' . esc_html( $args['title'] ) . '</h3>';
+		}
+
+		if ( 'content' === $args['type'] ) {
+			echo wp_kses_post( wpautop( $args['content'] ) );
+		}
+
+		if ( 'custom' === $args['type'] ) {
+			if ( is_callable( $args['render_callback'] ) ) {
+				call_user_func( $args['render_callback'], $obj );
+			}
+		}
+
+		if ( ! empty( $args['button_text'] ) && ! empty( $args['button_url'] ) ) {
+			$button_attrs = array(
+				'href' => $args['button_url'],
+			);
+
+			if ( ! empty( $args['button_class'] ) ) {
+				$button_attrs['class'] = $args['button_class'];
+			}
+
+			if ( true === $args['button_new_tab'] ) {
+				$button_attrs['target'] = '_blank';
+			}
+
+			echo '<a ' . $obj->render_attr( $button_attrs, false ) . '">' . esc_html( $args['button_text'] ) . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+
+		echo '</div><!-- .optioner-box -->';
+	}
+
+	/**
+	 * Return stars markup.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string Stars markup.
+	 */
+	public function get_stars() {
+		$output = '<div class="optioner-stars">';
+
+		for ( $i = 0; $i < 5; $i++ ) {
+			$output .= '<span class="dashicons-before dashicons-star-filled"></span>';
+		}
+
+		$output .= '</div><!-- .optioner-stars -->';
+
+		return $output;
+	}
+
+	/**
+	 * Render quick links.
+	 *
+	 * @since 1.0.0
+	 */
+	protected function render_quick_links() {
+		$links = $this->quick_links;
+
+		if ( ! empty( $links ) ) {
+			echo '<div class="optioner-quick-links">';
+
+			foreach ( $links as $link ) {
+				$button_classes = '';
+
+				if ( isset( $link['type'] ) ) {
+					if ( 'primary' === $link['type'] ) {
+						$button_classes = 'button button-primary';
+					} elseif ( 'secondary' === $link['type'] ) {
+						$button_classes = 'button button-secondary';
+					}
+				}
+
+				echo '<a href="' . esc_url( $link['url'] ) . '" class="' . esc_attr( $button_classes ) . '" target="_blank">' . esc_html( $link['text'] ) . '</a>';
+			}
+
+			echo '</div><!-- .optioner-quick-links -->';
+		}
+	}
+
+
+
 }
