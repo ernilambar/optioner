@@ -32,7 +32,12 @@
 .optioner-wrap {
 	.wrap-content {
 		display: flex;
+		flex-direction: row;
 		margin-top: 30px;
+
+		@include respond-to($bp3) {
+			flex-direction: column;
+		}
 
 		&.sticky-sidebar {
 			position: relative;
@@ -41,14 +46,22 @@
 
 		.wrap-primary {
 			flex: 1;
+			height: 100%;
+		}
+
+		.optioner-form-nav-wrap {
 			background-color: $white;
 			border: 1px solid $color_border;
 			box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
-			height: 100%;
+			margin-bottom: 30px;
 		}
 
 		.wrap-secondary {
 			margin-left: 15px;
+
+			@include respond-to($bp3) {
+				margin-left: 0;
+			}
 		}
 	}
 

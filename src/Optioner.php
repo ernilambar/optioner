@@ -230,11 +230,17 @@ class Optioner {
 
 		echo '<div class="wrap-primary">';
 
+		echo '<div class="optioner-form-nav-wrap">';
+
 		if ( true === $this->tab_status ) {
 			$this->render_navigation();
 		}
 
 		$this->render_forms();
+
+		echo '</div><!-- .optioner-form-nav-wrap -->';
+
+		do_action( 'optioner_after_form', $this, $this->page );
 
 		echo '</div><!-- .wrap-primary -->';
 
@@ -244,7 +250,7 @@ class Optioner {
 			echo '<div class="wrap-secondary" style="' . esc_attr( $sidebar_styles ) . '">';
 
 			if ( is_callable( $this->sidebar_callback ) ) {
-				call_user_func( $this->sidebar_callback, $this  );
+				call_user_func( $this->sidebar_callback, $this );
 			}
 
 			echo '</div><!-- .wrap-secondary -->';
@@ -341,7 +347,7 @@ class Optioner {
 					add_settings_field(
 						$field_key,
 						isset( $field['title'] ) ? $field['title'] : '',
-						is_callable( array($this, 'callback_' . $field['type'] ) ) ? array( $this, 'callback_' . $field['type'] ) : array( $this, 'callback_text' ),
+						is_callable( array( $this, 'callback_' . $field['type'] ) ) ? array( $this, 'callback_' . $field['type'] ) : array( $this, 'callback_text' ),
 						$tab['id'] . '-' . $this->page['menu_slug'],
 						$tab['id'] . '_settings-' . $this->page['menu_slug'],
 						$args
@@ -467,6 +473,14 @@ class Optioner {
 		do_action( 'optioner_field_bottom_' . $args['field']['type'], $args['field']['id'], $this->page['menu_slug'], $args );
 	}
 
+	/**
+	 * Return field conditionals.
+	 *
+	 * @since  1.0.0
+	 *
+	 * @param array $args Field arguments.
+	 * @return string Conditionals string.
+	 */
 	private function get_conditionals( $args ) {
 		$output = '';
 
@@ -475,7 +489,7 @@ class Optioner {
 		$conditions = $args['field']['condition'];
 
 		foreach ( $conditions as $cond ) {
-			$parent_field = $this->get_field_by_id( $cond['key']);
+			$parent_field = $this->get_field_by_id( $cond['key'] );
 
 			if ( empty( $parent_field ) ) {
 				continue;
@@ -492,7 +506,7 @@ class Optioner {
 				$rule = $this->page['option_slug'] . '[' . $cond['key'] . ']';
 
 				if ( isset( $cond['compare'] ) ) {
-					$rule .= ' ' . $cond['compare'] . ' \'' . $cond['value']. '\'';
+					$rule .= ' ' . $cond['compare'] . ' \'' . $cond['value'] . '\'';
 				}
 			}
 
@@ -500,13 +514,21 @@ class Optioner {
 		}
 
 		if ( ! empty( $rules ) ) {
-			$output = join(' && ', $rules );
+			$output = join( ' && ', $rules );
 		}
 
 		return $output;
 	}
 
-	private function get_field_by_id ( $id ) {
+	/**
+	 * Return field details by field ID.
+	 *
+	 * @since  1.0.0
+	 *
+	 * @param string $id Field ID.
+	 * @return array Field details.
+	 */
+	private function get_field_by_id( $id ) {
 		$output = array();
 
 		foreach ( $this->fields as $section_key => $section ) {
@@ -1295,7 +1317,7 @@ class Optioner {
 		return $output;
 	}
 
-		/**
+	/**
 	 * Render sidebar box.
 	 *
 	 * @since 1.0.0
@@ -1307,6 +1329,7 @@ class Optioner {
 		$defaults = array(
 			'class'           => '',
 			'title'           => esc_html__( 'Box Title', 'wp-welcome' ),
+			'icon'            => '',
 			'type'            => 'content',
 			'content'         => esc_html__( 'Box Content', 'wp-welcome' ),
 			'render_callback' => null,
@@ -1341,7 +1364,14 @@ class Optioner {
 		echo '<div ' . $obj->render_attr( $box_attrs, false ) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		if ( $args['title'] ) {
-			echo '<h3>' . esc_html( $args['title'] ) . '</h3>';
+			echo '<h3>';
+
+			if ( ! empty( $args['icon'] ) ) {
+				echo '<span class="dashicons ' . esc_attr( $args['icon'] ) . '"></span>';
+			}
+
+			echo esc_html( $args['title'] );
+			echo '</h3>';
 		}
 
 		if ( 'content' === $args['type'] ) {
@@ -1420,7 +1450,4 @@ class Optioner {
 			echo '</div><!-- .optioner-quick-links -->';
 		}
 	}
-
-
-
 }
