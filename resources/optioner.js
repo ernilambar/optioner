@@ -79,7 +79,7 @@ import 'conditionize2';
 			}
 
 			// Initial status for tab content.
-			if ( null !== activeTab && $( `#${ activeTab }` ) ) {
+			if ( null !== activeTab && $( `#${ activeTab }` ).length ) {
 				$( `#${ activeTab }` ).hide().fadeIn( 'fast' );
 				initializeCodeEditor( `#${ activeTab }` );
 				$( `.optioner-tabs-nav a[href="#${ activeTab }"]` ).addClass( 'active' );
@@ -90,6 +90,10 @@ import 'conditionize2';
 
 			this.wrapper.find( '.optioner-tabs-nav a' ).on( 'click', ( e ) => {
 				e.preventDefault();
+
+				if ( $( e.target ).hasClass( 'active' ) ) {
+					return;
+				}
 
 				this.wrapper.find( '.optioner-tabs-nav a' ).removeClass( 'active' );
 				$( e.target ).addClass( 'active' );
