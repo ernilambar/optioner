@@ -59,8 +59,12 @@
 		}
 	}
 
-	.optioner-stars .dashicons-star-filled:before {
-		color: $yellow;
-		margin-right: 3px;
+	.optioner-stars {
+		margin-bottom: 1em;
+
+		.dashicons-star-filled:before {
+			color: $yellow;
+			margin-right: 3px;
+		}
 	}
 }
