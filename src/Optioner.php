@@ -296,7 +296,7 @@ class Optioner {
 			if ( isset( $tab['render_callback'] ) && is_callable( $tab['render_callback'] ) ) {
 				echo '<div class="tab-content-inner tab-content-inner-custom">';
 				do_action( 'optioner_form_top_' . $tab['id'], $tab );
-				call_user_func( $tab['render_callback'] );
+				call_user_func( $tab['render_callback'], $tab, $this );
 				do_action( 'optioner_form_bottom_' . $tab['id'], $tab );
 				echo '</div>';
 			} else {
@@ -543,6 +543,19 @@ class Optioner {
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Render custom field.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_custom( $args ) {
+		if ( isset( $args['field']['render_callback'] ) && is_callable( $args['field']['render_callback'] ) ) {
+			call_user_func( $args['field']['render_callback'], $args, $this );
+		}
 	}
 
 	/**
