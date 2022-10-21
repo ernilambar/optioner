@@ -85,10 +85,23 @@ if ( ! class_exists( Init_2_0_7::class, false ) ) {
 			wp_enqueue_script( 'optioner-scripts', OPTIONER_URL . '/assets/optioner.js', array( 'jquery', 'wp-color-picker', 'code-editor' ), OPTIONER_VERSION, true );
 
 			$localized_array = array(
-				'storage_key' => wp_unique_id( 'optioner-' ) . '-activetab',
+				'storage_key' => $this->get_unique_id( 'optioner-' ) . '-activetab',
 			);
 
 			wp_localize_script( 'optioner-scripts', 'optionerObject', $localized_array );
+		}
+
+		/**
+		 * Gets unique ID.
+		 *
+		 * @since 2.0.7
+		 *
+		 * @param string $prefix Prefix for the returned ID.
+		 * @return string Unique ID.
+		 */
+		public function get_unique_id( $prefix = '' ) {
+		  static $optioner_counter = 0;
+		  return $prefix . (string) ++$optioner_counter;
 		}
 	}
 
