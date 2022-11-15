@@ -1,11 +1,18 @@
 .optioner-wrap {
+
 	.form-field-image {
+
 		.hide {
 			display: none;
 		}
 
 		.preview-wrap {
 			max-width: 200px;
+
+			img {
+				width: 100%;
+				display: none;
+			}
 
 			&.preview-on {
 				display: block;
@@ -16,10 +23,6 @@
 				}
 			}
 
-			img {
-				width: 100%;
-				display: none;
-			}
 		}
 	}
 }
