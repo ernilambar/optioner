@@ -1,5 +1,7 @@
 .optioner-wrap {
+
 	.field-row-toggle {
+
 		.toggle {
 			position: relative;
 			display: inline-block;
@@ -26,14 +28,14 @@
 			transition: 0.4s;
 		}
 
-		.slider:before {
+		.slider::before {
 			position: absolute;
 			content: "";
 			height: 16px;
 			width: 16px;
 			left: 4px;
 			bottom: 4px;
-			background-color: white;
+			background-color: #fff;
 			border-radius: 50%;
 			transition: 0.4s;
 		}
@@ -46,7 +48,7 @@
 			box-shadow: 0 0 1px $color_primary;
 		}
 
-		input:checked + .slider:before {
+		input:checked + .slider::before {
 			transform: translateX(26px);
 		}
 	}

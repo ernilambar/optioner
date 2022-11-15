@@ -62,7 +62,7 @@
 	.optioner-stars {
 		margin-bottom: 1em;
 
-		.dashicons-star-filled:before {
+		.dashicons-star-filled::before {
 			color: $yellow;
 			margin-right: 3px;
 		}
