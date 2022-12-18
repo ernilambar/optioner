@@ -340,7 +340,7 @@ class Optioner {
 						'field_name'     => $this->page['option_slug'] . '[' . $field['id'] . ']',
 						'field_clean_id' => $this->page['option_slug'] . '---' . $field['id'],
 						'field_value'    => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
-						'class'          => 'field-row-' . $field['type'],
+						'class'          => 'field-row-' . $field['type'] . ' field-' . $field['id'],
 						'label_for'      => $this->page['option_slug'] . '---' . $field['id'],
 					);
 
@@ -1047,7 +1047,7 @@ class Optioner {
 	 * @param array $args Arguments.
 	 * @return mixed Value.
 	 */
-	private function get_value( $args ) {
+	public function get_value( $args ) {
 		$output  = null;
 		$default = null;
 
