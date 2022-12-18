@@ -54,6 +54,16 @@
 
 		.tab-content-inner-custom {
 			padding: 20px;
+
+			ul {
+				list-style-type: disc;
+			}
+
+			ul, ol {
+				margin: 0;
+				list-style-position: outside;
+				margin-left: 10px;
+			}
 		}
 
 		.tab-content-inner-custom p:first-child {
