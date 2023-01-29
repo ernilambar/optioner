@@ -1336,7 +1336,7 @@ class Optioner {
 	 * @param array   $args Sidebar box arguments.
 	 * @param Welcome $object Instance of Welcome.
 	 */
-	public function render_sidebar_box( $args = array(), $object ) {
+	public function render_sidebar_box( $args, $object ) {
 		$defaults = array(
 			'class'           => '',
 			'title'           => esc_html__( 'Box Title', 'wp-welcome' ),
