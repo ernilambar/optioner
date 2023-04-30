@@ -344,10 +344,13 @@ class Optioner {
 						'label_for'      => $this->page['option_slug'] . '---' . $field['id'],
 					);
 
+					$callback_name = $field['type'];
+					$callback_name = strtolower( str_replace( '-', '_', $callback_name ) );
+
 					add_settings_field(
 						$field_key,
 						isset( $field['title'] ) ? $field['title'] : '',
-						is_callable( array( $this, 'callback_' . $field['type'] ) ) ? array( $this, 'callback_' . $field['type'] ) : array( $this, 'callback_text' ),
+						is_callable( array( $this, 'callback_' . $callback_name ) ) ? array( $this, 'callback_' . $callback_name ) : array( $this, 'callback_text' ),
 						$tab['id'] . '-' . $this->page['menu_slug'],
 						$tab['id'] . '_settings-' . $this->page['menu_slug'],
 						$args
@@ -382,6 +385,8 @@ class Optioner {
 							case 'text':
 							case 'select':
 							case 'radio':
+							case 'radio-image':
+							case 'buttonset':
 								$output[ $field['id'] ] = sanitize_text_field( $input[ $field['id'] ] );
 								break;
 
@@ -1009,6 +1014,84 @@ class Optioner {
 				$html .= '<li>';
 
 				$html .= sprintf( '<label><input %s %s />%s</label>', $attributes, checked( $this->get_value( $args ), $key, false ), $value );
+
+				$html .= '</li>';
+			}
+
+			$html .= '</ul>';
+		}
+
+		$html .= $this->get_field_description( $args );
+
+		$this->render_field_markup( $html, $args );
+	}
+
+	/**
+	 * Render buttonset.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_buttonset( $args ) {
+		$html = '';
+
+		if ( ! empty( $args['field']['choices'] ) ) {
+			$html .= '<div class="buttonset">';
+
+			foreach ( $args['field']['choices'] as $key => $value ) {
+				$attr = array(
+					'type'  => 'radio',
+					'name'  => $args['field_name'],
+					'id'    => $args['field_clean_id'] . '-' . $key,
+					'value' => $key,
+					'class' => array( 'switch-input' ),
+				);
+
+				$attributes = $this->render_attr( $attr, false );
+
+				$html .= sprintf( '<input %s %s ><label class="switch-label" for="%s">%s</label></input>', $attributes, checked( $this->get_value( $args ), $key, false ), $args['field_clean_id'] . '-' . $key, $value );
+			}
+
+			$html .= '</div>';
+		}
+
+		$html .= $this->get_field_description( $args );
+
+		$this->render_field_markup( $html, $args );
+	}
+
+	/**
+	 * Render radio image.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function callback_radio_image( $args ) {
+		$html = '';
+
+		if ( ! empty( $args['field']['choices'] ) ) {
+			$layout_class = 'layout-vertical';
+
+			if ( isset( $args['field']['layout'] ) && ! empty( $args['field']['layout'] ) ) {
+				$layout_class = 'layout-' . $args['field']['layout'];
+			}
+
+			$html .= '<ul class="radio-images ' . esc_attr( $layout_class ) . '">';
+
+			foreach ( $args['field']['choices'] as $key => $value ) {
+				$attr = array(
+					'type'  => 'radio',
+					'name'  => $args['field_name'],
+					'value' => $key,
+				);
+
+				$attributes = $this->render_attr( $attr, false );
+
+				$html .= '<li>';
+
+				$html .= sprintf( '<label><input %s %s />%s</label>', $attributes, checked( $this->get_value( $args ), $key, false ), '<img src="' . $value . '">' );
 
 				$html .= '</li>';
 			}
