@@ -1029,7 +1029,7 @@ class Optioner {
 	/**
 	 * Render buttonset.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.9
 	 *
 	 * @param array $args Arguments.
 	 */
@@ -1064,7 +1064,7 @@ class Optioner {
 	/**
 	 * Render radio image.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.9
 	 *
 	 * @param array $args Arguments.
 	 */

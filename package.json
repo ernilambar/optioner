@@ -1,7 +1,7 @@
 {
   "name": "optioner",
   "title": "Optioner",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "main_file": "optioner.php",
   "license": "GPL-2.0-or-later",
   "scripts": {
@@ -19,7 +19,7 @@
   },
   "browserslist": "> 1%, not dead",
   "devDependencies": {
-    "@wordpress/scripts": "^24.5.0"
+    "@wordpress/scripts": "^26.3.0"
   },
   "dependencies": {
     "conditionize2": "^2.0.1",
