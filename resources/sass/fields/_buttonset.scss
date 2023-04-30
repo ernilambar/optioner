@@ -1,0 +1,49 @@
+.optioner-wrap {
+
+	.form-field-buttonset {
+
+		input[type="radio"] {
+			clip: rect(1px, 1px, 1px, 1px);
+			height: 1px;
+			overflow: hidden;
+			position: absolute !important;
+			width: 1px;
+		}
+
+		.buttonset {
+			display: inline-flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+
+			.switch-label {
+				display: inline-block;
+				border: 1px solid #7e8993;
+				padding: 5px 10px;
+				background-color: #fff;
+				z-index: 1;
+				margin: 0 0 0 -1px;
+			}
+
+			.switch-label:first-of-type {
+				border-radius: 3px 0 0 3px;
+			}
+
+			.switch-label:last-child {
+				border-radius: 0 3px 3px 0;
+			}
+
+			.switch-input {
+
+				&:checked {
+
+					+ .switch-label {
+						border-color: #7e8993;
+						background: $azure;
+						color: #fff;
+						z-index: 2;
+					}
+				}
+			}
+		}
+	}
+}
