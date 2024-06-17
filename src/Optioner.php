@@ -1138,7 +1138,7 @@ class Optioner {
 			$default = $args['field']['default'];
 		}
 
-		if ( isset( $this->options[ $args['field_id'] ] ) ) {
+		if ( array_key_exists( $args['field_id'], $this->options ) ) {
 			$output = $this->options[ $args['field_id'] ];
 		} else {
 			$output = $default;
