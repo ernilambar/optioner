@@ -3,17 +3,22 @@ import './sass/optioner.scss';
 import 'select2';
 import 'conditionize2';
 
-( function( $ ) {
+( function ( $ ) {
 	const initializeCodeEditor = ( tabId ) => {
-		jQuery( tabId ).find( '.code-editor' ).each( function() {
-			const isInitialized = $( this ).data( 'initialized' );
-			if ( '1' !== isInitialized ) {
-				const settings = ( 'javascript' === $( this ).data( 'mime' ) ) ? codeEditorSettings.javascript : codeEditorSettings.css;
-				const textareaId = $( this ).attr( 'id' );
-				$( this ).data( 'initialized', '1' );
-				wp.codeEditor.initialize( textareaId, settings );
-			}
-		} );
+		jQuery( tabId )
+			.find( '.code-editor' )
+			.each( function () {
+				const isInitialized = $( this ).data( 'initialized' );
+				if ( '1' !== isInitialized ) {
+					const settings =
+						'javascript' === $( this ).data( 'mime' )
+							? codeEditorSettings.javascript
+							: codeEditorSettings.css;
+					const textareaId = $( this ).attr( 'id' );
+					$( this ).data( 'initialized', '1' );
+					wp.codeEditor.initialize( textareaId, settings );
+				}
+			} );
 	};
 
 	class App {
@@ -32,39 +37,48 @@ import 'conditionize2';
 			this.initColor();
 			this.initMedia();
 
-			const isTab = this.wrapper.find( '.wrap-content' ).hasClass( 'tab-enabled' );
+			const isTab = this.wrapper
+				.find( '.wrap-content' )
+				.hasClass( 'tab-enabled' );
 
 			if ( true === isTab ) {
 				this.initTab();
 			} else {
 				this.wrapper.find( '.tab-content' ).fadeIn( 'fast' );
-				const tabSingleId = this.wrapper.find( '.tab-content' ).attr( 'id' );
+				const tabSingleId = this.wrapper
+					.find( '.tab-content' )
+					.attr( 'id' );
 				initializeCodeEditor( `#${ tabSingleId }` );
 			}
 		}
 
 		initHeading() {
-			this.wrapper.find( '.form-field-heading' ).each( function() {
+			this.wrapper.find( '.form-field-heading' ).each( function () {
 				const tr = $( this ).parent().parent();
 				tr.find( 'td' ).attr( 'colspan', '2' );
 			} );
 		}
 
 		initMessage() {
-			this.wrapper.find( '.form-field-message' ).each( function() {
+			this.wrapper.find( '.form-field-message' ).each( function () {
 				const tr = $( this ).parent().parent();
 				tr.find( 'td' ).attr( 'colspan', '2' );
 			} );
 		}
 
 		initSelect() {
-			this.wrapper.find( '.form-field-select select.optioner-stylish-select' ).each( function() {
-				$( this ).select2( { width: '100%', minimumResultsForSearch: 10 } );
-			} );
+			this.wrapper
+				.find( '.form-field-select select.optioner-stylish-select' )
+				.each( function () {
+					$( this ).select2( {
+						width: '100%',
+						minimumResultsForSearch: 10,
+					} );
+				} );
 		}
 
 		initColor() {
-			this.wrapper.find( '.form-field-color input' ).each( function() {
+			this.wrapper.find( '.form-field-color input' ).each( function () {
 				$( this ).wpColorPicker();
 			} );
 		}
@@ -82,10 +96,19 @@ import 'conditionize2';
 			if ( null !== activeTab && $( `#${ activeTab }` ).length ) {
 				$( `#${ activeTab }` ).hide().fadeIn( 'fast' );
 				initializeCodeEditor( `#${ activeTab }` );
-				$( `.optioner-tabs-nav a[href="#${ activeTab }"]` ).addClass( 'active' );
+				$( `.optioner-tabs-nav a[href="#${ activeTab }"]` ).addClass(
+					'active'
+				);
 			} else {
-				this.wrapper.find( '.tab-content' ).first().hide().fadeIn( 'fast' );
-				this.wrapper.find( '.optioner-tabs-nav a' ).first().addClass( 'active' );
+				this.wrapper
+					.find( '.tab-content' )
+					.first()
+					.hide()
+					.fadeIn( 'fast' );
+				this.wrapper
+					.find( '.optioner-tabs-nav a' )
+					.first()
+					.addClass( 'active' );
 			}
 
 			this.wrapper.find( '.optioner-tabs-nav a' ).on( 'click', ( e ) => {
@@ -95,7 +118,9 @@ import 'conditionize2';
 					return;
 				}
 
-				this.wrapper.find( '.optioner-tabs-nav a' ).removeClass( 'active' );
+				this.wrapper
+					.find( '.optioner-tabs-nav a' )
+					.removeClass( 'active' );
 				$( e.target ).addClass( 'active' );
 
 				// Get target.
@@ -103,7 +128,10 @@ import 'conditionize2';
 
 				// Save active tab in local storage.
 				if ( 'undefined' !== typeof localStorage ) {
-					localStorage.setItem( optionerObject.storage_key, targetGroup.replace( '#', '' ) );
+					localStorage.setItem(
+						optionerObject.storage_key,
+						targetGroup.replace( '#', '' )
+					);
 				}
 
 				this.wrapper.find( '.tab-content' ).hide();
@@ -119,7 +147,9 @@ import 'conditionize2';
 
 			$imageField.find( '.js-upload-image' ).each( ( i, elem ) => {
 				const uploaderTitle = $( elem ).data( 'uploader_title' );
-				const uploaderButtonText = $( elem ).data( 'uploader_button_text' );
+				const uploaderButtonText = $( elem ).data(
+					'uploader_button_text'
+				);
 
 				$( elem ).on( 'click', ( e ) => {
 					e.preventDefault();
@@ -130,38 +160,58 @@ import 'conditionize2';
 					}
 
 					// Setup modal.
-					const OptionerCustomImage = wp.media.controller.Library.extend( {
-						defaults: _.defaults( {
-							id: 'optioner-custom-insert-image',
-							title: uploaderTitle,
-							allowLocalEdits: false,
-							displaySettings: false,
-							displayUserSettings: false,
-							multiple: false,
-							library: wp.media.query( { type: 'image' } ),
-						}, wp.media.controller.Library.prototype.defaults ),
-					} );
+					const OptionerCustomImage =
+						wp.media.controller.Library.extend( {
+							defaults: _.defaults(
+								{
+									id: 'optioner-custom-insert-image',
+									title: uploaderTitle,
+									allowLocalEdits: false,
+									displaySettings: false,
+									displayUserSettings: false,
+									multiple: false,
+									library: wp.media.query( {
+										type: 'image',
+									} ),
+								},
+								wp.media.controller.Library.prototype.defaults
+							),
+						} );
 
 					// Create the media frame.
-					optionerCustomFileFrame = wp.media.frames.optionerCustomFileFrame = wp.media( {
-						button: {
-							text: uploaderButtonText,
-						},
-						state: 'optioner-custom-insert-image',
-						states: [
-							new OptionerCustomImage(),
-						],
-						multiple: false,
-					} );
+					optionerCustomFileFrame =
+						wp.media.frames.optionerCustomFileFrame = wp.media( {
+							button: {
+								text: uploaderButtonText,
+							},
+							state: 'optioner-custom-insert-image',
+							states: [ new OptionerCustomImage() ],
+							multiple: false,
+						} );
 
 					optionerCustomFileFrame.on( 'select', () => {
-						const currentImage = optionerCustomFileFrame.state( 'optioner-custom-insert-image' ).get( 'selection' ).first();
+						const currentImage = optionerCustomFileFrame
+							.state( 'optioner-custom-insert-image' )
+							.get( 'selection' )
+							.first();
 						const attachmentURL = currentImage.toJSON().url;
 
-						$( elem ).parent().find( '.field-input' ).val( attachmentURL );
-						$( elem ).parent().find( '.preview-wrap' ).addClass( 'preview-on' );
-						$( elem ).parent().find( '.field-preview' ).attr( 'src', attachmentURL );
-						$( elem ).parent().find( '.js-remove-image' ).removeClass( 'hide' );
+						$( elem )
+							.parent()
+							.find( '.field-input' )
+							.val( attachmentURL );
+						$( elem )
+							.parent()
+							.find( '.preview-wrap' )
+							.addClass( 'preview-on' );
+						$( elem )
+							.parent()
+							.find( '.field-preview' )
+							.attr( 'src', attachmentURL );
+						$( elem )
+							.parent()
+							.find( '.js-remove-image' )
+							.removeClass( 'hide' );
 					} );
 
 					// Open modal.
@@ -173,9 +223,15 @@ import 'conditionize2';
 				$( el ).on( 'click', ( e ) => {
 					e.preventDefault();
 					$( el ).parent().find( '.field-input' ).val( '' );
-					$( el ).parent().find( '.preview-wrap' ).removeClass( 'preview-on' );
+					$( el )
+						.parent()
+						.find( '.preview-wrap' )
+						.removeClass( 'preview-on' );
 					$( el ).parent().find( '.field-preview' ).attr( 'src', '' );
-					$( el ).parent().find( '.js-remove-image' ).addClass( 'hide' );
+					$( el )
+						.parent()
+						.find( '.js-remove-image' )
+						.addClass( 'hide' );
 				} );
 			} );
 
@@ -184,19 +240,34 @@ import 'conditionize2';
 					const inputValue = $( elInput ).val();
 
 					if ( inputValue !== '' ) {
-						$( elInput ).parent().find( '.preview-wrap' ).addClass( 'preview-on' );
-						$( elInput ).parent().find( '.field-preview' ).attr( 'src', inputValue );
-						$( elInput ).parent().find( '.js-remove-image' ).removeClass( 'hide' );
+						$( elInput )
+							.parent()
+							.find( '.preview-wrap' )
+							.addClass( 'preview-on' );
+						$( elInput )
+							.parent()
+							.find( '.field-preview' )
+							.attr( 'src', inputValue );
+						$( elInput )
+							.parent()
+							.find( '.js-remove-image' )
+							.removeClass( 'hide' );
 					} else {
-						$( elInput ).parent().find( '.preview-wrap' ).removeClass( 'preview-on' );
-						$( elInput ).parent().find( '.js-remove-image' ).addClass( 'hide' );
+						$( elInput )
+							.parent()
+							.find( '.preview-wrap' )
+							.removeClass( 'preview-on' );
+						$( elInput )
+							.parent()
+							.find( '.js-remove-image' )
+							.addClass( 'hide' );
 					}
 				} );
 			} );
 		}
 	}
 
-	document.addEventListener( 'DOMContentLoaded', function() {
+	document.addEventListener( 'DOMContentLoaded', function () {
 		new App();
 
 		jQuery( '.conditional' ).conditionize( {
@@ -209,4 +280,4 @@ import 'conditionize2';
 			},
 		} );
 	} );
-}( jQuery ) );
+} )( jQuery );
