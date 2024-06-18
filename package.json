@@ -1,16 +1,29 @@
 {
-  "name": "optioner",
-  "title": "Optioner",
-  "version": "2.0.9",
-  "main_file": "optioner.php",
-  "license": "GPL-2.0-or-later",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ernilambar/optioner"
-  },
-  "browserslist": "> 1%, not dead",
-  "npmpackagejsonlint": {
+	"name": "optioner",
+	"version": "2.0.10",
+	"description": "Minimal option framework for WordPress.",
+	"main_file": "optioner.php",
+	"author": "Nilambar Sharma",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"wordpress",
+		"option"
+	],
+	"homepage": "https://github.com/ernilambar/optioner",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ernilambar/optioner"
+	},
+	"bugs": {
+		"url": "https://github.com/ernilambar/optioner/issues"
+	},
+	"browserslist": "> 1%, not dead",
+	"npmpackagejsonlint": {
 		"extends": "@wordpress/npm-package-json-lint-config"
+	},
+	"dependencies": {
+		"conditionize2": "^2.0.1",
+		"select2": "4.1.0-rc.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.24.7",
@@ -25,16 +38,12 @@
 		"postcss-loader": "^8.1.1",
 		"postcss-preset-env": "^9.5.14",
 		"prettier": "npm:wp-prettier@^3.0.3",
-		"sass": "^1.77.5",
+		"sass": "^1.77.6",
 		"sass-loader": "^14.2.1",
 		"style-loader": "^4.0.0",
 		"webpack": "^5.92.0",
 		"webpack-cli": "^5.1.4"
 	},
-  "dependencies": {
-    "conditionize2": "^2.0.1",
-    "select2": "4.1.0-rc.0"
-  },
 	"scripts": {
 		"dev": "webpack --watch",
 		"build": "webpack --mode=production --no-devtool",
