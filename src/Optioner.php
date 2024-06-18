@@ -143,7 +143,7 @@ class Optioner {
 			return;
 		}
 
-		$this->options = get_option( $this->page['option_slug'] );
+		$this->options = (array) get_option( $this->page['option_slug'] );
 
 		// Check if top level page.
 		if ( isset( $this->page['top_level_menu'] ) && $this->page['top_level_menu'] ) {
