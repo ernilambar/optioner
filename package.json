@@ -4,25 +4,41 @@
   "version": "2.0.9",
   "main_file": "optioner.php",
   "license": "GPL-2.0-or-later",
-  "scripts": {
-    "dev": "wp-scripts start",
-    "build": "wp-scripts build",
-    "lint:css": "wp-scripts lint-style 'resources/**/*.{css,scss}'",
-    "lint:css:fix": "wp-scripts lint-style 'resources/**/*.{css,scss}' --fix",
-    "lint:js": "wp-scripts lint-js ./resources webpack.config.js",
-    "lint:js:fix": "wp-scripts lint-js ./resources webpack.config.js --fix",
-    "preinstall": "npx only-allow pnpm"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ernilambar/optioner"
   },
   "browserslist": "> 1%, not dead",
-  "devDependencies": {
-    "@wordpress/scripts": "^26.3.0"
-  },
+  "npmpackagejsonlint": {
+		"extends": "@wordpress/npm-package-json-lint-config"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.24.7",
+		"@babel/preset-env": "^7.24.7",
+		"@wordpress/npm-package-json-lint-config": "^5.1.0",
+		"@wordpress/prettier-config": "^4.1.0",
+		"babel-loader": "^9.1.3",
+		"css-loader": "^7.1.2",
+		"css-minimizer-webpack-plugin": "^7.0.0",
+		"mini-css-extract-plugin": "^2.9.0",
+		"npm-package-json-lint": "^8.0.0",
+		"postcss-loader": "^8.1.1",
+		"postcss-preset-env": "^9.5.14",
+		"prettier": "npm:wp-prettier@^3.0.3",
+		"sass": "^1.77.5",
+		"sass-loader": "^14.2.1",
+		"style-loader": "^4.0.0",
+		"webpack": "^5.92.0",
+		"webpack-cli": "^5.1.4"
+	},
   "dependencies": {
     "conditionize2": "^2.0.1",
     "select2": "4.1.0-rc.0"
-  }
+  },
+	"scripts": {
+		"dev": "webpack --watch",
+		"build": "webpack --mode=production --no-devtool",
+		"format": "prettier --write \"resources/**/*.{js,scss}\" webpack.config.js *.json",
+		"lint-pkg-json": "npmPkgJsonLint ."
+	}
 }
