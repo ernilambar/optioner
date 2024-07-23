@@ -1,0 +1,15 @@
+:root {
+	--optioner-color-white: #fff;
+	--optioner-color-green: #36a583;
+	--optioner-color-blue: #007cba;
+	--optioner-color-azure: #008dd4;
+	--optioner-color-yellow: #ffb900;
+	--optioner-color-orange: #d54e21;
+
+	--optioner-color-primary: var(--optioner-color-azure);
+	--optioner-color-border: #dfdfdf;
+}
+
+@custom-media --bp-1 screen and (max-width: 960px);
+@custom-media --bp-3 screen and (max-width: 720px);
+@custom-media --bp-6 screen and (max-width: 480px);

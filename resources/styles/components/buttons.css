@@ -1,8 +1,8 @@
 .optioner-wrap {
 	.optioner-button {
 		display: inline-block;
-		background-color: $color_primary;
-		border: 1px solid $color_primary;
+		background-color: var(--optioner-color-primary);
+		border: 1px solid var(--optioner-color-primary);
 		color: #fff;
 		border-radius: 4px;
 		text-decoration: none;
@@ -17,7 +17,7 @@
 			opacity: 0.9;
 		}
 
-		&-danger {
+		.optioner-button-danger {
 			background-color: #b73b27;
 			border-color: #b73b27;
 		}

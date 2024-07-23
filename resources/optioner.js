@@ -1,4 +1,5 @@
-import './sass/optioner.scss';
+import 'select2/dist/css/select2.css';
+import './styles/optioner.css';
 
 import 'select2';
 import 'conditionize2';

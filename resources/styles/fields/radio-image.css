@@ -34,7 +34,7 @@
 			}
 
 			input:checked + img {
-				border-color: $azure;
+				border-color: var(--optioner-color-primary);
 			}
 
 			&.layout-horizontal {

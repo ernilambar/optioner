@@ -768,7 +768,7 @@ class Optioner {
 
 		$attributes = $this->render_attr( $attr, false );
 
-		$html = sprintf( '<textarea %s>%s</textarea>', $attributes, esc_textarea( $this->get_value( $args ) ) );
+		$html = sprintf( '<textarea %s>%s</textarea>', $attributes, esc_textarea( (string) $this->get_value( $args ) ) );
 
 		$html .= $this->get_field_description( $args );
 
@@ -799,7 +799,7 @@ class Optioner {
 
 		$attributes = $this->render_attr( $attr, false );
 
-		$html = sprintf( '<textarea %s>%s</textarea>', $attributes, esc_textarea( $this->get_value( $args ) ) );
+		$html = sprintf( '<textarea %s>%s</textarea>', $attributes, esc_textarea( (string) $this->get_value( $args ) ) );
 
 		$html .= $this->get_field_description( $args );
 
@@ -833,7 +833,7 @@ class Optioner {
 
 		echo '<div style="max-width: ' . esc_attr( $size . 'px' ) . ';">';
 
-		wp_editor( $field_value, $args['field_id'], $editor_settings );
+		wp_editor( (string) $field_value, $args['field_id'], $editor_settings );
 
 		echo '</div>';
 
