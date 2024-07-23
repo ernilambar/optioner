@@ -8,7 +8,7 @@
 	.form-field-message {
 		color: #646970;
 		margin-left: -10px;
-		border-left: 5px solid #00a9ff;
+		border-left: 5px solid var(--optioner-color-primary);
 		padding: 5px 15px;
 	}
 }

@@ -34,7 +34,7 @@
 				&:checked {
 					+ .switch-label {
 						border-color: #7e8993;
-						background: $azure;
+						background: var(--optioner-color-primary);
 						color: #fff;
 						z-index: 2;
 					}
