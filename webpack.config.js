@@ -48,27 +48,10 @@ module.exports = {
 					'sass-loader',
 				],
 			},
-			{
-				test: /\.(woff|woff2|eot|ttf|otf)$/,
-				type: 'asset/resource',
-				generator: {
-					filename: 'fonts/[name][ext]',
-				},
-			},
-			{
-				test: /\.(png|svg|jpg|jpeg|gif|webp)$/,
-				type: 'asset/resource',
-				generator: {
-					filename: 'images/[name][ext]',
-				},
-			},
 		],
 	},
 	plugins: [ new MiniCssExtractPlugin( { filename: '[name].css' } ) ],
 	optimization: {
-		minimizer: [
-			new TerserPlugin( { extractComments: false } ),
-			new CssMinimizerPlugin(),
-		],
+		minimizer: [ new TerserPlugin( { extractComments: false } ), new CssMinimizerPlugin() ],
 	},
 };

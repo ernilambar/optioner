@@ -35,19 +35,21 @@
 		"css-minimizer-webpack-plugin": "^7.0.0",
 		"mini-css-extract-plugin": "^2.9.0",
 		"npm-package-json-lint": "^8.0.0",
+		"postcss": "^8.4.39",
 		"postcss-loader": "^8.1.1",
 		"postcss-preset-env": "^9.5.14",
 		"prettier": "npm:wp-prettier@^3.0.3",
 		"sass": "^1.77.6",
 		"sass-loader": "^14.2.1",
 		"style-loader": "^4.0.0",
+		"terser-webpack-plugin": "^5.3.10",
 		"webpack": "^5.92.0",
 		"webpack-cli": "^5.1.4"
 	},
 	"scripts": {
 		"dev": "webpack --watch",
 		"build": "webpack --mode=production --no-devtool",
-		"format": "prettier --write \"resources/**/*.{js,scss}\" webpack.config.js *.json",
+		"format": "prettier \"**/*.{cjs,css,js,json,mjs,scss}\" --write",
 		"lint-pkg-json": "npmPkgJsonLint ."
 	}
 }
