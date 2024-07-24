@@ -290,7 +290,6 @@ class Optioner {
 		settings_fields( $this->page['option_slug'] . '-group' );
 
 		foreach ( $this->tabs as $tab ) {
-
 			echo '<div id="' . esc_attr( $tab['id'] ) . '" class="tab-content">';
 
 			if ( isset( $tab['render_callback'] ) && is_callable( $tab['render_callback'] ) ) {
@@ -372,10 +371,8 @@ class Optioner {
 		$output = array();
 
 		foreach ( $this->fields as $tab ) {
-
 			foreach ( $tab as $field ) {
 				if ( isset( $input[ $field['id'] ] ) ) {
-
 					if ( isset( $field['sanitize_callback'] ) && is_callable( $field['sanitize_callback'] ) ) {
 						// Custom sanitization.
 						$output[ $field['id'] ] = call_user_func_array( $field['sanitize_callback'], array( $input[ $field['id'] ] ) );
@@ -537,9 +534,7 @@ class Optioner {
 		$output = array();
 
 		foreach ( $this->fields as $section_key => $section ) {
-
 			foreach ( $section as $field_key => $field ) {
-
 				if ( $id === $field_key ) {
 					$output = $field;
 					break;
@@ -1194,7 +1189,7 @@ class Optioner {
 
 		foreach ( $links as $link ) {
 			$defaults = array(
-				'text' => esc_html__( 'Link', 'wp-welcome' ),
+				'text' => esc_html__( 'Link', 'optioner' ),
 				'url'  => '#',
 				'type' => 'primary',
 			);
@@ -1293,9 +1288,9 @@ class Optioner {
 	 * @since 1.0.0
 	 *
 	 * @param array $attributes Attributes.
-	 * @param bool  $echo Whether to echo or not.
+	 * @param bool  $display    Whether to echo or not.
 	 */
-	private function render_attr( $attributes, $echo = true ) {
+	private function render_attr( $attributes, $display = true ) {
 		if ( empty( $attributes ) ) {
 			return;
 		}
@@ -1311,7 +1306,6 @@ class Optioner {
 
 			if ( false !== $value && 'href' === $name ) {
 				$esc_value = esc_url( $value );
-
 			} elseif ( false !== $value ) {
 				$esc_value = esc_attr( $value );
 			}
@@ -1323,7 +1317,7 @@ class Optioner {
 			}
 		}
 
-		if ( ! empty( $html ) && true === $echo ) {
+		if ( ! empty( $html ) && true === $display ) {
 			echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} else {
 			return $html;
@@ -1355,15 +1349,13 @@ class Optioner {
 
 		if ( true === $this->top_level_menu ) {
 			$output = 'toplevel';
-		} else {
-			if ( isset( $map_array[ $this->parent_page ] ) ) {
+		} elseif ( isset( $map_array[ $this->parent_page ] ) ) {
 				$output = $map_array[ $this->parent_page ];
-			} else {
-				$t = strpos( $this->parent_page, 'edit.php?post_type=' );
+		} else {
+			$t = strpos( $this->parent_page, 'edit.php?post_type=' );
 
-				if ( false !== $t ) {
-					$output = substr( $this->parent_page, strlen( 'edit.php?post_type=' ) );
-				}
+			if ( false !== $t ) {
+				$output = substr( $this->parent_page, strlen( 'edit.php?post_type=' ) );
 			}
 		}
 
@@ -1417,15 +1409,15 @@ class Optioner {
 	 * @since 1.0.0
 	 *
 	 * @param array   $args Sidebar box arguments.
-	 * @param Welcome $object Instance of Welcome.
+	 * @param Welcome $obj  Instance of Welcome.
 	 */
-	public function render_sidebar_box( $args, $object ) {
+	public function render_sidebar_box( $args, $obj ) {
 		$defaults = array(
 			'class'           => '',
-			'title'           => esc_html__( 'Box Title', 'wp-welcome' ),
+			'title'           => esc_html__( 'Box Title', 'optioner' ),
 			'icon'            => '',
 			'type'            => 'content',
-			'content'         => esc_html__( 'Box Content', 'wp-welcome' ),
+			'content'         => esc_html__( 'Box Content', 'optioner' ),
 			'render_callback' => null,
 			'button_text'     => '',
 			'button_url'      => '#',
@@ -1435,7 +1427,7 @@ class Optioner {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$object->render_sidebar_box_content( $args, $object );
+		$obj->render_sidebar_box_content( $args, $obj );
 	}
 
 	/**
