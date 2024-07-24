@@ -9,14 +9,45 @@ namespace Nilambar\Optioner;
 
 if ( ! class_exists( Init_2_0_10::class, false ) ) {
 
+	/**
+	 * Init class.
+	 *
+	 * @since 1.0.0
+	 */
 	class Init_2_0_10 {
 
+		/**
+		 * Version.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @var string
+		 */
 		const VERSION = '2.0.10';
 
+		/**
+		 * Priority.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @var int
+		 */
 		const PRIORITY = 9992;
 
+		/**
+		 * Instance.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @var object
+		 */
 		public static $single_instance = null;
 
+		/**
+		 * Create singleton instance.
+		 *
+		 * @since 1.0.0
+		 */
 		public static function initiate() {
 			if ( null === self::$single_instance ) {
 				self::$single_instance = new self();
@@ -24,6 +55,11 @@ if ( ! class_exists( Init_2_0_10::class, false ) ) {
 			return self::$single_instance;
 		}
 
+		/**
+		 * Constructor.
+		 *
+		 * @since 1.0.0
+		 */
 		private function __construct() {
 			if ( ! defined( 'OPTIONER_LOADED' ) ) {
 				define( 'OPTIONER_LOADED', self::PRIORITY );
@@ -33,6 +69,11 @@ if ( ! class_exists( Init_2_0_10::class, false ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
 		}
 
+		/**
+		 * Includes library files.
+		 *
+		 * @since 1.0.0
+		 */
 		public function include_lib() {
 			if ( class_exists( Optioner::class, false ) ) {
 				return;
@@ -100,8 +141,8 @@ if ( ! class_exists( Init_2_0_10::class, false ) ) {
 		 * @return string Unique ID.
 		 */
 		public function get_unique_id( $prefix = '' ) {
-		  static $optioner_counter = 0;
-		  return $prefix . (string) ++$optioner_counter;
+			static $optioner_counter = 0;
+			return $prefix . (string) ++$optioner_counter;
 		}
 	}
 
