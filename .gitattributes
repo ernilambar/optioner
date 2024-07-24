@@ -8,6 +8,7 @@ resources/ export-ignore
 .prettierignore export-ignore
 .prettierrc.mjs export-ignore
 CHANGELOG.md export-ignore
+LICENSE export-ignore
 package.json export-ignore
 pnpm-lock.yaml export-ignore
 postcss.config.cjs export-ignore
