@@ -4,7 +4,7 @@
 	"description": "Minimal option framework for WordPress.",
 	"main_file": "optioner.php",
 	"author": "Nilambar Sharma",
-	"license": "GPL-2.0-or-later",
+	"license": "MIT",
 	"keywords": [
 		"wordpress",
 		"option"
