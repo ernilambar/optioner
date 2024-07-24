@@ -7,14 +7,14 @@
 
 namespace Nilambar\Optioner;
 
-if ( ! class_exists( Init_2_0_10::class, false ) ) {
+if ( ! class_exists( Init_3_0_0::class, false ) ) {
 
 	/**
 	 * Init class.
 	 *
 	 * @since 1.0.0
 	 */
-	class Init_2_0_10 {
+	class Init_3_0_0 {
 
 		/**
 		 * Version.
@@ -23,7 +23,7 @@ if ( ! class_exists( Init_2_0_10::class, false ) ) {
 		 *
 		 * @var string
 		 */
-		const VERSION = '2.0.10';
+		const VERSION = '3.0.0';
 
 		/**
 		 * Priority.
@@ -32,7 +32,7 @@ if ( ! class_exists( Init_2_0_10::class, false ) ) {
 		 *
 		 * @var int
 		 */
-		const PRIORITY = 9992;
+		const PRIORITY = 9980;
 
 		/**
 		 * Instance.
@@ -146,5 +146,5 @@ if ( ! class_exists( Init_2_0_10::class, false ) ) {
 		}
 	}
 
-	Init_2_0_10::initiate();
+	Init_3_0_0::initiate();
 }
