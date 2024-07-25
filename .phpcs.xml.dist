@@ -46,6 +46,13 @@
 
 	<rule ref="WordPress" />
 
+	<rule ref="WordPress-Core">
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+	</rule>
+
+	<!-- Enforce short arrays. -->
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+
 	<!-- Include the WordPress rulesets. -->
 	<rule ref="WordPress.WhiteSpace.ControlStructureSpacing">
 		<properties>
