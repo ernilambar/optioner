@@ -203,7 +203,7 @@ class Optioner {
 	 * @since 1.0.0
 	 */
 	public function render_page() {
-		echo '<div class="wrap optioner-wrap" id="optioner-wrapper">';
+		echo '<div class="wrap optioner-wrap optioner-wrap-' . esc_attr( sanitize_title( $this->page['menu_slug'] ) ) . '" id="optioner-wrapper">';
 
 		echo '<div class="optioner-header">';
 		echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
