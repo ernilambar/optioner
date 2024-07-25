@@ -51,7 +51,7 @@ class Optioner {
 	 *
 	 * @var array
 	 */
-	protected $tabs = array();
+	protected $tabs = [];
 
 	/**
 	 * Tab status.
@@ -69,7 +69,7 @@ class Optioner {
 	 *
 	 * @var array
 	 */
-	protected $fields = array();
+	protected $fields = [];
 
 	/**
 	 * Page settings.
@@ -78,7 +78,7 @@ class Optioner {
 	 *
 	 * @var array
 	 */
-	protected $page = array();
+	protected $page = [];
 
 	/**
 	 * Quick links.
@@ -87,7 +87,7 @@ class Optioner {
 	 *
 	 * @var array
 	 */
-	protected $quick_links = array();
+	protected $quick_links = [];
 
 	/**
 	 * Sidebar status.
@@ -164,10 +164,10 @@ class Optioner {
 		}
 
 		// Create admin page.
-		add_action( 'admin_menu', array( $this, 'create_menu_page' ) );
+		add_action( 'admin_menu', [ $this, 'create_menu_page' ] );
 
 		// Register settings.
-		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'admin_init', [ $this, 'register_settings' ] );
 	}
 
 	/**
@@ -182,7 +182,7 @@ class Optioner {
 				$this->page['menu_title'],
 				$this->page['capability'],
 				$this->page['menu_slug'],
-				array( $this, 'render_page' ),
+				[ $this, 'render_page' ],
 				$this->page['menu_icon']
 			);
 		} else {
@@ -192,7 +192,7 @@ class Optioner {
 				$this->page['menu_title'],
 				$this->page['capability'],
 				$this->page['menu_slug'],
-				array( $this, 'render_page' )
+				[ $this, 'render_page' ]
 			);
 		}
 	}
@@ -320,28 +320,28 @@ class Optioner {
 	 * @since 1.0.0
 	 */
 	public function register_settings() {
-		register_setting( $this->page['option_slug'] . '-group', $this->page['option_slug'], array( $this, 'sanitize_fields' ) );
+		register_setting( $this->page['option_slug'] . '-group', $this->page['option_slug'], [ $this, 'sanitize_fields' ] );
 
 		// Load tabs.
 		foreach ( $this->tabs as $tab ) {
 			add_settings_section(
 				$tab['id'] . '_settings-' . $this->page['menu_slug'],
 				$tab['title'],
-				array( $this, 'section_text_callback' ),
+				[ $this, 'section_text_callback' ],
 				$tab['id'] . '-' . $this->page['menu_slug']
 			);
 
 			if ( isset( $this->fields[ $tab['id'] ] ) && ! empty( $this->fields[ $tab['id'] ] ) ) {
 				foreach ( $this->fields[ $tab['id'] ] as $field_key => $field ) {
-					$args = array(
+					$args = [
 						'field'          => $field,
 						'field_id'       => $field['id'],
 						'field_name'     => $this->page['option_slug'] . '[' . $field['id'] . ']',
 						'field_clean_id' => $this->page['option_slug'] . '---' . $field['id'],
 						'field_value'    => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
 						'class'          => 'field-row-' . $field['type'] . ' field-' . $field['id'],
-						'label_for'      => in_array( $field['type'], array( 'code', 'email', 'image', 'number', 'select', 'text', 'textarea', 'url' ), true ) ? $this->page['option_slug'] . '---' . $field['id'] : '',
-					);
+						'label_for'      => in_array( $field['type'], [ 'code', 'email', 'image', 'number', 'select', 'text', 'textarea', 'url' ], true ) ? $this->page['option_slug'] . '---' . $field['id'] : '',
+					];
 
 					$callback_name = $field['type'];
 					$callback_name = strtolower( str_replace( '-', '_', $callback_name ) );
@@ -349,7 +349,7 @@ class Optioner {
 					add_settings_field(
 						$field_key,
 						isset( $field['title'] ) ? $field['title'] : '',
-						is_callable( array( $this, 'callback_' . $callback_name ) ) ? array( $this, 'callback_' . $callback_name ) : array( $this, 'callback_text' ),
+						is_callable( [ $this, 'callback_' . $callback_name ] ) ? [ $this, 'callback_' . $callback_name ] : [ $this, 'callback_text' ],
 						$tab['id'] . '-' . $this->page['menu_slug'],
 						$tab['id'] . '_settings-' . $this->page['menu_slug'],
 						$args
@@ -368,14 +368,14 @@ class Optioner {
 	 * @return array Sanitized values.
 	 */
 	public function sanitize_fields( $input ) {
-		$output = array();
+		$output = [];
 
 		foreach ( $this->fields as $tab ) {
 			foreach ( $tab as $field ) {
 				if ( isset( $input[ $field['id'] ] ) ) {
 					if ( isset( $field['sanitize_callback'] ) && is_callable( $field['sanitize_callback'] ) ) {
 						// Custom sanitization.
-						$output[ $field['id'] ] = call_user_func_array( $field['sanitize_callback'], array( $input[ $field['id'] ] ) );
+						$output[ $field['id'] ] = call_user_func_array( $field['sanitize_callback'], [ $input[ $field['id'] ] ] );
 					} else {
 						// Default sanitization.
 						switch ( strtolower( $field['type'] ) ) {
@@ -418,7 +418,7 @@ class Optioner {
 								break;
 
 							case 'multicheck':
-								$val = array();
+								$val = [];
 
 								if ( is_array( $input[ $field['id'] ] ) && ! empty( $input[ $field['id'] ] ) ) {
 									foreach ( $input[ $field['id'] ] as $v ) {
@@ -486,7 +486,7 @@ class Optioner {
 	private function get_conditionals( $args ) {
 		$output = '';
 
-		$rules = array();
+		$rules = [];
 
 		$conditions = $args['field']['condition'];
 
@@ -531,7 +531,7 @@ class Optioner {
 	 * @return array Field details.
 	 */
 	private function get_field_by_id( $id ) {
-		$output = array();
+		$output = [];
 
 		foreach ( $this->fields as $section_key => $section ) {
 			foreach ( $section as $field_key => $field ) {
@@ -566,13 +566,13 @@ class Optioner {
 	 * @param array $args Arguments.
 	 */
 	public function callback_text( $args ) {
-		$attr = array(
+		$attr = [
 			'type'  => $args['field']['type'],
 			'name'  => $args['field_name'],
 			'id'    => $args['field_clean_id'],
 			'value' => $this->get_value( $args ),
 			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
-		);
+		];
 
 		if ( isset( $args['field']['placeholder'] ) ) {
 			$attr['placeholder'] = $args['field']['placeholder'];
@@ -639,12 +639,12 @@ class Optioner {
 	 * @param array $args Arguments.
 	 */
 	public function callback_checkbox( $args ) {
-		$attr = array(
+		$attr = [
 			'type'  => 'checkbox',
 			'name'  => $args['field_name'],
 			'value' => 1,
 			'id'    => $args['field_clean_id'],
-		);
+		];
 
 		$attributes = $this->render_attr( $attr, false );
 
@@ -671,12 +671,12 @@ class Optioner {
 	 * @param array $args Arguments.
 	 */
 	public function callback_toggle( $args ) {
-		$attr = array(
+		$attr = [
 			'type'  => 'checkbox',
 			'name'  => $args['field_name'],
 			'value' => 1,
 			'id'    => $args['field_clean_id'],
-		);
+		];
 
 		$attributes = $this->render_attr( $attr, false );
 
@@ -717,11 +717,11 @@ class Optioner {
 			$html .= '<ul>';
 
 			foreach ( $args['field']['choices'] as $key => $value ) {
-				$attr = array(
+				$attr = [
 					'type'  => 'checkbox',
 					'name'  => $args['field_name'] . '[]',
 					'value' => $key,
-				);
+				];
 
 				$attributes = $this->render_attr( $attr, false );
 
@@ -750,12 +750,12 @@ class Optioner {
 	 * @param array $args Arguments.
 	 */
 	public function callback_textarea( $args ) {
-		$attr = array(
+		$attr = [
 			'name'  => $args['field_name'],
 			'id'    => $args['field_clean_id'],
 			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
 			'rows'  => isset( $args['field']['rows'] ) ? $args['field']['rows'] : 5,
-		);
+		];
 
 		if ( isset( $args['field']['placeholder'] ) ) {
 			$attr['placeholder'] = $args['field']['placeholder'];
@@ -778,13 +778,13 @@ class Optioner {
 	 * @param array $args Arguments.
 	 */
 	public function callback_code( $args ) {
-		$attr = array(
+		$attr = [
 			'name'      => $args['field_name'],
 			'id'        => $args['field_clean_id'],
 			'class'     => isset( $args['field']['class'] ) ? $args['field']['class'] : '',
 			'rows'      => isset( $args['field']['rows'] ) ? $args['field']['rows'] : 5,
 			'data-mime' => isset( $args['field']['mime_type'] ) ? $args['field']['mime_type'] : 'css',
-		);
+		];
 
 		if ( isset( $args['field']['placeholder'] ) ) {
 			$attr['placeholder'] = $args['field']['placeholder'];
@@ -811,12 +811,12 @@ class Optioner {
 	public function callback_editor( $args ) {
 		$field_value = $this->get_value( $args );
 
-		$editor_settings = array(
+		$editor_settings = [
 			'teeny'          => true,
 			'textarea_name'  => $args['field_name'],
 			'textarea_rows'  => 10,
 			'default_editor' => 'tinymce',
-		);
+		];
 
 		if ( isset( $args['field']['settings'] ) && is_array( $args['field']['settings'] ) ) {
 			$editor_settings = wp_parse_args( $args['field']['settings'], $editor_settings );
@@ -876,13 +876,13 @@ class Optioner {
 	 * @param array $args Arguments.
 	 */
 	public function callback_color( $args ) {
-		$attr = array(
+		$attr = [
 			'type'  => 'text',
 			'name'  => $args['field_name'],
 			'id'    => $args['field_clean_id'],
 			'value' => $this->get_value( $args ),
 			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'regular-text',
-		);
+		];
 
 		$attr['class'] = ' code optioner-color';
 
@@ -907,9 +907,9 @@ class Optioner {
 	 * @param array $args Arguments.
 	 */
 	public function callback_heading( $args ) {
-		$attr = array(
+		$attr = [
 			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : 'optioner-heading',
-		);
+		];
 
 		$attributes = $this->render_attr( $attr, false );
 
@@ -928,9 +928,9 @@ class Optioner {
 	 * @param array $args Arguments.
 	 */
 	public function callback_message( $args ) {
-		$attr = array(
+		$attr = [
 			'class' => isset( $args['field']['class'] ) ? $args['field']['class'] : '',
-		);
+		];
 
 		$attributes = $this->render_attr( $attr, false );
 
@@ -948,10 +948,10 @@ class Optioner {
 	 * @param array $args Arguments.
 	 */
 	public function callback_select( $args ) {
-		$attr = array(
+		$attr = [
 			'name' => $args['field_name'],
 			'id'   => $args['field_clean_id'],
-		);
+		];
 
 		if ( isset( $args['field']['stylish'] ) && true === $args['field']['stylish'] ) {
 			$attr['class'] = ' optioner-stylish-select';
@@ -998,11 +998,11 @@ class Optioner {
 			$html .= '<ul class="radio-list ' . esc_attr( $layout_class ) . '">';
 
 			foreach ( $args['field']['choices'] as $key => $value ) {
-				$attr = array(
+				$attr = [
 					'type'  => 'radio',
 					'name'  => $args['field_name'],
 					'value' => $key,
-				);
+				];
 
 				$attributes = $this->render_attr( $attr, false );
 
@@ -1035,13 +1035,13 @@ class Optioner {
 			$html .= '<div class="buttonset">';
 
 			foreach ( $args['field']['choices'] as $key => $value ) {
-				$attr = array(
+				$attr = [
 					'type'  => 'radio',
 					'name'  => $args['field_name'],
 					'id'    => $args['field_clean_id'] . '-' . $key,
 					'value' => $key,
-					'class' => array( 'switch-input' ),
-				);
+					'class' => [ 'switch-input' ],
+				];
 
 				$attributes = $this->render_attr( $attr, false );
 
@@ -1076,11 +1076,11 @@ class Optioner {
 			$html .= '<ul class="radio-images ' . esc_attr( $layout_class ) . '">';
 
 			foreach ( $args['field']['choices'] as $key => $value ) {
-				$attr = array(
+				$attr = [
 					'type'  => 'radio',
 					'name'  => $args['field_name'],
 					'value' => $key,
-				);
+				];
 
 				$attributes = $this->render_attr( $attr, false );
 
@@ -1159,8 +1159,8 @@ class Optioner {
 	 *
 	 * @param array $args Arguments.
 	 */
-	public function set_page( $args = array() ) {
-		$defaults = array(
+	public function set_page( $args = [] ) {
+		$defaults = [
 			'page_title'    => esc_html__( 'Optioner', 'optioner' ),
 			'menu_title'    => esc_html__( 'Optioner', 'optioner' ),
 			'capability'    => 'manage_options',
@@ -1168,7 +1168,7 @@ class Optioner {
 			'option_slug'   => 'optioner',
 			'menu_icon'     => 'dashicons-admin-generic',
 			'page_subtitle' => '',
-		);
+		];
 
 		$this->page = wp_parse_args( $args, $defaults );
 	}
@@ -1181,18 +1181,18 @@ class Optioner {
 	 * @param array $links Quick links array.
 	 */
 	public function set_quick_links( $links ) {
-		$output = array();
+		$output = [];
 
 		if ( empty( $links ) ) {
 			return $output;
 		}
 
 		foreach ( $links as $link ) {
-			$defaults = array(
+			$defaults = [
 				'text' => esc_html__( 'Link', 'optioner' ),
 				'url'  => '#',
 				'type' => 'primary',
-			);
+			];
 
 			$output[] = wp_parse_args( $link, $defaults );
 		}
@@ -1210,11 +1210,11 @@ class Optioner {
 	public function set_sidebar( $args ) {
 		$this->is_sidebar = true;
 
-		$defaults = array(
+		$defaults = [
 			'render_callback' => '',
 			'width'           => 25,
 			'sticky'          => false,
-		);
+		];
 
 		$args = wp_parse_args( $args, $defaults );
 
@@ -1244,11 +1244,11 @@ class Optioner {
 			return false;
 		}
 
-		$defaults = array(
+		$defaults = [
 			'id'       => '',
 			'title'    => '',
 			'subtitle' => '',
-		);
+		];
 
 		$args = wp_parse_args( $args, $defaults );
 
@@ -1270,12 +1270,12 @@ class Optioner {
 		}
 
 		// Set the defaults.
-		$defaults = array(
+		$defaults = [
 			'id'   => '',
 			'name' => '',
 			'desc' => '',
 			'type' => 'text',
-		);
+		];
 
 		$arg = wp_parse_args( $args, $defaults );
 
@@ -1310,7 +1310,7 @@ class Optioner {
 				$esc_value = esc_attr( $value );
 			}
 
-			if ( ! in_array( $name, array( 'class', 'id', 'title', 'style', 'name' ), true ) ) {
+			if ( ! in_array( $name, [ 'class', 'id', 'title', 'style', 'name' ], true ) ) {
 				$html .= false !== $value ? sprintf( ' %s="%s"', esc_html( $name ), $esc_value ) : esc_html( " {$name}" );
 			} else {
 				$html .= $value ? sprintf( ' %s="%s"', esc_html( $name ), $esc_value ) : '';
@@ -1334,7 +1334,7 @@ class Optioner {
 	public function get_required_screen() {
 		$output = '';
 
-		$map_array = array(
+		$map_array = [
 			'index.php'               => 'dashboard',
 			'edit.php'                => 'posts',
 			'upload.php'              => 'media',
@@ -1345,7 +1345,7 @@ class Optioner {
 			'users.php'               => 'users',
 			'tools.php'               => 'tools',
 			'options-general.php'     => 'settings',
-		);
+		];
 
 		if ( true === $this->top_level_menu ) {
 			$output = 'toplevel';
@@ -1394,9 +1394,9 @@ class Optioner {
 		$base_url = admin_url( $parent );
 
 		$output = add_query_arg(
-			array(
+			[
 				'page' => $this->page['menu_slug'],
-			),
+			],
 			$base_url
 		);
 
@@ -1408,11 +1408,11 @@ class Optioner {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array   $args Sidebar box arguments.
-	 * @param Welcome $obj  Instance of Welcome.
+	 * @param array    $args Sidebar box arguments.
+	 * @param Optioner $obj  Instance of Optioner.
 	 */
 	public function render_sidebar_box( $args, $obj ) {
-		$defaults = array(
+		$defaults = [
 			'class'           => '',
 			'title'           => esc_html__( 'Box Title', 'optioner' ),
 			'icon'            => '',
@@ -1423,7 +1423,7 @@ class Optioner {
 			'button_url'      => '#',
 			'button_class'    => '',
 			'button_new_tab'  => true,
-		);
+		];
 
 		$args = wp_parse_args( $args, $defaults );
 
@@ -1435,13 +1435,13 @@ class Optioner {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array   $args Sidebar box arguments.
-	 * @param Welcome $obj Instance of Welcome.
+	 * @param array    $args Sidebar box arguments.
+	 * @param Optioner $obj  Instance of Optioner.
 	 */
 	public static function render_sidebar_box_content( $args, $obj ) {
-		$box_attrs = array(
-			'class' => array( 'optioner-box' ),
-		);
+		$box_attrs = [
+			'class' => [ 'optioner-box' ],
+		];
 
 		if ( ! empty( $args['class'] ) ) {
 			$box_attrs['class'][] = $args['class'];
@@ -1471,9 +1471,9 @@ class Optioner {
 		}
 
 		if ( ! empty( $args['button_text'] ) && ! empty( $args['button_url'] ) ) {
-			$button_attrs = array(
+			$button_attrs = [
 				'href' => $args['button_url'],
-			);
+			];
 
 			if ( ! empty( $args['button_class'] ) ) {
 				$button_attrs['class'] = $args['button_class'];
