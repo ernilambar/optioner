@@ -340,7 +340,7 @@ class Optioner {
 						'field_clean_id' => $this->page['option_slug'] . '---' . $field['id'],
 						'field_value'    => ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '',
 						'class'          => 'field-row-' . $field['type'] . ' field-' . $field['id'],
-						'label_for'      => $this->page['option_slug'] . '---' . $field['id'],
+						'label_for'      => in_array( $field['type'], array( 'code', 'email', 'image', 'number', 'select', 'text', 'textarea', 'url' ), true ) ? $this->page['option_slug'] . '---' . $field['id'] : '',
 					);
 
 					$callback_name = $field['type'];
