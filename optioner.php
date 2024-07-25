@@ -65,8 +65,8 @@ if ( ! class_exists( Init_3_0_0::class, false ) ) {
 				define( 'OPTIONER_LOADED', self::PRIORITY );
 			}
 
-			add_action( 'init', array( $this, 'include_lib' ), self::PRIORITY );
-			add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
+			add_action( 'init', [ $this, 'include_lib' ], self::PRIORITY );
+			add_action( 'admin_enqueue_scripts', [ $this, 'load_assets' ] );
 		}
 
 		/**
@@ -109,8 +109,8 @@ if ( ! class_exists( Init_3_0_0::class, false ) ) {
 		 * @since 1.0.0
 		 */
 		public function load_assets() {
-			$ce_settings['css']        = wp_enqueue_code_editor( array( 'type' => 'css' ) );
-			$ce_settings['javascript'] = wp_enqueue_code_editor( array( 'type' => 'javascript' ) );
+			$ce_settings['css']        = wp_enqueue_code_editor( [ 'type' => 'css' ] );
+			$ce_settings['javascript'] = wp_enqueue_code_editor( [ 'type' => 'javascript' ] );
 
 			wp_localize_script( 'jquery', 'codeEditorSettings', $ce_settings );
 
@@ -121,13 +121,13 @@ if ( ! class_exists( Init_3_0_0::class, false ) ) {
 
 			wp_enqueue_media();
 
-			wp_enqueue_style( 'optioner-style', OPTIONER_URL . '/assets/optioner.css', array(), OPTIONER_VERSION );
+			wp_enqueue_style( 'optioner-style', OPTIONER_URL . '/assets/optioner.css', [], OPTIONER_VERSION );
 
-			wp_enqueue_script( 'optioner-scripts', OPTIONER_URL . '/assets/optioner.js', array( 'jquery', 'wp-color-picker', 'code-editor' ), OPTIONER_VERSION, true );
+			wp_enqueue_script( 'optioner-scripts', OPTIONER_URL . '/assets/optioner.js', [ 'jquery', 'wp-color-picker', 'code-editor' ], OPTIONER_VERSION, true );
 
-			$localized_array = array(
+			$localized_array = [
 				'storage_key' => $this->get_unique_id( 'optioner-' ) . '-activetab',
-			);
+			];
 
 			wp_localize_script( 'optioner-scripts', 'optionerObject', $localized_array );
 		}
