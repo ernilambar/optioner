@@ -45,7 +45,8 @@ npm-debug.log
 # Sass
 .sass-cache/
 
-# Project folders
+# Project
+composer.lock
 docs/
 build/
 deploy/
