@@ -1,9 +1,10 @@
 # Optioner
 
+![Stable Version](https://img.shields.io/packagist/v/ernilambar/optioner?label=Stable&color=329FD4)
 ![Type: Library](https://img.shields.io/badge/Type-Library-brightgreen.svg)
-![CMS: WordPress](https://img.shields.io/badge/CMS-WordPress-blue.svg)
-![PHP: Requires PHP 7.2](https://img.shields.io/badge/PHP-Requires%20PHP%207.2-8892BF.svg)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![CMS: WordPress](https://img.shields.io/badge/CMS-WordPress-007fff.svg)
+![PHP Version](https://img.shields.io/packagist/dependency-v/ernilambar/optioner/PHP)
+![License](https://img.shields.io/packagist/l/ernilambar/optioner?label=License)
 
 Minimal option framework for WordPress themes and plugins.
 
