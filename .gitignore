@@ -9,6 +9,7 @@ Desktop.ini
 
 # IDE files
 .idea
+.parcel-cache
 .vscode/*
 project.xml
 project.properties
