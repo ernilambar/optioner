@@ -68,10 +68,16 @@ import 'conditionize2';
 			this.wrapper
 				.find( '.form-field-select select.optioner-stylish-select' )
 				.each( function () {
-					let settings = {
+					const settings = {
+						searchField: 'text',
 						create: false,
-						controlInput: null,
 						allowEmptyOption: false,
+						highlight: true,
+						onType: function ( str ) {
+							if ( str.length > 0 && this.getValue() ) {
+								this.clear( true );
+							}
+						},
 					};
 					new TomSelect( this, settings );
 				} );
