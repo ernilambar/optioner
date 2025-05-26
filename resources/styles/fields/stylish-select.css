@@ -1,0 +1,18 @@
+.optioner-wrap {
+	.optioner-stylish-select {
+		.ts-wrapper {
+			width: auto !important;
+			min-width: 150px !important;
+			display: inline-block !important;
+		}
+
+		.ts-control {
+			width: auto !important;
+		}
+
+		.ts-dropdown {
+			width: auto !important;
+			min-width: 100% !important;
+		}
+	}
+}

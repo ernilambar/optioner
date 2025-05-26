@@ -1,7 +1,8 @@
-import 'select2/dist/css/select2.css';
+import 'tom-select/dist/css/tom-select.default.css';
 import './styles/optioner.css';
 
-import 'select2';
+import TomSelect from 'tom-select';
+
 import 'conditionize2';
 
 ( function ( $ ) {
@@ -67,10 +68,12 @@ import 'conditionize2';
 			this.wrapper
 				.find( '.form-field-select select.optioner-stylish-select' )
 				.each( function () {
-					$( this ).select2( {
-						width: '100%',
-						minimumResultsForSearch: 10,
-					} );
+					let settings = {
+						create: false,
+						controlInput: null,
+						allowEmptyOption: false,
+					};
+					new TomSelect( this, settings );
 				} );
 		}
 
