@@ -1,6 +1,6 @@
 {
 	"name": "optioner",
-	"version": "3.0.0",
+	"version": "3.1.0",
 	"description": "Minimal option framework for WordPress.",
 	"main_file": "optioner.php",
 	"author": "Nilambar Sharma",
@@ -28,13 +28,13 @@
 		"tom-select": "^2.4.3"
 	},
 	"devDependencies": {
-		"@wordpress/prettier-config": "^4.1.0",
-		"parcel": "^2.13.3",
-		"postcss": "^8.4.39",
-		"postcss-custom-media": "^10.0.8",
-		"postcss-import": "^16.1.0",
-		"postcss-nested": "^6.2.0",
-		"postcss-preset-env": "^9.5.14",
+		"@wordpress/prettier-config": "^4.26.0",
+		"parcel": "^2.15.4",
+		"postcss": "^8.5.6",
+		"postcss-custom-media": "^11.0.6",
+		"postcss-import": "^16.1.1",
+		"postcss-nested": "^7.0.2",
+		"postcss-preset-env": "^10.2.4",
 		"prettier": "npm:wp-prettier@^3.0.3"
 	},
 	"scripts": {
