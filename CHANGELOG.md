@@ -1,3 +1,8 @@
+## [3.1.0] - 2025-07-24
+
+- Added `extra_attrs` support for text-based fields
+- Improve PHP docs
+
 ## [3.0.0] - 2024-07-21
 
 - Minimum PHP requirement: 7.2
