@@ -578,6 +578,11 @@ class Optioner {
 			$attr['placeholder'] = $args['field']['placeholder'];
 		}
 
+		// Add extra attributes if provided.
+		if ( isset( $args['field']['extra_attrs'] ) && is_array( $args['field']['extra_attrs'] ) ) {
+			$attr = array_merge( $attr, $args['field']['extra_attrs'] );
+		}
+
 		$attributes = $this->render_attr( $attr, false );
 
 		$html = sprintf( '<input %s />', $attributes );
@@ -761,6 +766,11 @@ class Optioner {
 			$attr['placeholder'] = $args['field']['placeholder'];
 		}
 
+		// Add extra attributes if provided.
+		if ( isset( $args['field']['extra_attrs'] ) && is_array( $args['field']['extra_attrs'] ) ) {
+			$attr = array_merge( $attr, $args['field']['extra_attrs'] );
+		}
+
 		$attributes = $this->render_attr( $attr, false );
 
 		$html = sprintf( '<textarea %s>%s</textarea>', $attributes, esc_textarea( (string) $this->get_value( $args ) ) );
@@ -788,6 +798,11 @@ class Optioner {
 
 		if ( isset( $args['field']['placeholder'] ) ) {
 			$attr['placeholder'] = $args['field']['placeholder'];
+		}
+
+		// Add extra attributes if provided.
+		if ( isset( $args['field']['extra_attrs'] ) && is_array( $args['field']['extra_attrs'] ) ) {
+			$attr = array_merge( $attr, $args['field']['extra_attrs'] );
 		}
 
 		$attr['class'] .= ' code-editor';
@@ -888,6 +903,11 @@ class Optioner {
 
 		if ( isset( $args['field']['placeholder'] ) ) {
 			$attr['placeholder'] = $args['field']['placeholder'];
+		}
+
+		// Add extra attributes if provided.
+		if ( isset( $args['field']['extra_attrs'] ) && is_array( $args['field']['extra_attrs'] ) ) {
+			$attr = array_merge( $attr, $args['field']['extra_attrs'] );
 		}
 
 		$attributes = $this->render_attr( $attr, false );
