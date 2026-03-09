@@ -3,7 +3,7 @@
 		display: inline-block;
 		background-color: var(--optioner-color-primary);
 		border: 1px solid var(--optioner-color-primary);
-		color: #fff;
+		color: var(--optioner-button-text);
 		border-radius: 4px;
 		text-decoration: none;
 		padding: 4px;
@@ -11,10 +11,15 @@
 		width: 20px;
 		height: 20px;
 
-		&:hover,
+		&:hover {
+			background-color: var(--optioner-color-primary-hover);
+			border-color: var(--optioner-color-primary-hover);
+		}
+
 		&:focus,
 		&:active {
-			opacity: 0.9;
+			background-color: var(--optioner-color-primary-active);
+			border-color: var(--optioner-color-primary-active);
 		}
 
 		.optioner-button-danger {

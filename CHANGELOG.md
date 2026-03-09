@@ -1,3 +1,7 @@
+## [3.1.1] - 2025-03-09
+
+- Use WordPress admin theme color variables
+
 ## [3.1.0] - 2025-07-24
 
 - Added `extra_attrs` support for text-based fields
