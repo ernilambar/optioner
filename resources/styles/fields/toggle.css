@@ -43,7 +43,7 @@
 		}
 
 		input:focus + .slider {
-			box-shadow: 0 0 1px var(--optioner-color-primary);
+			box-shadow: 0 0 1px var(--optioner-color-primary-active);
 		}
 
 		input:checked + .slider::before {

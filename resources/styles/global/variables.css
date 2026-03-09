@@ -1,13 +1,20 @@
 :root {
 	--optioner-color-white: #fff;
-	--optioner-color-green: #36a583;
-	--optioner-color-blue: #007cba;
-	--optioner-color-azure: #008dd4;
-	--optioner-color-yellow: #ffb900;
-	--optioner-color-orange: #d54e21;
-
-	--optioner-color-primary: var(--optioner-color-azure);
 	--optioner-color-border: #dfdfdf;
+	--optioner-color-star: #ffb900;
+}
+
+body {
+	--optioner-color-primary: var(--wp-admin-theme-color, #008dd4);
+	--optioner-color-primary-hover: var(
+		--wp-admin-theme-color-darker-10,
+		var(--optioner-color-primary)
+	);
+	--optioner-color-primary-active: var(
+		--wp-admin-theme-color-darker-20,
+		var(--optioner-color-primary)
+	);
+	--optioner-button-text: var(--wp-admin-buttons-color, #fff);
 }
 
 @custom-media --bp-1 screen and (max-width: 960px);

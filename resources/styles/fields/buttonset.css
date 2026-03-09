@@ -35,7 +35,7 @@
 					+ .switch-label {
 						border-color: #7e8993;
 						background: var(--optioner-color-primary);
-						color: #fff;
+						color: var(--optioner-button-text);
 						z-index: 2;
 					}
 				}

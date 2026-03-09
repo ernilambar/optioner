@@ -63,7 +63,7 @@
 		margin-bottom: 1em;
 
 		.dashicons-star-filled::before {
-			color: var(--optioner-color-yellow);
+			color: var(--optioner-color-star);
 			margin-right: 3px;
 		}
 	}
