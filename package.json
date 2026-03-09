@@ -18,27 +18,23 @@
 		"url": "https://github.com/ernilambar/optioner/issues"
 	},
 	"browserslist": "> 1%, last 2 versions, not dead",
-	"alias": {
-		"jquery": {
-			"global": "jQuery"
-		}
-	},
 	"dependencies": {
 		"conditionize2": "^2.0.1",
 		"tom-select": "^2.5.2"
 	},
 	"devDependencies": {
 		"@wordpress/prettier-config": "^4.41.0",
-		"parcel": "^2.16.4",
+		"browserslist-to-esbuild": "^2.1.1",
 		"postcss": "^8.5.8",
 		"postcss-custom-media": "^12.0.1",
 		"postcss-import": "^16.1.1",
 		"postcss-nested": "^7.0.2",
 		"postcss-preset-env": "^11.2.0",
-		"prettier": "npm:wp-prettier@^3.0.3"
+		"prettier": "npm:wp-prettier@^3.0.3",
+		"vite": "^7.3.1"
 	},
 	"scripts": {
-		"build": "parcel build resources/optioner.js --no-source-maps --dist-dir assets --public-url ./",
-		"format": "prettier \"**/*.{cjs,css,js,json,mjs}\" --write"
+		"build": "vite build",
+		"format": "prettier \"**/*.{cjs,css,js,json,mjs}\" --write --log-level warn"
 	}
 }
