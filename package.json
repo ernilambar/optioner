@@ -1,6 +1,6 @@
 {
 	"name": "optioner",
-	"version": "3.1.1",
+	"version": "3.1.2",
 	"description": "Minimal option framework for WordPress.",
 	"main_file": "optioner.php",
 	"author": "Nilambar Sharma",

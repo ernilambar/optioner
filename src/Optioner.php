@@ -783,6 +783,9 @@ class Optioner {
 	/**
 	 * Render code editor.
 	 *
+	 * Use `mime_type` to pick the CodeMirror profile: `css` (default), `javascript`,
+	 * or plain text via `text`.
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param array $args Arguments.
