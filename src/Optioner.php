@@ -270,7 +270,9 @@ class Optioner {
 		$html = '<div class="optioner-tabs-nav">';
 
 		foreach ( $this->tabs as $tab ) {
-			$html .= sprintf( '<h3><a href="#%1$s" class="tab-nav" id="%1$s-tab">%2$s</a></h3>', $tab['id'], $tab['title'] );
+			$tab_id    = esc_attr( $tab['id'] );
+			$tab_title = esc_html( $tab['title'] );
+			$html     .= sprintf( '<h3><a href="#%1$s" class="tab-nav" id="%1$s-tab">%2$s</a></h3>', $tab_id, $tab_title );
 		}
 
 		$html .= '</div>';
@@ -734,7 +736,7 @@ class Optioner {
 
 				$html .= sprintf( '<input %s %s />', $attributes, checked( in_array( (string) $key, $values, true ), true, false ) );
 
-				$html .= $value;
+				$html .= esc_html( (string) $value );
 
 				$html .= '</li>';
 			}
@@ -782,6 +784,9 @@ class Optioner {
 
 	/**
 	 * Render code editor.
+	 *
+	 * Use `mime_type` to pick the CodeMirror profile: `css` (default), `javascript`,
+	 * or plain text via `text`.
 	 *
 	 * @since 1.0.0
 	 *
@@ -1028,7 +1033,7 @@ class Optioner {
 
 				$html .= '<li>';
 
-				$html .= sprintf( '<label><input %s %s />%s</label>', $attributes, checked( $this->get_value( $args ), $key, false ), $value );
+				$html .= sprintf( '<label><input %s %s />%s</label>', $attributes, checked( $this->get_value( $args ), $key, false ), esc_html( (string) $value ) );
 
 				$html .= '</li>';
 			}
@@ -1065,7 +1070,7 @@ class Optioner {
 
 				$attributes = $this->render_attr( $attr, false );
 
-				$html .= sprintf( '<input %s %s ><label class="switch-label" for="%s">%s</label></input>', $attributes, checked( $this->get_value( $args ), $key, false ), $args['field_clean_id'] . '-' . $key, $value );
+				$html .= sprintf( '<input %s %s ><label class="switch-label" for="%s">%s</label></input>', $attributes, checked( $this->get_value( $args ), $key, false ), $args['field_clean_id'] . '-' . $key, esc_html( (string) $value ) );
 			}
 
 			$html .= '</div>';
@@ -1106,7 +1111,7 @@ class Optioner {
 
 				$html .= '<li>';
 
-				$html .= sprintf( '<label><input %s %s />%s</label>', $attributes, checked( $this->get_value( $args ), $key, false ), '<img src="' . $value . '">' );
+				$html .= sprintf( '<label><input %s %s />%s</label>', $attributes, checked( $this->get_value( $args ), $key, false ), '<img src="' . esc_url( (string) $value ) . '" alt="' . esc_attr( (string) $key ) . '">' );
 
 				$html .= '</li>';
 			}

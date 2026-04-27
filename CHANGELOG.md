@@ -1,3 +1,7 @@
+## [3.1.2] - 2026-04-27
+
+- Add plain-text CodeMirror support for `code` fields (`mime_type` => `text`)
+
 ## [3.1.1] - 2025-03-09
 
 - Use WordPress admin theme color variables

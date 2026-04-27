@@ -12,10 +12,13 @@ import 'conditionize2';
 			.each( function () {
 				const isInitialized = $( this ).data( 'initialized' );
 				if ( '1' !== isInitialized ) {
-					const settings =
-						'javascript' === $( this ).data( 'mime' )
-							? codeEditorSettings.javascript
-							: codeEditorSettings.css;
+					const mime = $( this ).data( 'mime' );
+					let settings = codeEditorSettings.css;
+					if ( 'javascript' === mime ) {
+						settings = codeEditorSettings.javascript;
+					} else if ( 'text' === mime ) {
+						settings = codeEditorSettings.text;
+					}
 					const textareaId = $( this ).attr( 'id' );
 					$( this ).data( 'initialized', '1' );
 					wp.codeEditor.initialize( textareaId, settings );

@@ -7,14 +7,14 @@
 
 namespace Nilambar\Optioner;
 
-if ( ! class_exists( Init_3_1_1::class, false ) ) {
+if ( ! class_exists( Init_3_1_2::class, false ) ) {
 
 	/**
 	 * Init class.
 	 *
 	 * @since 1.0.0
 	 */
-	class Init_3_1_1 {
+	class Init_3_1_2 {
 
 		/**
 		 * Version.
@@ -23,7 +23,7 @@ if ( ! class_exists( Init_3_1_1::class, false ) ) {
 		 *
 		 * @var string
 		 */
-		const VERSION = '3.1.1';
+		const VERSION = '3.1.2';
 
 		/**
 		 * Priority.
@@ -32,7 +32,7 @@ if ( ! class_exists( Init_3_1_1::class, false ) ) {
 		 *
 		 * @var int
 		 */
-		const PRIORITY = 9978;
+		const PRIORITY = 9977;
 
 		/**
 		 * Instance.
@@ -111,6 +111,7 @@ if ( ! class_exists( Init_3_1_1::class, false ) ) {
 		public function load_assets() {
 			$ce_settings['css']        = wp_enqueue_code_editor( [ 'type' => 'css' ] );
 			$ce_settings['javascript'] = wp_enqueue_code_editor( [ 'type' => 'javascript' ] );
+			$ce_settings['text']       = wp_enqueue_code_editor( [ 'type' => 'text/plain' ] );
 
 			wp_localize_script( 'jquery', 'codeEditorSettings', $ce_settings );
 
@@ -146,5 +147,5 @@ if ( ! class_exists( Init_3_1_1::class, false ) ) {
 		}
 	}
 
-	Init_3_1_1::initiate();
+	Init_3_1_2::initiate();
 }
