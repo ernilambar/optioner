@@ -364,87 +364,209 @@ class Optioner {
 	/**
 	 * Sanitize fields.
 	 *
+	 * Values for registered fields that are not present in the current request are kept
+	 * from the option already in the database so partial forms or conditional UI do not
+	 * wipe the rest of the stored settings.
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param array $input Raw values.
 	 * @return array Sanitized values.
 	 */
 	public function sanitize_fields( $input ) {
+		if ( ! is_array( $input ) ) {
+			$input = [];
+		}
+
+		$existing = get_option( $this->page['option_slug'], [] );
+
+		if ( ! is_array( $existing ) ) {
+			$existing = (array) $existing;
+		}
+
 		$output = [];
 
 		foreach ( $this->fields as $tab ) {
 			foreach ( $tab as $field ) {
-				if ( isset( $input[ $field['id'] ] ) ) {
+				$field_id = $field['id'];
+
+				if ( isset( $input[ $field_id ] ) ) {
 					if ( isset( $field['sanitize_callback'] ) && is_callable( $field['sanitize_callback'] ) ) {
 						// Custom sanitization.
-						$output[ $field['id'] ] = call_user_func_array( $field['sanitize_callback'], [ $input[ $field['id'] ] ] );
+						$output[ $field_id ] = call_user_func_array( $field['sanitize_callback'], [ $input[ $field_id ] ] );
 					} else {
 						// Default sanitization.
 						switch ( strtolower( $field['type'] ) ) {
 							case 'text':
+								$output[ $field_id ] = sanitize_text_field( $input[ $field_id ] );
+								break;
+
 							case 'select':
 							case 'radio':
 							case 'radio-image':
 							case 'buttonset':
-								$output[ $field['id'] ] = sanitize_text_field( $input[ $field['id'] ] );
+								$output[ $field_id ] = $this->sanitize_choice_scalar_field( $field, $input[ $field_id ] );
 								break;
 
 							case 'url':
 							case 'image':
-								$output[ $field['id'] ] = esc_url_raw( $input[ $field['id'] ] );
+								$output[ $field_id ] = esc_url_raw( $input[ $field_id ] );
 								break;
 
 							case 'email':
-								$output[ $field['id'] ] = sanitize_email( $input[ $field['id'] ] );
+								$output[ $field_id ] = sanitize_email( $input[ $field_id ] );
 								break;
 
 							case 'number':
-								$output[ $field['id'] ] = intval( $input[ $field['id'] ] );
+								$output[ $field_id ] = intval( $input[ $field_id ] );
 								break;
 
 							case 'textarea':
-								$output[ $field['id'] ] = sanitize_textarea_field( $input[ $field['id'] ] );
+								$output[ $field_id ] = sanitize_textarea_field( $input[ $field_id ] );
 								break;
 
 							case 'editor':
-								$output[ $field['id'] ] = wp_kses_post( $input[ $field['id'] ] );
+								$output[ $field_id ] = wp_kses_post( $input[ $field_id ] );
 								break;
 
 							case 'code':
-								$output[ $field['id'] ] = $input[ $field['id'] ];
+								$output[ $field_id ] = $input[ $field_id ];
 								break;
 
 							case 'checkbox':
 							case 'toggle':
-								$output[ $field['id'] ] = $input[ $field['id'] ] ? true : false;
+								$output[ $field_id ] = $input[ $field_id ] ? true : false;
 								break;
 
 							case 'multicheck':
 								$val = [];
 
-								if ( is_array( $input[ $field['id'] ] ) && ! empty( $input[ $field['id'] ] ) ) {
-									foreach ( $input[ $field['id'] ] as $v ) {
-										$val[] = sanitize_text_field( $v );
+								if ( is_array( $input[ $field_id ] ) ) {
+									foreach ( $input[ $field_id ] as $v ) {
+										$item = sanitize_text_field( $v );
+										// Drop empty values from the trailing sentinel input (see callback_multicheck).
+										if ( '' !== $item ) {
+											$val[] = $item;
+										}
 									}
 								}
 
-								if ( ! empty( $val ) ) {
-									$output[ $field['id'] ] = $val;
-								}
+								$output[ $field_id ] = $this->sanitize_choice_multicheck_field( $field, $val );
 								break;
 
 							default:
-								$output[ $field['id'] ] = sanitize_text_field( $input[ $field['id'] ] );
+								$output[ $field_id ] = sanitize_text_field( $input[ $field_id ] );
 								break;
 						}
 					}
+				} elseif ( array_key_exists( $field_id, $existing ) ) {
+					$output[ $field_id ] = $existing[ $field_id ];
 				} else {
-					$output[ $field['id'] ] = null;
+					$output[ $field_id ] = null;
 				}
 			}
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Map string form of choice keys to the canonical key used in `$field['choices']` (PHP key type preserved).
+	 *
+	 * @since 3.1.3
+	 *
+	 * @param array $field Field definition.
+	 * @return array<string, mixed>|null Map of (string) key => original choice key, or null when not restricted.
+	 */
+	private function get_field_choice_key_map( $field ) {
+		if ( empty( $field['choices'] ) || ! is_array( $field['choices'] ) ) {
+			return null;
+		}
+
+		$map = [];
+
+		foreach ( array_keys( $field['choices'] ) as $choice_key ) {
+			$map[ (string) $choice_key ] = $choice_key;
+		}
+
+		return $map;
+	}
+
+	/**
+	 * Sanitize a scalar field that must match `choices` keys when choices are defined.
+	 *
+	 * @since 3.1.3
+	 *
+	 * @param array $field Field definition.
+	 * @param mixed $raw   Raw POST value.
+	 * @return mixed Sanitized value present in choices, else default if valid, else ''.
+	 */
+	private function sanitize_choice_scalar_field( $field, $raw ) {
+		$str = is_scalar( $raw ) ? (string) $raw : '';
+
+		return $this->restrict_value_to_field_choices( $field, sanitize_text_field( $str ) );
+	}
+
+	/**
+	 * Keep only values that match `choices` keys when choices are defined.
+	 *
+	 * @since 3.1.3
+	 *
+	 * @param array $field  Field definition.
+	 * @param array $values Already sanitized list of submitted keys.
+	 * @return array
+	 */
+	private function sanitize_choice_multicheck_field( $field, $values ) {
+		$map = $this->get_field_choice_key_map( $field );
+
+		if ( null === $map ) {
+			return $values;
+		}
+
+		$out = [];
+
+		foreach ( $values as $v ) {
+			$sk = (string) $v;
+
+			if ( isset( $map[ $sk ] ) ) {
+				$out[] = $map[ $sk ];
+			}
+		}
+
+		return $out;
+	}
+
+	/**
+	 * Restrict a sanitized scalar to keys of `$field['choices']` when choices exist.
+	 *
+	 * @since 3.1.3
+	 *
+	 * @param array  $field     Field definition.
+	 * @param string $sanitized Value after `sanitize_text_field()`.
+	 * @return mixed Canonical choice key or fallback.
+	 */
+	private function restrict_value_to_field_choices( $field, $sanitized ) {
+		$map = $this->get_field_choice_key_map( $field );
+
+		if ( null === $map ) {
+			return $sanitized;
+		}
+
+		$sk = (string) $sanitized;
+
+		if ( isset( $map[ $sk ] ) ) {
+			return $map[ $sk ];
+		}
+
+		if ( isset( $field['default'] ) ) {
+			$dk = (string) $field['default'];
+
+			if ( isset( $map[ $dk ] ) ) {
+				return $map[ $dk ];
+			}
+		}
+
+		return '';
 	}
 
 	/**
@@ -470,7 +592,14 @@ class Optioner {
 			$conditionals = $this->get_conditionals( $args );
 		}
 
-		$html = sprintf( '<div class="%5$s form-field-%1$s form-field-%2$s" data-condition="%4$s">%3$s</div>', $args['field']['type'], $args['field']['id'], $html, $conditionals, $conditional_class );
+		$html = sprintf(
+			'<div class="%5$s form-field-%1$s form-field-%2$s" data-condition="%4$s">%3$s</div>',
+			$args['field']['type'],
+			$args['field']['id'],
+			$html,
+			esc_attr( $conditionals ),
+			$conditional_class
+		);
 
 		do_action( 'optioner_field_top_' . $args['field']['type'], $args['field']['id'], $this->page['menu_slug'], $args );
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -490,27 +619,41 @@ class Optioner {
 
 		$rules = [];
 
-		$conditions = $args['field']['condition'];
+		$conditions = isset( $args['field']['condition'] ) ? $args['field']['condition'] : [];
+
+		if ( ! is_array( $conditions ) ) {
+			return $output;
+		}
 
 		foreach ( $conditions as $cond ) {
+			if ( ! is_array( $cond ) || ! isset( $cond['key'] ) ) {
+				continue;
+			}
+
 			$parent_field = $this->get_field_by_id( $cond['key'] );
 
 			if ( empty( $parent_field ) ) {
 				continue;
 			}
 
-			if ( 'checkbox' === $parent_field['type'] || 'toggle' === $parent_field['type'] ) {
-				$rule = '#' . $this->page['option_slug'] . '---' . $cond['key'];
+			// Keys come from registered fields only (validated above).
+			$field_key = $cond['key'];
 
-				// Reverse conditions.
+			if ( 'checkbox' === $parent_field['type'] || 'toggle' === $parent_field['type'] ) {
+				$rule = '#' . $this->page['option_slug'] . '---' . $field_key;
+
+				// Reverse conditions (unchanged semantics vs. pre-secure builds).
 				if ( isset( $cond['compare'] ) && '!==' === $cond['compare'] ) {
 					$rule = '!' . $rule;
 				}
 			} else {
-				$rule = $this->page['option_slug'] . '[' . $cond['key'] . ']';
+				$rule = $this->page['option_slug'] . '[' . $field_key . ']';
 
 				if ( isset( $cond['compare'] ) ) {
-					$rule .= ' ' . $cond['compare'] . ' \'' . $cond['value'] . '\'';
+					$compare = $this->normalize_condition_compare( (string) $cond['compare'] );
+					$value   = isset( $cond['value'] ) ? $cond['value'] : '';
+
+					$rule .= ' ' . $compare . ' ' . $this->encode_condition_value_literal( $value );
 				}
 			}
 
@@ -518,10 +661,73 @@ class Optioner {
 		}
 
 		if ( ! empty( $rules ) ) {
-			$output = join( ' && ', $rules );
+			$output = implode( ' && ', $rules );
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Allowlist compare operators for conditionize `data-condition` (evaluated as JS).
+	 *
+	 * Unknown operators fall back to `===` so existing configs keep a comparison while
+	 * blocking injection (e.g. comma, semicolon, or call operators).
+	 *
+	 * @since 3.1.3
+	 *
+	 * @param string $compare Raw compare token from field config.
+	 * @return string Safe operator.
+	 */
+	private function normalize_condition_compare( $compare ) {
+		static $allowed = [
+			'===',
+			'!==',
+			'==',
+			'!=',
+			'>',
+			'<',
+			'>=',
+			'<=',
+		];
+
+		$compare = trim( $compare );
+
+		if ( in_array( $compare, $allowed, true ) ) {
+			return $compare;
+		}
+
+		return '===';
+	}
+
+	/**
+	 * Encode a condition RHS as a JSON literal for safe embedding in JS (conditionize2).
+	 *
+	 * Replaces legacy single-quoted strings; for `===` / `==` behavior matches string
+	 * comparison used previously for typical option values.
+	 *
+	 * @since 3.1.3
+	 *
+	 * @param mixed $value Condition value from field config.
+	 * @return string JSON literal (never empty operator side — empty string encodes as "").
+	 */
+	private function encode_condition_value_literal( $value ) {
+		$json_flags = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE;
+
+		// Legacy rules always wrapped RHS in single quotes (JS string). Match that by
+		// JSON-encoding the same string PHP would have interpolated in `'…'`.
+		if ( null === $value ) {
+			$string = '';
+		} elseif ( is_bool( $value ) ) {
+			$string = $value ? '1' : '';
+		} elseif ( is_scalar( $value ) ) {
+			$string = (string) $value;
+		} else {
+			$string = '';
+		}
+
+		$encoded = wp_json_encode( $string, $json_flags );
+
+		return false !== $encoded ? $encoded : '""';
 	}
 
 	/**
@@ -535,11 +741,25 @@ class Optioner {
 	private function get_field_by_id( $id ) {
 		$output = [];
 
+		$id = is_scalar( $id ) ? (string) $id : '';
+
 		foreach ( $this->fields as $section_key => $section ) {
+			if ( ! is_array( $section ) ) {
+				continue;
+			}
+
 			foreach ( $section as $field_key => $field ) {
-				if ( $id === $field_key ) {
+				if ( ! is_array( $field ) ) {
+					continue;
+				}
+
+				$stored_id = isset( $field['id'] ) ? (string) $field['id'] : '';
+				$key_match = is_scalar( $field_key ) ? (string) $field_key : '';
+
+				// Match array key (legacy) or explicit id (canonical).
+				if ( $id === $key_match || ( '' !== $stored_id && $id === $stored_id ) ) {
 					$output = $field;
-					break;
+					break 2;
 				}
 			}
 		}
@@ -740,6 +960,9 @@ class Optioner {
 
 				$html .= '</li>';
 			}
+
+			// Ensures the field key is present in POST when no boxes are checked, so save can persist [].
+			$html .= '<input type="hidden" name="' . esc_attr( $args['field_name'] . '[]' ) . '" value="" />';
 
 			$html .= '</ul>';
 		}
@@ -1287,14 +1510,13 @@ class Optioner {
 	 *
 	 * @param string $tab  Tab id.
 	 * @param array  $args Field arguments.
+	 * @return bool True when the field was registered; false for invalid input or empty id.
 	 */
 	public function add_field( $tab, $args ) {
-		// Bail if not array.
 		if ( ! is_array( $args ) ) {
 			return false;
 		}
 
-		// Set the defaults.
 		$defaults = [
 			'id'   => '',
 			'name' => '',
@@ -1304,7 +1526,21 @@ class Optioner {
 
 		$arg = wp_parse_args( $args, $defaults );
 
-		$this->fields[ $tab ][ $args['id'] ] = $args;
+		$field_id = isset( $arg['id'] ) ? (string) $arg['id'] : '';
+
+		if ( '' === $field_id ) {
+			return false;
+		}
+
+		$arg['id'] = $field_id;
+
+		if ( ! isset( $this->fields[ $tab ] ) || ! is_array( $this->fields[ $tab ] ) ) {
+			$this->fields[ $tab ] = [];
+		}
+
+		$this->fields[ $tab ][ $field_id ] = $arg;
+
+		return true;
 	}
 
 	/**
