@@ -1,3 +1,7 @@
+## [3.1.4] - 2026-06-11
+
+- Fix asset URL resolution for themes and child themes.
+
 ## [3.1.3] - 2026-04-28
 
 - Choice fields: POST values limited to `choices` keys when set.
