@@ -305,7 +305,7 @@ class Optioner {
 				do_action( 'optioner_form_top_' . $tab['id'], $tab );
 				do_settings_sections( $tab['id'] . '-' . $this->page['menu_slug'] );
 				do_action( 'optioner_form_bottom_' . $tab['id'], $tab );
-				submit_button( esc_html__( 'Save Changes', 'optioner' ) );
+				submit_button();
 				echo '</div>';
 			}
 
@@ -1096,7 +1096,7 @@ class Optioner {
 		?>
 		<div class="field-image">
 			<input type="text" class="field-input regular-text" name="<?php echo esc_attr( $args['field_name'] ); ?>" id="<?php echo esc_attr( $args['field_clean_id'] ); ?>" value="<?php echo esc_attr( $value ); ?>" />
-			<a href="javascript:void(0);" class="js-upload-image optioner-button" data-uploader_title="<?php esc_attr_e( 'Select Image', 'optioner' ); ?>" data-uploader_button_text="<?php esc_attr_e( 'Choose Image', 'optioner' ); ?>"><span class="dashicons dashicons-upload"></span></a>
+			<a href="javascript:void(0);" class="js-upload-image optioner-button" data-uploader_title="<?php esc_attr_e( 'Select image' ); ?>" data-uploader_button_text="<?php esc_attr_e( 'Choose image' ); ?>"><span class="dashicons dashicons-upload"></span></a>
 			<a href="javascript:void(0);" class="optioner-button optioner-button-danger js-remove-image <?php echo ( empty( $value ) ) ? 'hide' : ''; ?>"><span class="dashicons dashicons-no"></span></a>
 			<div class="preview-wrap <?php echo ( ! empty( $value ) ? 'preview-on' : '' ); ?>">
 				<img class="field-preview" src="<?php echo esc_attr( $value ); ?>" alt="" draggable="false" />
@@ -1210,7 +1210,7 @@ class Optioner {
 		$html = sprintf( '<select %s>', $attributes );
 
 		if ( isset( $args['field']['allow_null'] ) && true === $args['field']['allow_null'] ) {
-			$html .= '<option value="">&mdash; ' . esc_html__( 'Select', 'optioner' ) . ' &mdash;</option>';
+			$html .= '<option value="">&mdash; ' . esc_html__( 'Select' ) . ' &mdash;</option>';
 		}
 
 		if ( ! empty( $args['field']['choices'] ) ) {
@@ -1409,8 +1409,8 @@ class Optioner {
 	 */
 	public function set_page( $args = [] ) {
 		$defaults = [
-			'page_title'    => esc_html__( 'Optioner', 'optioner' ),
-			'menu_title'    => esc_html__( 'Optioner', 'optioner' ),
+			'page_title'    => '',
+			'menu_title'    => '',
 			'capability'    => 'manage_options',
 			'menu_slug'     => 'optioner',
 			'option_slug'   => 'optioner',
@@ -1437,7 +1437,7 @@ class Optioner {
 
 		foreach ( $links as $link ) {
 			$defaults = [
-				'text' => esc_html__( 'Link', 'optioner' ),
+				'text' => '',
 				'url'  => '#',
 				'type' => 'primary',
 			];
@@ -1675,10 +1675,10 @@ class Optioner {
 	public function render_sidebar_box( $args, $obj ) {
 		$defaults = [
 			'class'           => '',
-			'title'           => esc_html__( 'Box Title', 'optioner' ),
+			'title'           => '',
 			'icon'            => '',
 			'type'            => 'content',
-			'content'         => esc_html__( 'Box Content', 'optioner' ),
+			'content'         => '',
 			'render_callback' => null,
 			'button_text'     => '',
 			'button_url'      => '#',
