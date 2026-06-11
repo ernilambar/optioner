@@ -75,14 +75,6 @@
 		<exclude name="WordPress.Security.NonceVerification.Recommended"/>
 	</rule>
 
-	<rule ref="WordPress.WP.I18n">
-		<properties>
-			<property name="text_domain" type="array">
-				<element value="optioner" />
-			</property>
-		</properties>
-	</rule>
-
 	<!-- Loads the PHP Compatibility ruleset. -->
 	<rule ref="PHPCompatibility">
 		<exclude name="PHPCompatibility.FunctionUse.NewFunctions.str_containsFound"/>

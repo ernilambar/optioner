@@ -24,6 +24,9 @@ tmp/
 # Environment files
 .env
 
+# AI files
+.claude/
+
 wp-cli.local.yml
 yarn-error.log
 npm-debug.log
@@ -51,6 +54,5 @@ composer.lock
 docs/
 build/
 deploy/
-languages/
 vendor/
 node_modules/

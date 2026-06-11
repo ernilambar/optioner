@@ -70,6 +70,32 @@ if ( ! class_exists( Init_3_1_3::class, false ) ) {
 		}
 
 		/**
+		 * Converts an absolute filesystem path to a URL.
+		 *
+		 * Works regardless of whether the package lives in a plugin, theme, or elsewhere under ABSPATH.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $path Absolute filesystem path.
+		 * @return string URL with no trailing slash.
+		 */
+		private static function path_to_url( $path ) {
+			$path        = wp_normalize_path( $path );
+			$content_dir = wp_normalize_path( WP_CONTENT_DIR );
+
+			if ( 0 === strpos( $path, $content_dir ) ) {
+				return rtrim( content_url( substr( $path, strlen( $content_dir ) ) ), '/' );
+			}
+
+			$abspath = wp_normalize_path( ABSPATH );
+			if ( 0 === strpos( $path, $abspath ) ) {
+				return rtrim( site_url( substr( $path, strlen( $abspath ) ) ), '/' );
+			}
+
+			return '';
+		}
+
+		/**
 		 * Includes library files.
 		 *
 		 * @since 1.0.0
@@ -84,11 +110,11 @@ if ( ! class_exists( Init_3_1_3::class, false ) ) {
 			}
 
 			if ( ! defined( 'OPTIONER_DIR' ) ) {
-				define( 'OPTIONER_DIR', rtrim( plugin_dir_path( __FILE__ ), '/' ) );
+				define( 'OPTIONER_DIR', __DIR__ );
 			}
 
 			if ( ! defined( 'OPTIONER_URL' ) ) {
-				define( 'OPTIONER_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
+				define( 'OPTIONER_URL', self::path_to_url( __DIR__ ) );
 			}
 
 			if ( ! class_exists( \WPTRT\Autoload\Loader::class, false ) ) {
