@@ -2,39 +2,39 @@
 	"name": "optioner",
 	"version": "3.1.4",
 	"description": "Minimal option framework for WordPress.",
-	"main_file": "optioner.php",
-	"author": "Nilambar Sharma",
-	"license": "MIT",
 	"keywords": [
 		"wordpress",
 		"option"
 	],
 	"homepage": "https://github.com/ernilambar/optioner",
+	"bugs": {
+		"url": "https://github.com/ernilambar/optioner/issues"
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/ernilambar/optioner"
 	},
-	"bugs": {
-		"url": "https://github.com/ernilambar/optioner/issues"
+	"license": "MIT",
+	"author": "Nilambar Sharma",
+	"main": "optioner.php",
+	"scripts": {
+		"build": "vite build",
+		"format": "prettier \"**/*.{cjs,css,js,json,mjs}\" --write --log-level warn"
 	},
 	"browserslist": "> 1%, last 2 versions, not dead",
 	"dependencies": {
 		"conditionize2": "^2.0.1",
-		"tom-select": "^2.6.1"
+		"tom-select": "^2.6.2"
 	},
 	"devDependencies": {
-		"@wordpress/prettier-config": "^4.47.0",
+		"@wordpress/prettier-config": "^4.54.0",
 		"browserslist-to-esbuild": "^2.1.1",
-		"postcss": "^8.5.15",
+		"postcss": "^8.5.26",
 		"postcss-custom-media": "^12.0.1",
-		"postcss-import": "^16.1.1",
-		"postcss-nested": "^7.0.2",
-		"postcss-preset-env": "^11.3.0",
+		"postcss-import": "^17.0.0",
+		"postcss-nested": "^8.0.1",
+		"postcss-preset-env": "^11.5.0",
 		"prettier": "npm:wp-prettier@^3.0.3",
-		"vite": "^8.0.16"
-	},
-	"scripts": {
-		"build": "vite build",
-		"format": "prettier \"**/*.{cjs,css,js,json,mjs}\" --write --log-level warn"
+		"vite": "^8.2.2"
 	}
 }
